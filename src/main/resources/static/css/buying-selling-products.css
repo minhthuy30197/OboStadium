@@ -1,0 +1,19 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+.main-content .nav {
+  grid-template-columns: 1fr 1fr;
+}
+.main-content .nav-link {
+  display: inline-block;
+}
+.main-content .pending {
+  color: #C1554E;
+}
+.main-content .cancel {
+  color: #ABACAD;
+  text-decoration: line-through;
+}
+.main-content .successfully {
+  color: #12B76D;
+}
+
+/*# sourceMappingURL=buying-selling-products.css.map */

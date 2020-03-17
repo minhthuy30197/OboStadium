@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+.buying .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.buying .title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 1.75rem;
+}
+.buying .change.btn-primary {
+  line-height: 1.1875rem;
+}
+
+.address-info-wrapper button {
+  padding: 0.375rem 0.625rem;
+}
+.address-info-wrapper .btns {
+  display: none;
+  margin-top: 1.875rem;
+}
+.address-info-wrapper .btns button:last-child {
+  margin-left: 1.25rem;
+}
+
+.childs {
+  padding: 1.875rem;
+  padding-top: 1.5625rem;
+  border: 0.0625rem solid #D5D6D6 !important;
+  border-radius: 0.25rem;
+}
+
+.payment-methods {
+  margin-top: 1.875rem;
+}
+
+.visa-master-wrapper {
+  margin-top: 0.625rem;
+}
+
+.confirm-btn {
+  margin-top: 1.875rem;
+  padding: 0.625rem 1.5625rem;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .buying {
+    margin-top: 1.875rem;
+  }
+}
+@media (max-width: 576px) {
+  .bid-buy-btn .btn,
+.asks-sell-btn .btn {
+    padding: 0.75rem;
+  }
+
+  .total-price-showing {
+    font-size: 1.1875rem;
+  }
+
+  .childs {
+    padding: 1.25rem 0.75rem;
+  }
+
+  .buying .title {
+    font-size: 1.25rem;
+  }
+}
+@media (max-width: 323px) {
+  .address-info-wrapper button {
+    font-size: 0.75rem;
+  }
+}
+
+/*# sourceMappingURL=buying-section.css.map */

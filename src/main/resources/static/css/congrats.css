@@ -1,0 +1,127 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+.h1 {
+  text-align: center;
+  font-weight: bold;
+  font-size: 3.125rem;
+  margin: 0px;
+}
+
+.sub-title {
+  text-align: center;
+  margin: 1.25rem 0px;
+}
+
+.short-desc-wrapper {
+  background-color: #f4f4f4f4;
+  padding: 3.125rem 0px;
+}
+
+.short-desc {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.short-desc .title {
+  font-weight: bold;
+}
+.short-desc .main-content {
+  color: #ABACAD;
+  font-weight: bold;
+  line-height: 1.5rem;
+}
+
+.full-desc-wrapper {
+  margin: 100px 0px;
+}
+
+.h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.full-desc .content {
+  font-weight: bold;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 1.25rem 0px;
+}
+.full-desc .content div:last-child {
+  text-align: right;
+}
+.full-desc .break-line {
+  background-color: #D5D6D6;
+  height: 0.0625rem;
+  margin-bottom: 0.625rem;
+}
+.full-desc .product-name {
+  color: #F04E40;
+}
+.full-desc .size {
+  color: #ABACAD;
+  font-weight: normal;
+  text-align: left !important;
+}
+
+.content-price {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-weight: bold;
+  margin-top: 1.25rem;
+}
+.content-price .wrapper {
+  grid-column: 2/2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.content-price .total-price-wrapper .sub-price {
+  font-size: 1.5rem;
+  color: #F04E40;
+}
+
+.go-back-home-wrapper {
+  text-align: center;
+}
+
+.go-back-home-btn {
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  font-weight: bold;
+  padding: 1rem 1.5rem;
+}
+
+@media (max-width: 767px) {
+  .short-desc {
+    display: block;
+  }
+  .short-desc .content {
+    margin-bottom: 1.25rem;
+  }
+  .short-desc .content:last-child {
+    margin-bottom: 0px;
+  }
+
+  .content-price {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .content-price .wrapper {
+    width: 100%;
+  }
+
+  .full-desc-wrapper {
+    margin: 1.875rem 0px;
+  }
+}
+@media (max-width: 382px) {
+  .h1 {
+    font-size: 2.5rem;
+  }
+
+  .h2 {
+    font-size: 1.875rem;
+  }
+}
+
+/*# sourceMappingURL=congrats.css.map */

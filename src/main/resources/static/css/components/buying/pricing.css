@@ -1,0 +1,124 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+.pricing {
+  margin-top: 1.875rem;
+}
+.pricing .btn-primary {
+  width: 100%;
+  margin-bottom: 1.25rem;
+  padding: 0.75rem 1.25rem;
+}
+.pricing .sell:last-child {
+  margin-bottom: 0px;
+}
+.pricing .size.btn-primary {
+  padding: 1.25rem;
+  background-color: #ffffff;
+  border: 1px solid #D5D6D6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.pricing .size.btn-primary:active {
+  background-color: #ffffff !important;
+  border-color: #D5D6D6;
+  color: #333333 !important;
+}
+.pricing .size.btn-primary:hover {
+  background-color: #ffffff !important;
+  border-color: #333333;
+  color: #333333 !important;
+}
+.pricing .size-text,
+.pricing .dropdown-arrow {
+  color: #ABACAD;
+  line-height: 1.75rem;
+}
+.pricing .size-details {
+  color: #333333;
+  font-weight: bold;
+}
+
+.bid-buy-btn .btn,
+.asks-sell-btn .btn {
+  padding: 1.25rem;
+  font-weight: bold;
+}
+.bid-buy-btn .bid-btn, .bid-buy-btn .asks-btn,
+.asks-sell-btn .bid-btn,
+.asks-sell-btn .asks-btn {
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+}
+.bid-buy-btn .buy-btn, .bid-buy-btn .sell-btn,
+.asks-sell-btn .buy-btn,
+.asks-sell-btn .sell-btn {
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
+}
+.bid-buy-btn .buy-btn:hover, .bid-buy-btn .buy-btn:active, .bid-buy-btn .sell-btn:hover, .bid-buy-btn .sell-btn:active,
+.asks-sell-btn .buy-btn:hover,
+.asks-sell-btn .buy-btn:active,
+.asks-sell-btn .sell-btn:hover,
+.asks-sell-btn .sell-btn:active {
+  border-left-color: transparent !important;
+}
+.bid-buy-btn .nav-item,
+.asks-sell-btn .nav-item {
+  width: 50%;
+}
+.bid-buy-btn .nav-tabs,
+.asks-sell-btn .nav-tabs {
+  border: 0px;
+}
+
+.price-input {
+  line-height: 1.5rem;
+  padding: 0.75rem;
+  padding-left: 1.25rem;
+}
+
+.price-input.buy-now {
+  color: #ABACAD;
+}
+
+.price-include {
+  margin-top: 1.5625rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  line-height: 1.5rem;
+  padding-bottom: 1.5625rem;
+  border-bottom: 1px solid #D5D6D6;
+}
+.price-include .sub-price-showing {
+  font-weight: bold;
+}
+
+.coupon {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+.coupon .form-control {
+  border: none;
+  border-bottom: 1px solid transparent;
+  text-align: right;
+  padding-right: 0px;
+  border-radius: 0px;
+}
+.coupon .form-control:focus {
+  border-bottom: 1px solid #D5D6D6;
+}
+
+.total-price {
+  border: none;
+  padding: 0px;
+}
+
+.total-price-showing {
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  color: #F04E40;
+  font-weight: bold;
+}
+
+/*# sourceMappingURL=pricing.css.map */

@@ -1,0 +1,55 @@
+<!-- Modals-->
+<div th:fragment="login-modal" class="modal fade" id="signInSignUp" tabindex="-1" role="dialog" aria-labelledby="signInSignUpLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                    <li class="nav-item"><a class="nav-link active" id="signIn-tab" data-toggle="pill" href="#signIn"
+                                            role="tab" aria-controls="signIn" aria-selected="true">Đăng nhập</a></li>
+                    <li class="nav-item"><a class="nav-link" id="signUp-tab" data-toggle="pill" href="#signUp"
+                                            role="tab" aria-controls="signUp" aria-selected="false">Đăng ký</a></li>
+                </ul>
+            </div>
+            <div class="modal-body">
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="signIn" role="tabpanel" aria-labelledby="signIn-tab">
+                        <form>
+                            <input class="form-control sign-in-email" placeholder="Email" autocomplete="autocomplete"/>
+                            <div class="invalid-feedback"></div>
+                            <input class="form-control sign-in-password" type="password" placeholder="Mật khẩu"
+                                   autocomplete="autocomplete"/>
+                            <div class="invalid-feedback"></div>
+                            <div class="forgot-password-wrapper"></div>
+                            Quên mật khẩu? Nhấn vào <span class="text-btn">đây</span>
+                            <div class="btn btn-primary red-btn sign-in-btn">Đăng nhập</div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="signUp" role="tabpanel" aria-labelledby="signUp-tab">
+                        <form>
+                            <input class="form-control sign-up-full-name" placeholder="Họ và tên *"
+                                   autocomplete="autocomplete"/>
+                            <div class="invalid-feedback"></div>
+                            <input class="form-control sign-up-phone" placeholder="Số điện thoại *"
+                                   autocomplete="autocomplete"/>
+                            <div class="invalid-feedback"></div>
+                            <input class="form-control sign-up-email" placeholder="Email *"
+                                   autocomplete="autocomplete"/>
+                            <div class="invalid-feedback"></div>
+                            <input class="form-control sign-up-password" type="password" placeholder="Mật khẩu *"
+                                   autocomplete="autocomplete"/>
+                            <div class="invalid-feedback"></div>
+                            <input class="form-control sign-up-confirm-password" type="password"
+                                   placeholder="Xác nhận mật khẩu *" autocomplete="autocomplete"/>
+                            <div class="invalid-feedback"></div>
+                            <div class="privacy-confirm"></div>
+                            Khi bạn nhấn Đăng ký, bạn đã đồng ý thực hiện mọi giao dịch mua bán theo <span
+                                class="text-btn">điều kiện sử dụng và chính sách của OBO Stadium.</span>
+                            <div class="btn btn-primary red-btn sign-up-btn">Đăng kí</div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

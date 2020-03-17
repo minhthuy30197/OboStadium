@@ -1,0 +1,90 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+.main-content {
+  border: 0.0625rem solid #D5D6D6 !important;
+  border-radius: 0.25rem;
+}
+.main-content .item,
+.main-content .item-small {
+  border: 0px !important;
+}
+.main-content .item {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  align-items: center;
+}
+.main-content .cancel-btn {
+  grid-column: 2/2;
+  width: 50%;
+  justify-self: flex-end;
+}
+.main-content .btns {
+  grid-column: 2/2;
+  display: grid;
+  grid-gap: 0.625rem;
+  margin-top: 1.25rem;
+}
+.main-content .btns .cancel-btn {
+  grid-column: 0;
+  width: auto;
+  justify-self: normal;
+}
+.main-content .item-small {
+  display: none;
+  margin: 0px;
+}
+.main-content .header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.main-content .item-info-wrapper,
+.main-content .header {
+  margin: 1rem 2.5rem;
+}
+
+.order-status-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.status,
+.order-number {
+  font-weight: bold;
+}
+
+.order-number {
+  color: #F04E40;
+}
+
+.go-back-previous-page {
+  color: #C1554E;
+}
+.go-back-previous-page:hover {
+  color: #C1554E;
+}
+
+@media (max-width: 767px) {
+  .order-status-wrapper {
+    display: none;
+  }
+
+  .main-content .item-info-wrapper {
+    margin: 0px;
+  }
+  .main-content .header {
+    margin-left: 1rem;
+  }
+  .main-content .item {
+    display: none;
+    padding: 1rem 1.25rem;
+  }
+  .main-content .item-small {
+    display: block;
+    padding: 1rem 1.25rem;
+  }
+  .main-content .cancel-btn {
+    margin-top: 0.625rem;
+  }
+}
+
+/*# sourceMappingURL=bid-details.css.map */

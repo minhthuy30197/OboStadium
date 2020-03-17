@@ -1,0 +1,52 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+.visa-master-wrapper.added {
+  padding-bottom: 1.875rem;
+  border-bottom: 1px solid #D5D6D6;
+}
+
+#paymentMethods .cvv-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.25rem;
+}
+#paymentMethods .cvv-wrapper .form-control {
+  max-width: 80%;
+}
+#paymentMethods .card-wrapper {
+  display: flex;
+}
+#paymentMethods .jp-card-container {
+  display: flex;
+  justify-content: center;
+  transform: scale(0.8);
+}
+
+@media (min-width: 576px) {
+  #paymentMethods .modal-dialog {
+    max-width: 500px !important;
+  }
+}
+@media (min-width: 576px) {
+  #addNewShipping .modal-dialog-scrollable {
+    max-height: calc(100% - 17rem);
+  }
+}
+@media (max-width: 576px) {
+  .cvv-wrapper .form-control {
+    width: 70%;
+  }
+}
+@media (max-width: 382px) {
+  #addNewShipping .btn,
+#paymentMethods .btn {
+    padding: 0.625rem 1.875rem;
+  }
+}
+@media (max-width: 323px) {
+  #paymentMethods .jp-card-container {
+    transform: scale(0.7);
+  }
+}
+
+/*# sourceMappingURL=payment-methods-modal.css.map */

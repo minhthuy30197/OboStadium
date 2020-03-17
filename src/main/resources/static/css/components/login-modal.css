@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+#signInSignUp .modal-header {
+  padding: 0px;
+  border: 0px;
+}
+#signInSignUp .nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+}
+#signInSignUp .nav-link {
+  border-radius: 0px;
+  background-color: #D5D6D6;
+  text-align: center;
+  padding: 1.25rem 0px;
+  text-transform: uppercase;
+}
+#signInSignUp .nav-link.active {
+  background-color: white;
+  color: #333333;
+}
+#signInSignUp .tab-pane {
+  margin: 1.25rem 1.875rem;
+}
+#signInSignUp .form-control {
+  margin-top: 1.25rem;
+}
+#signInSignUp .btn-primary {
+  width: 100%;
+  text-transform: uppercase;
+  margin-top: 1.875rem;
+}
+#signInSignUp .forgot-password-wrapper,
+#signInSignUp .privacy-confirm {
+  margin-top: 1.25rem;
+}
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 420px;
+  }
+}
+
+/*# sourceMappingURL=login-modal.css.map */

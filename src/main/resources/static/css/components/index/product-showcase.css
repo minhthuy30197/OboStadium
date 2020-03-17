@@ -1,0 +1,46 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+.product-row {
+  padding-left: 0.9375rem;
+  padding-right: 0.9375rem;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.products-showcase .title {
+  margin-bottom: 3.125rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.products-showcase .see-more-btn-text {
+  color: #C1554E;
+  font-weight: 400;
+}
+
+@media (min-width: 1230px) {
+  .product {
+    margin-right: 0px;
+  }
+}
+@media (max-width: 400px) {
+  .products-showcase .title {
+    font-size: 1.25rem;
+  }
+  .products-showcase .see-more-btn-text {
+    font-size: 0.625rem;
+  }
+}
+@media (max-width: 576px) {
+  .products-showcase .title {
+    margin-bottom: 1.25rem;
+  }
+  .products-showcase .product-row {
+    margin-right: 0.3125rem;
+  }
+}
+
+/*# sourceMappingURL=product-showcase.css.map */

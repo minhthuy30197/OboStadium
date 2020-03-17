@@ -1,0 +1,39 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+input[type=radio] {
+  /* Hide original inputs */
+  visibility: hidden;
+  position: absolute;
+}
+
+input[type=radio] + label .radio-dot {
+  height: 1rem;
+  width: 1rem;
+  border: 1px solid #F04E40;
+  margin-right: 0.625rem;
+  border-radius: 50%;
+  position: relative;
+}
+
+input[type=radio] + label .radio-dot:before {
+  height: 0.625rem;
+  width: 0.625rem;
+  content: "";
+  display: inline-block;
+  vertical-align: baseline;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+input[type=radio]:checked + label .radio-dot:before {
+  background: #F04E40;
+  padding: 0.3125rem;
+}
+
+/* CUSTOM RADIO AND CHECKBOX STYLES */
+input[type=radio] + label .radio-dot:before {
+  border-radius: 50%;
+}
+
+/*# sourceMappingURL=input-radio.css.map */

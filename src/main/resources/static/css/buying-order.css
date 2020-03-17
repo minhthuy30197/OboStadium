@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+.main-content .nav {
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+@media (max-width: 767px) {
+  .main-content .nav {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: scroll;
+  }
+  .main-content .nav-item {
+    white-space: nowrap;
+  }
+}
+
+/*# sourceMappingURL=buying-order.css.map */

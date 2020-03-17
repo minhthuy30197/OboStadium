@@ -1,0 +1,33 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+.category {
+  text-align: center;
+  margin-bottom: 2.125rem;
+}
+
+.category-wrap {
+  position: relative;
+  display: inline-block;
+  color: #333333;
+}
+
+.tag {
+  text-transform: uppercase;
+  background-color: #ffffff;
+  position: absolute;
+  font-size: 0.6875rem;
+  bottom: 0.375rem;
+  left: 0.375rem;
+  padding: 0.3125rem 0.625rem;
+}
+
+@media (max-width: 576px) {
+  .category {
+    margin-bottom: 0.9375rem;
+  }
+
+  #last-category {
+    margin-bottom: 0px;
+  }
+}
+
+/*# sourceMappingURL=index-category.css.map */

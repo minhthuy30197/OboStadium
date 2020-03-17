@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(
+                                                ~{:: title},
+                                                'short-header',
+                                                ~{:: #css-resources},
+                                                ~{:: #js-resources},
+                                                ~{:: #main-content}
+                                               )}">
+
+<head>
+    <title>Các câu hỏi thường gặp</title>
+
+    <th:block id="css-resources">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/header.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/except-home-page.css}"/>
+        <link rel="stylesheet" type="text/css" href="./css/faqs.css"/>
+    </th:block>
+</head>
+<body>
+<main id="main-content">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb container">
+        <a class="previous-page" href="/">Trang chủ</a>
+        <i class="fas fa-chevron-right arrow"></i>
+        <span class="current-page">Các câu hỏi thường gặp</span>
+    </div>
+
+    <!-- Main content -->
+    <section class="main-content container">
+        <div class="about-obo">
+            <h2 class="h2">OBO Stadium l&agrave; g&igrave;?</h2>
+            <p class="content">OBO Stadium là website thương mại điện tử đầu tiên và duy nhất tại Việt Nam chuyên biệt về giày dép nói chung và sneakers nói riêng. OBO Stadium ra đời với hoài bão tạo nên một bước đột phá lớn trong lĩnh vực thương mại điện tử chuyên biệt về giày dép ở Việt Nam. OBO Stadium đặt mục tiêu trở thành hệ thống bán lẻ số một tại Việt Nam, tiến đến vươn ra thị trường khu vực và thế giới. Sứ mệnh của OBO Stadium là mang thương mại điện tử đến với mọi đối tượng khách hàng, từ những tầng lớp bình dân nhất, ít quan tâm đến công nghệ nhất. Từ đó, OBO Stadium sẽ từng bước xây dựng văn hoá tiêu dùng tiện lợi và văn minh cho người Việt Nam.</p>
+            <p class="content">OBO Stadium cũng tạo ra cơ hội cho các nhà kinh doanh bán lẻ và các Nhà sản xuất nội địa mở rộng thị trường, có được một môi trường phát triển lành mạnh, hiệu quả. Cũng trên hệ thống này, OBO Stadium mang đến cho người tiêu dùng những sản phẩm, dịch vụ chất lượng cao, thúc đẩy và sự phát triển của lĩnh vực thương mại điện tử và ngành bán lẻ tại Việt Nam. Đây là một phần quan trọng tạo ra động lực mạnh mẽ để phát triển nền kinh tế, từ đó góp phần vào sự thịnh vượng của đất nước.</p>
+        </div>
+        <div class="collapse-content">
+            <div class="accordion" id="accordionExample">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Qu&#x1EA3;n l&yacute; t&agrave;i kho&#x1EA3;n<i class="fas fa-chevron-down"></i></button>
+                        </h2>
+                    </div>
+                    <div class="collapse" id="collapseOne" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <div class="question">1. Làm thế nào để đăng ký tài khoản trên OBO Stadium?</div>
+                            <div class="answer">Quý khách bấm nút "Đăng ký" ở góc phải trên cùng màn hình, điền đủ các thông tin theo yêu cầu.</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="question">2. Vì sao tôi không nhận được email kích hoạt tài khoản?</div>
+                            <div class="answer">Nếu Quý khách không tìm thấy email kích hoạt trong mục Inbox, vui lòng kiểm tra trong mục Thư rác/Spam/Email.</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="question">3. Làm thế nào để thay đổi thông tin trong tài khoản mua hàng của tôi?</div>
+                            <div class="answer">Để thay đổi thông tin trong tài khoản mua hàng tại OBO Stadium, Quý khách vui lòng đăng nhập vào tài khoản của mình. Click vào nút tam giác cạnh tên tài khoản của bạn, chọn » Quản lý tài khoản » click chọn Thông tin cơ bản » click chỉnh sửa để chỉnh sửa thông tin cần thiết..</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Mua h&agrave;ng tr&ecirc;n OBO Stadium<i class="fas fa-chevron-down"></i></button>
+                        </h2>
+                    </div>
+                    <div class="collapse" id="collapseTwo" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <div class="question">1. Làm thế nào để đăng ký tài khoản trên OBO Stadium?</div>
+                            <div class="answer">Quý khách bấm nút "Đăng ký" ở góc phải trên cùng màn hình, điền đủ các thông tin theo yêu cầu.</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="question">2. Vì sao tôi không nhận được email kích hoạt tài khoản?</div>
+                            <div class="answer">Nếu Quý khách không tìm thấy email kích hoạt trong mục Inbox, vui lòng kiểm tra trong mục Thư rác/Spam/Email.</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="question">3. Làm thế nào để thay đổi thông tin trong tài khoản mua hàng của tôi?</div>
+                            <div class="answer">Để thay đổi thông tin trong tài khoản mua hàng tại OBO Stadium, Quý khách vui lòng đăng nhập vào tài khoản của mình. Click vào nút tam giác cạnh tên tài khoản của bạn, chọn » Quản lý tài khoản » click chọn Thông tin cơ bản » click chỉnh sửa để chỉnh sửa thông tin cần thiết..</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingThree">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">B&aacute;n h&agrave;ng tr&ecirc;n OBO Stadium<i class="fas fa-chevron-down"></i></button>
+                        </h2>
+                    </div>
+                    <div class="collapse" id="collapseThree" aria-labelledby="headingThree" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <div class="question">1. Làm thế nào để đăng ký tài khoản trên OBO Stadium?</div>
+                            <div class="answer">Quý khách bấm nút "Đăng ký" ở góc phải trên cùng màn hình, điền đủ các thông tin theo yêu cầu.</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="question">2. Vì sao tôi không nhận được email kích hoạt tài khoản?</div>
+                            <div class="answer">Nếu Quý khách không tìm thấy email kích hoạt trong mục Inbox, vui lòng kiểm tra trong mục Thư rác/Spam/Email.</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="question">3. Làm thế nào để thay đổi thông tin trong tài khoản mua hàng của tôi?</div>
+                            <div class="answer">Để thay đổi thông tin trong tài khoản mua hàng tại OBO Stadium, Quý khách vui lòng đăng nhập vào tài khoản của mình. Click vào nút tam giác cạnh tên tài khoản của bạn, chọn » Quản lý tài khoản » click chọn Thông tin cơ bản » click chỉnh sửa để chỉnh sửa thông tin cần thiết..</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingFour">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">Giao nh&#x1EAD;n h&agrave;ng<i class="fas fa-chevron-down"></i></button>
+                        </h2>
+                    </div>
+                    <div class="collapse" id="collapseFour" aria-labelledby="headingFour" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <div class="question">1. Làm thế nào để đăng ký tài khoản trên OBO Stadium?</div>
+                            <div class="answer">Quý khách bấm nút "Đăng ký" ở góc phải trên cùng màn hình, điền đủ các thông tin theo yêu cầu.</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="question">2. Vì sao tôi không nhận được email kích hoạt tài khoản?</div>
+                            <div class="answer">Nếu Quý khách không tìm thấy email kích hoạt trong mục Inbox, vui lòng kiểm tra trong mục Thư rác/Spam/Email.</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="question">3. Làm thế nào để thay đổi thông tin trong tài khoản mua hàng của tôi?</div>
+                            <div class="answer">Để thay đổi thông tin trong tài khoản mua hàng tại OBO Stadium, Quý khách vui lòng đăng nhập vào tài khoản của mình. Click vào nút tam giác cạnh tên tài khoản của bạn, chọn » Quản lý tài khoản » click chọn Thông tin cơ bản » click chỉnh sửa để chỉnh sửa thông tin cần thiết..</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingFive">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">Ph&#x1B0;&#x1A1;ng th&#x1EE9;c thanh to&aacute;n<i class="fas fa-chevron-down"></i></button>
+                        </h2>
+                    </div>
+                    <div class="collapse" id="collapseFive" aria-labelledby="headingFive" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <div class="question">1. Làm thế nào để đăng ký tài khoản trên OBO Stadium?</div>
+                            <div class="answer">Quý khách bấm nút "Đăng ký" ở góc phải trên cùng màn hình, điền đủ các thông tin theo yêu cầu.</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="question">2. Vì sao tôi không nhận được email kích hoạt tài khoản?</div>
+                            <div class="answer">Nếu Quý khách không tìm thấy email kích hoạt trong mục Inbox, vui lòng kiểm tra trong mục Thư rác/Spam/Email.</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="question">3. Làm thế nào để thay đổi thông tin trong tài khoản mua hàng của tôi?</div>
+                            <div class="answer">Để thay đổi thông tin trong tài khoản mua hàng tại OBO Stadium, Quý khách vui lòng đăng nhập vào tài khoản của mình. Click vào nút tam giác cạnh tên tài khoản của bạn, chọn » Quản lý tài khoản » click chọn Thông tin cơ bản » click chỉnh sửa để chỉnh sửa thông tin cần thiết..</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<th:block id="js-resources">
+    <script th:src="@{/script/faqs.js}"></script>
+    <script th:src="@{/script/except-home-page.js}"></script>
+</th:block>
+</body>
+</html>
+
+

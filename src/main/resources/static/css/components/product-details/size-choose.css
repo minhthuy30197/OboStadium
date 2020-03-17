@@ -1,0 +1,48 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+#sizeChooseModal a:hover,
+#sizeGuideModal a:hover {
+  color: #C1554E;
+}
+#sizeChooseModal .modal-header, #sizeChooseModal .modal-body,
+#sizeGuideModal .modal-header,
+#sizeGuideModal .modal-body {
+  padding: 1.875rem;
+  border: 0px;
+}
+#sizeChooseModal .size .select-filter,
+#sizeGuideModal .size .select-filter {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 1.25rem;
+}
+#sizeChooseModal .size .select-filter .item,
+#sizeGuideModal .size .select-filter .item {
+  width: 100%;
+  margin: 0px;
+  text-align: center;
+  border: 1px solid #333333;
+  border-radius: 0.125rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+#sizeChooseModal .size .select-filter .item:after,
+#sizeGuideModal .size .select-filter .item:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+
+body.modal1-on,
+body.modal2-on {
+  overflow: hidden;
+}
+
+@media (min-width: 576px) {
+  .modal-dialog-scrollable {
+    max-height: 50vh;
+  }
+}
+
+/*# sourceMappingURL=size-choose.css.map */

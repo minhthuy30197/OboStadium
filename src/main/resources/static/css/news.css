@@ -1,0 +1,58 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+header {
+  background-image: url("../image/banner/news-banner.png");
+}
+
+.search-form {
+  padding: 0px;
+}
+
+.main-heading {
+  margin: 3.125rem 0px 150px 0px;
+}
+
+.news {
+  background-color: #F2F3F5;
+  display: block;
+  margin-bottom: 3.125rem;
+}
+.news .row {
+  display: flex;
+  align-items: center;
+}
+.news .details {
+  padding-top: 1.625rem;
+  padding-bottom: 1.625rem;
+}
+.news .details-small {
+  padding: 1.625rem 2.5rem;
+  display: none;
+}
+.news .title {
+  font-size: 1.625rem;
+  font-weight: bold;
+  margin: 1.625rem 0px;
+  margin-top: 0.625rem;
+  text-transform: capitalize;
+}
+
+@media (max-width: 768px) {
+  .search-form .form-control {
+    margin-bottom: 0px;
+  }
+
+  .navbar {
+    padding: 0px;
+  }
+}
+@media (max-width: 992px) {
+  .news .details {
+    display: none;
+  }
+
+  .news .details-small {
+    display: block;
+  }
+}
+
+/*# sourceMappingURL=news.css.map */

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(
+                                                ~{:: title},
+                                                'full-header',
+                                                ~{:: #css-resources},
+                                                ~{:: #js-resources},
+                                                ~{:: #main-content}
+                                               )}">
+
+<head>
+    <title>Trang chủ</title>
+
+    <th:block id="css-resources">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/products.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/lastest-news.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/index/index-newsletter.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/index/index-category.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/index/product-showcase.css}"/>
+    </th:block>
+</head>
+<body>
+<main id="main-content">
+    <!--  Best seller product -->
+    <section class="products-showcase best-seller container">
+        <div class="row">
+            <div class="title col-12">
+                <h2 class="h2">Sản phẩm bán chạy</h2><a
+                    class="see-more-btn-text text-uppercase" href="/products">Xem Thêm</a>
+            </div>
+        </div>
+        <div class="row product-row d-flex justify-content-md-between">
+            <th:block th:each="product : ${bestSellerProducts}">
+                <a class="product position-relative" th:href="@{/products/{id}(id=${product.id})}">
+                    <div class="card"><img class="card-img-top"
+                                           th:src="${product.image}"
+                                           th:alt="${product.name}"/>
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${product.name}"></h5>
+                            <p class="price"><span th:text="${product.price}"></span> &#x20AB;</p>
+                            <p class="card-text sold">&Dstrok;&atilde; b&aacute;n <span th:text="${product.totalSold}"></span> &dstrok;&ocirc;i</p>
+                        </div>
+                    </div>
+                    <div class="shadow mx-auto position-absolute"></div>
+                </a>
+            </th:block>
+        </div>
+    </section>
+    <!-- Break Banner-->
+    <section class="break-banner">
+        <a href="./product-details.html">
+            <img class="img-fluid" id="promo-banner-1" th:src="@{/image/banner/promo-banner-1-lg.png}" alt="promo-banner-1"/>
+        </a>
+    </section>
+
+    <!-- New product -->
+    <section class="products-showcase under-retail container">
+        <div class="row">
+            <div class="title col-12">
+                <h2 class="h2">ĐẬP HỘP HÀNG MỚI</h2><a class="see-more-btn-text text-uppercase" href="/products">Xem
+                Th&ecirc;m</a>
+            </div>
+        </div>
+        <div class="row product-row d-flex justify-content-md-between">
+            <th:block th:each="product : ${newProducts}">
+                <a class="product position-relative" th:href="@{/products/{id}(id=${product.id})}">
+                    <div class="card"><img class="card-img-top"
+                                           th:src="${product.image}"
+                                           th:alt="${product.name}"/>
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${product.name}"></h5>
+                            <p class="price"><span th:text="${product.price}"></span> &#x20AB;</p>
+                            <p class="card-text sold">&Dstrok;&atilde; b&aacute;n <span th:text="${product.totalSold}"></span> &dstrok;&ocirc;i</p>
+                        </div>
+                    </div>
+                    <div class="shadow mx-auto position-absolute"></div>
+                </a>
+            </th:block>
+        </div>
+    </section>
+    <!-- Break Banner-->
+    <section class="break-banner">
+        <a href="./product-details.html">
+            <img class="img-fluid" id="promo-banner-2" th:src="@{/image/banner/promo-banner-2-lg.png}" alt="promo-banner-2"/>
+        </a>
+    </section>
+
+    <!-- Staff Selects -->
+    <section class="products-showcase staffs-choose container">
+        <div class="row">
+            <div class="title col-12">
+                <h2 class="h2">OBO LỰA CHỌN</h2><a class="see-more-btn-text text-uppercase" href="/products">Xem Th&ecirc;m</a>
+            </div>
+        </div>
+        <div class="row product-row d-flex justify-content-md-between">
+            <th:block th:each="product : ${oboChoiceProducts}">
+                <a class="product position-relative" th:href="@{/products/{id}(id=${product.id})}">
+                    <div class="card"><img class="card-img-top"
+                                           th:src="${product.image}"
+                                           th:alt="${product.name}"/>
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${product.name}"></h5>
+                            <p class="price"><span th:text="${product.price}"></span> &#x20AB;</p>
+                            <p class="card-text sold">&Dstrok;&atilde; b&aacute;n <span th:text="${product.totalSold}"></span> &dstrok;&ocirc;i</p>
+                        </div>
+                    </div>
+                    <div class="shadow mx-auto position-absolute"></div>
+                </a>
+            </th:block>
+        </div>
+    </section>
+    <!-- Break Banner-->
+    <section class="break-banner">
+        <a href="./product-details.html">
+            <img class="img-fluid" id="promo-banner-3" th:src="@{/image/banner/promo-banner-3-lg.png}" alt="promo-banner-3"/>
+        </a>
+    </section>
+
+    <!-- Category Section-->
+    <section class="categories-showcase container">
+        <div class="row">
+            <div class="title col-12">
+                <h2 class="h2">B&#x1ED9; S&#x1B0;u T&#x1EAD;p</h2>
+            </div>
+        </div>
+        <div class="row categories-row d-flex justify-content-md-between">
+            <div class="category col-sm-4"><a class="category-wrap" href="./shop.html"><img class="img-fluid"
+                                                                                            th:src="@{/image/categories/category-1.png}"
+                                                                                            alt="category-1"/>
+                <div class="tag">TECH PERFORMANCE</div>
+            </a></div>
+            <div class="category col-sm-4"><a class="category-wrap" href="./shop.html"><img class="img-fluid"
+                                                                                            th:src="@{/image/categories/category-2.png}"
+                                                                                            alt="category-2"/>
+                <div class="tag">OFF-WHITE</div>
+            </a></div>
+            <div class="category col-sm-4"><a class="category-wrap" href="./shop.html"><img class="img-fluid"
+                                                                                            th:src="@{/image/categories/category-3.png}"
+                                                                                            alt="category-3"/>
+                <div class="tag">SUPREME</div>
+            </a></div>
+            <div class="category col-sm-4"><a class="category-wrap" href="./shop.html"><img class="img-fluid"
+                                                                                            th:src="@{/image/categories/category-4.png}"
+                                                                                            alt="category-4"/>
+                <div class="tag">NBA</div>
+            </a></div>
+            <div class="category col-sm-4"><a class="category-wrap" href="./shop.html"><img class="img-fluid"
+                                                                                            th:src="@{/image/categories/category-5.png}"
+                                                                                            alt="category-5"/>
+                <div class="tag">YEEZY</div>
+            </a></div>
+            <div class="category col-sm-4" id="last-category"><a class="category-wrap" href="./shop.html"><img
+                    class="img-fluid" th:src="@{/image/categories/category-6.png}" alt="category-6"/>
+                <div class="tag">Comme Des Gar&ccedil;ons</div>
+            </a></div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section-->
+    <section class="newsletter container-fluid d-flex justify-content-center">
+        <div class="newsletter-form-wrapper">
+            <div class="title">&Dstrok;&abreve;ng k&yacute; nh&#x1EAD;n b&#x1EA3;n tin OBO Stadium</div>
+            <div class="sub-title">H&atilde;y &dstrok;&abreve;ng k&yacute; &dstrok;&#x1EC3; nh&#x1EAD;n tin m&#x1EDB;i
+                nhanh nh&#x1EA5;t qua email
+            </div>
+            <div class="newsletter-form d-flex">
+                <form class="d-flex w-100 justify-content-between flex-column flex-md-row">
+                    <input class="form-control" type="text" placeholder="Nhập địa chỉ email của bạn"/>
+                    <button class="btn btn-primary text-uppercase red-btn" type="submit">&dstrok;&abreve;ng k&yacute;
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lastest News Section-->
+    <section class="latest-news container">
+        <div class="row">
+            <div class="title col-12">
+                <h2 class="h2">Bài viết mới</h2><a class="see-more-btn-text text-uppercase"
+                                                                        href="/posts">Xem Th&ecirc;m</a>
+            </div>
+        </div>
+        <div class="carousel">
+            <th:block th:each="post : ${latestPosts}">
+                <a class="news position-relative" th:href="@{/posts/{id}(id=${post.id})}">
+                    <div class="card"><img class="card-img-top" th:src="${post.thumbnail}" th:alt="${post.title}"/>
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${post.title}"></h5>
+                            <p class="card-text news-short-desc" th:text="${post.description}"></p>
+                            <p class="card-text author">By <span class="name" th:text="${post.author}"></span> &middot; <span th:text="${post.date}"></span></p>
+                        </div>
+                    </div>
+                    <div class="shadow mx-auto position-absolute"></div>
+                </a>
+            </th:block>
+        </div>
+    </section>
+</main>
+
+<th:block id="js-resources">
+    <script type="text/javascript" th:src="@{/script/index.js}"></script>
+    <script type="text/javascript" th:src="@{/script/lastest-news.js}"></script>
+</th:block>
+</body>
+</html>
+
+
+

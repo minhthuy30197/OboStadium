@@ -1,0 +1,49 @@
+<th:block th:fragment="size-choose-modal">
+    <div class="modal fade" id="sizeGuideModal" tabindex="-1" role="dialog" aria-labelledby="sizeGuideModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header"><a class="go-back-size-choose text-btn" data-toggle="modal" href="#sizeChooseModal" data-dismiss="modal"><i class="fas fa-chevron-left"></i> Trở lại</a>
+                    <h5 class="modal-title" id="sizeGuideModalTitle">Bảng size</h5>
+                </div>
+                <div class="modal-body">
+                    <table class="side-guide-table table">
+                        <thead>
+                        <tr>
+                            <th>CM</th>
+                            <th>VN/EU</th>
+                            <th>US</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>23.7</td>
+                            <td>38.5</td>
+                            <td>6</td>
+                        </tr>
+                        <tr>
+                            <td>23.7</td>
+                            <td>38.5</td>
+                            <td>6</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="sizeChooseModal" tabindex="-1" role="dialog" aria-labelledby="sizeChooseModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="sizeChooseModalTitle">Chọn size</h5><a class="size-guide text-btn" data-toggle="modal" href="#sizeGuideModal" data-dismiss="modal">Bảng size</a>
+                </div>
+                <div class="modal-body">
+                    <div class="size content">
+                        <div class="select-filter"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>

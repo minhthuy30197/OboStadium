@@ -1,0 +1,255 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+.main-content .break-line {
+  width: 1px;
+  background-color: #D5D6D6;
+  height: 100%;
+}
+
+.nav-pills {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.setting-box {
+  border: 0.0625rem solid #D5D6D6 !important;
+  border-radius: 0.25rem;
+  padding: 1.875rem 2.5rem;
+  color: #333333;
+  font-weight: normal;
+}
+
+.item-row {
+  display: grid;
+  grid-template-columns: 0.5fr 1fr;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.password-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.password-wrapper .text-btn {
+  margin-left: 1rem;
+}
+
+.text-btn {
+  white-space: nowrap;
+}
+
+.update-btn {
+  grid-column: 2/2;
+  max-width: 120px;
+}
+
+.gender-input-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.birthday-input-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.birthday-input-wrapper .form-control {
+  width: calc(33% - 15px);
+}
+
+#address-setting .setting-box {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-gap: 2.5rem;
+}
+#address-setting .receive-person {
+  font-weight: bold;
+}
+#address-setting .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#address-setting .phone {
+  margin: 1.25rem 0px;
+}
+
+#payment-methods-setting .setting-box {
+  padding: 1.25rem;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  grid-gap: 1.625rem;
+}
+#payment-methods-setting .payment-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-methods {
+  width: 60px;
+}
+
+.add-new-address-btn,
+.add-new-payment-btn {
+  max-width: 120px;
+  margin-top: 1.25rem;
+}
+
+.radio-wrapper label {
+  margin: 0px;
+  line-height: 1.1875rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+}
+
+input[type=radio] {
+  /* Hide original inputs */
+  visibility: hidden;
+  position: absolute;
+}
+
+input[type=radio] + label .radio-dot {
+  height: 1rem;
+  width: 1rem;
+  border: 1px solid #F04E40;
+  margin-right: 0.625rem;
+  border-radius: 50%;
+  position: relative;
+}
+
+input[type=radio] + label .radio-dot:before {
+  height: 0.625rem;
+  width: 0.625rem;
+  content: "";
+  display: inline-block;
+  vertical-align: baseline;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+input[type=radio]:checked + label .radio-dot:before {
+  background: #F04E40;
+  padding: 0.3125rem;
+}
+
+/* CUSTOM RADIO AND CHECKBOX STYLES */
+input[type=radio] + label .radio-dot:before {
+  border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+  #address-setting .setting-box {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 1.25rem;
+  }
+  #address-setting .break-line {
+    display: none;
+  }
+  #address-setting .address-item {
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid #D5D6D6;
+  }
+  #address-setting .address-item .phone {
+    margin: 0.625rem 0px;
+  }
+  #address-setting .address-item:last-child {
+    border-bottom: none;
+    padding: 0px;
+  }
+
+  #payment-methods-setting .setting-box {
+    padding: 1.25rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1.625rem;
+  }
+  #payment-methods-setting .break-line {
+    display: none;
+  }
+}
+@media (max-width: 767px) {
+  .main-content .nav {
+    overflow-x: scroll;
+  }
+  .main-content .nav-link {
+    white-space: nowrap;
+  }
+
+  .setting-box {
+    padding: 1.25rem;
+  }
+
+  .item-row {
+    grid-template-columns: 1fr;
+    padding: 0px;
+  }
+  .item-row .text {
+    margin-bottom: 0.625rem;
+  }
+
+  .update-btn {
+    grid-column: auto;
+  }
+
+  #payment-methods-setting .setting-box {
+    padding: 1.25rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1.625rem;
+  }
+  #payment-methods-setting .payment-item {
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid #D5D6D6;
+  }
+  #payment-methods-setting .payment-item:last-child {
+    padding: 0px;
+    border: 0px;
+  }
+}
+#changePassword .item-row:last-child {
+  margin: 0px;
+}
+
+#changePassword .modal-header,
+#changePassword .modal-body,
+#changePassword .modal-footer,
+#confirmDelete .modal-header,
+#confirmDelete .modal-body,
+#confirmDelete .modal-footer {
+  padding: 1.875rem;
+  padding-bottom: 0px;
+}
+#changePassword .modal-header,
+#changePassword .modal-footer,
+#confirmDelete .modal-header,
+#confirmDelete .modal-footer {
+  border: 0px;
+}
+#changePassword .modal-footer,
+#confirmDelete .modal-footer {
+  padding-bottom: 1.875rem;
+}
+#changePassword .item-row,
+#confirmDelete .item-row {
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (min-width: 576px) {
+  #changePassword .modal-dialog {
+    max-width: 500px;
+  }
+}
+@media (max-width: 767px) {
+  #changePassword .item-row {
+    grid-template-columns: 1fr;
+    padding: 0px;
+  }
+}
+
+/*# sourceMappingURL=account-setting.css.map */

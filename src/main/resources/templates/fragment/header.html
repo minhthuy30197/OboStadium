@@ -1,0 +1,52 @@
+<th:block th:fragment="full-header">
+    <header class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-light container"><a class="navbar-brand" href="./"><img class="img-fluid" th:src="@{/image/logo-white.png}" alt="logo"/></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse justify-content-md-end text-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" id="shop" href="/san-pham">Sản phẩm</a></li>
+                    <li class="nav-item"><a class="nav-link" id="news" href="/tin-tuc">Tin tức</a></li>
+                    <li class="nav-item"><a class="nav-link account-setting" id="account" href="" data-toggle="modal" data-target="#signInSignUp"></a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="content text-center">
+            <h1 class="slogan main-heading text-uppercase">BEST THINGS WITH BEST OFFERS</h1>
+            <div class="search-form justify-content-md-center d-flex">
+                <form class="container">
+                    <div class="row justify-content-center">
+                        <div class="search-input-wrapper">
+                            <input class="form-control search-input col-sm-5" type="text" placeholder="Bạn cần tìm gì..."/>
+                            <button class="btn btn-primary text-uppercase red-btn search-button" type="submit"><i class="fas fa-search"></i></button>
+                            <div class="search-result"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </header>
+</th:block>
+
+<th:block th:fragment="short-header">
+    <header class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-light container"><a class="navbar-brand" href="./"><img class="img-fluid" th:src="@{/image/logo-white.png}" alt="logo"/></a>
+            <div class="search-form">
+                <form>
+                    <div class="search-input-wrapper">
+                        <input class="form-control search-input" type="text" placeholder="Bạn cần tìm gì..."/>
+                        <button class="btn btn-primary text-uppercase red-btn search-button" type="submit"><i class="fas fa-search"></i></button>
+                        <div class="search-result"></div>
+                    </div>
+                </form>
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse justify-content-md-end text-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" id="shop" href="/san-pham">Sản phẩm</a></li>
+                    <li class="nav-item"><a class="nav-link" id="news" href="/tin-tuc">Tin tức</a></li>
+                    <li class="nav-item"><a class="nav-link account-setting" id="account" href="" data-toggle="modal" data-target="#signInSignUp"></a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+</th:block>

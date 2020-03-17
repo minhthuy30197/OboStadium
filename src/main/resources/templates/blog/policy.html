@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(
+                                                ~{:: title},
+                                                'short-header',
+                                                ~{:: #css-resources},
+                                                ~{:: #js-resources},
+                                                ~{:: #main-content}
+                                               )}">
+
+<head>
+    <title>Chính sách bảo mật</title>
+
+    <th:block id="css-resources">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/header.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/except-home-page.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/rules.css}"/>
+    </th:block>
+</head>
+<body>
+<main id="main-content">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb container">
+        <a class="previous-page" href="/">Trang chủ</a>
+        <i class="fas fa-chevron-right arrow"></i>
+        <span class="current-page">Chính sách bảo mật</span>
+    </div>
+
+    <!-- Main content -->
+    <section class="main-content container">
+        <div class="about-obo">
+            <h2 class="h2">Chính sách bảo mật</h2>
+        </div>
+        <div class="content">
+            <p><b>1. Mục đích áp dụng</b></p>
+            <p>Chính sách bảo mật và chia sẻ thông tin này (“Chính Sách”) nhằm đảm bảo an toàn thông tin liên quan đến các tổ chức, cá nhân tham gia truy cập và/hoặc giao dịch trên website www.obostadium.com thuộc quyền sở hữu của Công ty Cổ phần Dịch vụ Thương Mại Tổng hợp OBO Stadium (sau đây gọi chung là “OBO Stadium”).</p>
+            <p>Chính Sách này mô tả cách OBO Stadium tiếp nhận, tổng hợp, lưu giữ, sử dụng và bảo vệ thông tin của các tổ chức, cá nhân tham gia truy cập, giao dịch trên OBO Stadium (“Khách Hàng”). Việc Khách Hàng truy cập hoặc thực hiện giao dịch trên OBO Stadium được hiểu là Khách Hàng đã đọc, hiểu và đồng ý tuân thủ Chính Sách này, kể cả các phiên bản sửa đổi, bổ sung của Chính Sách. Phiên bản sửa đổi, bổ sung Chính Sách này (nếu có) sẽ có hiệu lực sau 5 ngày kể từ ngày việc sửa đổi, bổ sung Chính Sách được thông báo trên OBO Stadium.</p>
+            <p><b>2. Quy định cụ thể</b></p>
+            <p>- Khi Khách Hàng thực hiện giao dịch và/hoặc đăng ký mở tài khoản tại OBO Stadium, tùy từng thời điểm, Khách Hàng phải cung cấp một số thông tin cần thiết cho việc thực hiện giao dịch và/hoặc đăng ký tài khoản (“Thông Tin Khách Hàng”).</p>
+            <p>- Khách Hàng có trách nhiệm đảm bảo những thông tin Khách Hàng cung cấp là đầy đủ và chính xác và luôn cập nhật thông tin để đảm bảo tính đầy đủ và chính xác. OBO Stadium không chịu trách nhiệm giải quyết bất kỳ tranh chấp nào nếu thông tin Khách Hàng cung cấp không chính xác hoặc không được cập nhật hoặc giả mạo. </p>
+            <p>- Thông Tin Khách Hàng, cũng như các thông tin trao đổi giữa Khách Hàng và OBO Stadium, đều được lưu giữ và bảo mật bởi hệ thống của OBO Stadium, riêng thông tin thẻ thanh toán của Khách Hàng sẽ do các đối tác Cổng thanh toán của OBO Stadium bảo mật theo tiêu chuẩn quốc tế PCI DSS.</p>
+            <p>- OBO Stadium có các biện pháp thích hợp về kỹ thuật và an ninh để ngăn chặn việc truy cập, sử dụng trái phép Thông Tin Khách Hàng. OBO Stadium cũng thường xuyên phối hợp với các chuyên gia bảo mật nhằm cập nhật những thông tin mới nhất về an ninh mạng để đảm bảo sự an toàn cho Thông Tin Khách Hàng khi Khách Hàng truy cập, đăng ký mở tài khoản và/hoặc sử dụng các tính năng của OBO Stadium. Khi thu thập dữ liệu, OBO Stadium thực hiện lưu giữ và bảo mật Thông Tin Khách Hàng tại hệ thống máy chủ và các Thông Tin Khách Hàng này được bảo đảm an toàn bằng các hệ thống tường lửa (firewall), các biện pháp kiểm soát truy cập, mã hóa dữ liệu.</p>
+            <p>- Các thông tin thẻ thanh toán của Khách Hàng được các đối tác cổng thanh toán của OBO Stadium bảo vệ theo tiêu chuẩn quốc tế. OBO Stadium không cho phép các bên thứ ba theo dõi hoặc thu thập thông tin của Khách Hàng trên các website thành phần của OBO Stadium.</p>
+            <p>- Đối với các tài khoản đã đóng chúng tôi vẫn lưu trữ Thông Tin Cá Nhân và truy cập của Khách Hàng để phục vụ cho các mục đích phòng chống gian lận, điều tra, giải đáp thắc mắc… Các Thông Tin Cá Nhân này sẽ được OBO Stadium lưu giữ trên hệ thống máy chủ tối đa trong vòng 12(mười hai) tháng kể từ ngày Khách Hàng đóng tài khoản trên OBO Stadium. Sau khi thời hạn này kết thúc, OBO Stadium sẽ tiến hành xóa vĩnh viễn Thông Tin Cá Nhân của Bạn.</p>
+            <p>- Khách Hàng tuyệt đối không được có bất kỳ hành vi sử dụng công cụ, chương trình để can thiệp trái phép vào hệ thống hay làm thay đổi cấu trúc dữ liệu của OBO Stadium, cũng như bất kỳ hành vi nào khác nhằm phát tán, cổ vũ cho các hoạt động với mục đích can thiệp, phá hoại hay xâm nhập vào dữ liệu của hệ thống OBO Stadium, cũng như các các hành vi mà pháp luật Việt Nam nghiêm cấm. Trong trường hợp OBO Stadium phát hiện Khách Hàng có hành vi cố tình giả mạo, gian lận, phát tán các thông tin trái phép,… OBO Stadium có quyền chuyển Thông Tin Cá Nhân của Khách Hàng cho các cơ quan có thẩm quyền để xử lý theo quy định pháp luật.</p>
+        </div>
+    </section>
+</main>
+
+<th:block id="js-resources">
+    <script th:src="@{/script/except-home-page.js}"></script>
+</th:block>
+</body>
+</html>
+
+

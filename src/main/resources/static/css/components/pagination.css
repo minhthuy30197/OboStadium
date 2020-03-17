@@ -1,0 +1,19 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+.paginate-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.25rem;
+}
+.paginate-pagination ul li a.page {
+  height: 2.5rem;
+  width: 2.5rem;
+  line-height: 2.5rem;
+}
+.paginate-pagination ul li a.page.active {
+  pointer-events: none;
+  color: #F04E40;
+  opacity: 1;
+}
+
+/*# sourceMappingURL=pagination.css.map */

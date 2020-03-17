@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+.product-info {
+  text-align: center;
+}
+
+.product-name {
+  font-size: 2.5rem;
+  font-weight: 500;
+  line-height: 2.9375rem;
+}
+
+.price-info,
+.size-info-wrapper {
+  line-height: 1.1875rem;
+  margin: 1.25rem 0px;
+}
+.price-info .bid-price-info,
+.price-info .ask-price-info,
+.price-info .size-info,
+.size-info-wrapper .bid-price-info,
+.size-info-wrapper .ask-price-info,
+.size-info-wrapper .size-info {
+  font-weight: bold;
+}
+
+.bid-price-info {
+  color: #F04E40;
+}
+
+.ask-price-info {
+  color: #12B76D;
+}
+
+@media (max-width: 768px) {
+  .price-info {
+    display: flex;
+    flex-flow: column;
+  }
+  .price-info .first-row {
+    margin-bottom: 0.625rem;
+  }
+  .price-info .line {
+    display: none;
+  }
+}
+
+/*# sourceMappingURL=product-info.css.map */

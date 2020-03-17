@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+.modal-body .filter-bar {
+  display: block;
+}
+.modal-body .size .select-filter {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 1.25rem;
+}
+.modal-body .clear-filter {
+  height: auto;
+}
+.modal-body .size .select-filter .item {
+  width: 100%;
+  margin: 0px;
+}
+.modal-body .size .select-filter .item:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+
+@media (max-width: 575.98px) {
+  .modal-body .filter-bar .size .select-filter {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
+/*# sourceMappingURL=filter-bar-small.css.map */

@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="main-fragment(title, header, cssResources, jsResources, mainContent)">
+    <head>
+        <meta charset="UTF-8" />
+        <title th:replace="${title}">Page Title</title>
+        <link rel="icon" th:href="@{/image/favicon.ico}" type="image/x-icon"/>
+        <link rel="shortcut icon" th:href="@{/image/favicon.ico}" type="image/x-icon"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+        <!-- Bootstrap CSS-->
+        <link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"/>
+        <!-- Slick CSS-->
+        <link rel="stylesheet" type="text/css" th:href="@{/vendor/slick/slick.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/vendor/slick/slick-theme.css}"/>
+        <!-- Font Awesome CSS-->
+        <link rel="stylesheet" type="text/css" th:href="@{/vendor/fontawesome/css/all.css}"/>
+        <!-- Pretty Checkbox CSS-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
+        <!-- Login Modal-->
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/login-modal.css}"/>
+        <!-- Useed in Js-->
+        <link rel="stylesheet" type="text/css" th:href="@{/css/used-in-js.css}"/>
+        <!-- Common CSS-->
+        <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+        <!-- Components CSS-->
+        <th:block th:replace="${cssResources} ?: ~{}"></th:block>
+    </head>
+    <body>
+        <!-- HEADER -->
+        <th:block th:replace="~{fragment/header :: ${header}}"></th:block>
+
+        <!-- BODY -->
+        <th:block th:replace="${mainContent} ?: ~{}"></th:block>
+
+        <!-- LOGIN MODAL -->
+        <th:block th:replace="~{fragment/login_modal :: login-modal}"></th:block>
+
+        <!-- FOOTER -->
+        <th:block th:replace="~{fragment/footer :: footer}"></th:block>
+
+        </div><a class="back-to-top" href="#"><img th:src="@{/image/back-to-top.png}" alt=""/></a>
+
+        <script type="text/javascript" th:src="@{/vendor/jquery/jquery-3.4.1.min.js}"></script>
+        <script type="text/javascript" th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <!-- Main Js-->
+        <script type="text/javascript" th:src="@{/script/main.js}"></script>
+        <!-- Slick JS-->
+        <script type="text/javascript" th:src="@{/vendor/slick/slick.min.js}"></script>
+        <!-- Currency-->
+        <script type="text/javascript" th:src="@{/vendor/currency/currency.min.js}"></script>
+        <!-- Common JS-->
+        <th:block th:replace="${jsResources} ?: ~{}"></th:block>
+    </body>
+</html>

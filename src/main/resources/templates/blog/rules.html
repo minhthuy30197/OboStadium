@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(
+                                                ~{:: title},
+                                                'short-header',
+                                                ~{:: #css-resources},
+                                                ~{:: #js-resources},
+                                                ~{:: #main-content}
+                                               )}">
+
+<head>
+    <title>Điều khoản sử dụng</title>
+
+    <th:block id="css-resources">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/header.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/except-home-page.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/rules.css}"/>
+    </th:block>
+</head>
+<body>
+<main id="main-content">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb container">
+        <a class="previous-page" href="/">Trang chủ</a>
+        <i class="fas fa-chevron-right arrow"></i>
+        <span class="current-page">Điều khoản sử dụng</span>
+    </div>
+
+    <!-- Main content -->
+    <section class="main-content container">
+        <div class="about-obo">
+            <h2 class="h2">Điều khoản và điều kiện giao dịch</h2>
+        </div>
+        <div class="content">
+            <p>Chào mừng Quý khách đến với website cung cấp dịch vụ thương mại điện tử www.obostadium.com hoặc ứng dụng cung cấp dịch vụ thương mại điện tử OBO Stadium (sau đây gọi là " Website/Ứng Dụng"), website điện tử thiết lập và sở hữu bởi CÔNG TY CỔ PHẦN DỊCH VỤ THƯƠNG MẠI TỔNG HỢP OBO Stadium, một công ty thuộc tập đoàn OBO Stadium, thành lập và hoạt động theo Giấy chứng nhận đăng ký doanh nghiệp số 0104918404 do Sở KHĐT Hà Nội cấp lần đầu ngày 20/09/2010 như được sửa đổi bổ sung từng thời điểm (sau đây gọi chung là  "OBO Stadium")</p>
+            <p>OBO Stadium cũng đã được Bộ Công Thương xác nhận đăng ký đối với ứng dụng di động Thương mại điện tử OBO Stadium (sau đây gọi là “ Ứng Dụng”) từ ngày 25/12/2017.</p>
+            <p>Xin vui lòng đọc kỹ Điều khoản và điều kiện giao dịch này (sau đây gọi là " Điều Khoản Và Điều Kiện") trước khi đặt mua bất kỳ hàng hóa/dịch vụ/voucher/giấy chứng nhận dịch vụ nào trên Website/Ứng Dụng (sau đây gọi là " Sản Phẩm").</p>
+            <p> <b>1. Phạm vi áp dụng</b>
+            <p><i>1.1. Điều Khoản Và Điều Kiện sẽ được áp dụng cho khách hàng:</i></p>
+            <p>(i) Mua Sản Phẩm bán trên Website/Ứng Dụng</p>
+            <p>(ii) Có nhu cầu được giao Sản Phẩm đến các địa điểm phù hợp với Chính sách giao hàng đăng tải trên Website/Ứng Dụng.</p>
+            <p>1.2. Khách hàng tại Điều Khoản Và Điều Kiện này bao gồm: mọi cá nhân từ đủ 15 tuổi trở lên, có năng lực hành vi dân sự phù hợp để thực hiện giao dịch thông qua OBO Stadium và (ii) mọi tổ chức được thành lập và hoạt động hợp pháp theo quy định của pháp luật Việt Nam (sau đây gọi là “ Khách Hàng”).</p>
+            </p>
+            <p><b>2. Xác lập và hủy hợp đồng Thương mại điện tử:</b>
+            <p> </p><i>2.1. Xác lập hợp đồng Thương mại điện tử</i>
+            <p>Mọi thông tin về Sản Phẩm đưa ra trên Website/Ứng Dụng trong bất kỳ trường hợp nào không được hiểu là đề nghị giao kết hợp đồng của OBO Stadium tới Khách Hàng.</p>
+            <p>Các bước hình thành hợp đồng như sau:</p>
+            <p>Bước 1: Khách Hàng đăt hàng trên Website/Ứng Dụng sẽ hình thành một đơn đặt hàng (" Đơn Đặt Hàng"). Ngay sau đó, OBO Stadium gửi thông báo đặt hàng (về mã đơn hàng, thông tin người nhận) cho Khách Hàng (i) trực tiếp qua Website/Ứng Dụng và/hoặc (ii) qua email đăng ký;</p>
+            <p>Bước 2: OBO Stadium gửi  xác nhận Đơn Đặt Hàng thông qua một trong các Phương thức sau:</p>
+            <p> -           Qua địa chỉ email mà Khách Hàng đã đăng ký với nội dung: danh sách Sản Phẩm, thời hạn giao hàng, điện thoại liên hệ, thông tin người nhận, người đặt hàng, giá trị thanh toán, …</p>
+            <p>-            Qua tin nhắn tới số điện thoại đặt hàng của Khách Hàng với nội dung:mã đơn hàng; xác nhận xử lý thành công, thông tin liên lạc.</p>
+            <p>-            Qua việc cập nhật tình trạng đơn hàng trong hệ thống quản lý tài khoản của Khách Hàng trên Website/Ứng Dụng với nội dung Đơn hàng đã được xác nhận, hoặc nội dung có ý nghĩa tương đương.</p>
+            <p>Hợp đồng giữa OBO Stadium và Khách Hàng được xác lập và có hiệu lực kể từ thời điểm OBO Stadium gửi xác nhận như nêu tại Bước 2 (“ Hợp Đồng”). Trường hợp một Đơn Đặt Hàng được giao hàng thành nhiều lần khác nhau, Hợp Đồng sẽ được xác lập và có giá trị áp dụng đối với những Sản Phẩm đã được hệ thống xác nhận trong từng lần giao hàng. Trạng thái của Sản Phẩm trong các lần giao hàng sẽ được cập nhật và có thể theo dõi tại tài khoản của Khách Hàng trên Website/Ứng Dụng.</p>
+            <p>(*) Lưu ý: Trong quá trình xử lý Đơn Đặt Hàng của Khách Hàng, OBO Stadium có quyền không xác nhận một phần hoặc toàn bộ Đơn Đặt Hàng trong một số trường hợp bao gồm nhưng không giới hạn:</p>
+            <p>-             OBO Stadium/nhà cung cấp không thể đáp ứng một phần hoặc toàn bộ các điều kiện giao dịch trong Đơn Đặt Hàng của Khách Hàng do nguyên nhân khách quan, do lỗi kỹ thuật từ hệ thống hoặc do nhà cung cấp;</p>
+            <p>-            OBO Stadium nghi ngờ có sự đầu cơ kiếm lợi từ Khách Hàng (khái niệm đầu cơ được quy định tại mục (i) khoản 2.2.2 dưới đây);</p>
+            <p>OBO Stadium sẽ cập nhật thông tin trạng thái đơn hàng không được xác nhận trong hệ thống quản lý tài khoản của Khách Hàng trên Website/Ứng Dụng để Khách Hàng theo dõi.</p>
+            <p><i>2.2. Hủy Đơn đặt hàng/Hủy Hợp Đồng.</i></p>
+            <p>2.2.1. Khách Hàng có quyền hủy Đơn Đặt Hàng, hủy Hợp Đồng trong các trường hợp sau đây:</p>
+            <p>(i)           Hủy trước khi Sản Phẩm được giao:</p>
+            <p>1.     Với bất kỳ lý do gì, Khách Hàng được quyền hủy một phần hoặc toàn bộ Đơn Đặt Hàng trước thời điểm Sản Phẩm được giao (trừ trường hợp Sản Phẩm áp dụng các điều kiện đặc biệt khác đã được OBO Stadium quy định trên từng nội dung về Sản Phẩm), bằng một hoặc nhiều phương thức sau:</p>
+            <p>-      Liên hệ đến Trung Tâm Chăm Sóc Khách Hàng  (hotline: 1900 1901); Và/Hoặc</p>
+            <p>-      Gửi yêu cầu qua email: cskh@OBO Stadium.com; Và/Hoặc</p>
+            <p>-    Sử dụng nút “HUY DON HANG” trong hệ thống quản lý tài khoản của Khách Hàng trên Website (việc hủy đơn hàng bằng phương thức này có thể chỉ đáp ứng một phần nhu cầu của Khách Hàng vì phụ thuộc vào tính năng được cung ứng của Website tại từng thời điểm).</p>
+            <p>2.     OBO Stadium xác nhận qua SMS; email hoặc cập nhật tình trạng đơn hàng (Đơn hàng đã được hủy) trong hệ thống quản lý tài khoản của Khách Hàng.</p>
+            <p>(ii)   Hủy sau khi Sản Phẩm được giao: Khách Hàng chỉ được hủy Hợp Đồng sau khi Sản Phẩm được giao theo các quy định tại Chính sách giao hàngtải trên Website/Ứng Dụng.</p>
+            <p>2.2.2. OBO Stadium có quyền hủy Đơn Đặt Hàng đã được xác nhận (Hợp Đồng) trong một số trường hợp sau đây:</p>
+            <p>(i)    Khi OBO Stadium phát hiện Khách Hàng có dấu hiệu (theo quan điểm của OBO Stadium):</p>
+            <p>1.     Đầu cơ (được hiểu là Khách Hàng lợi dụng các chính sách bán hàng của OBO Stadium để đặt hàng với số lượng nhiều và/hoặc không dùng cho mục đích tiêu dùng cuối cùng mà để mua đi bán lại, nhằm tìm kiếm lợi ích); và/hoặc</p>
+            <p>2.     Dùng  những sơ hở, lỗi hệ thống, những sai sót, nhầm lẫn dẫn đến sai lệch về thông tin Sản Phẩm (bao gồm nhưng không giới hạn về giá, về điều kiện giao hàng, về trạng thái tồn, về đặc tính, chủng loại Sản Phẩm, về các điều kiện, ưu đãi đi kèm theo Sản Phẩm) trong quá trình thực hiện giao dịch của OBO Stadium để mua hàng nhằm nhận được lợi ích cao hơn so với bình thường;</p>
+            <p>3.     Vi phạm  các quy định của Chính Sách Khuyến Mại quy định tại Mục 2.3 Điều Khoản và Điều Kiện này.</p>
+            <p>(ii)   Khi OBO Stadium/nhân viên giao hàng của OBO Stadium không liên hệ được với Khách Hàng từ ba (03) lần trở lên trong vòng hai mươi tư (24) giờ kể từ thời điểm bắt đầu liên hệ giao hàng;</p>
+            <p>(iii) Khi Bất khả kháng ảnh hưởng tới việc thực hiện Hợp Đồng của OBO Stadium diễn ra và kéo dài quá hai mươi tư (24) giờ kể từ thời điểm bắt đầu xảy ra Bất khả kháng, OBO Stadium sẽ bằng mọi phương thức, nỗ lực tối đa thông báo cho Khách Hàng về tình trạng này và đề xuất thời gian thực hiện Hợp Đồng mới. Trường hợp, Khách Hàng không đồng ý với đề xuất của OBO Stadium có thể chủ động hủy Hợp Đồng hoặc OBO Stadium sẽ chủ động hủy.</p>
+            <p>(iv) Các trường hợp OBO Stadium có căn cứ xác định Hợp Đồng vô hiệu theo quy định của pháp luật.</p>
+            <p>Trong trường hợp Đơn Đặt Hàng đã được xác nhận bị hủy một phần hoặc toàn bộ, số tiền Khách Hàng đã thanh toán tương ứng với phần giá trị Đơn Đặt Hàng bị hủy sẽ được hoàn trả lại cho Khách Hàng theo quy định tại Chính sách đổi trả đăng tải trên Website/Ứng Dụng. </p>
+            </p>
+        </div>
+    </section>
+</main>
+
+<th:block id="js-resources">
+    <script th:src="@{/script/except-home-page.js}"></script>
+</th:block>
+</body>
+</html>
+
+

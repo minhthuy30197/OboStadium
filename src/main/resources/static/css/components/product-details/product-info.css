@@ -1,0 +1,120 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+.common-info {
+  margin-bottom: 3.125rem;
+}
+.common-info .brand {
+  color: #767676;
+  margin-bottom: 0.9375rem;
+}
+.common-info .name {
+  font-weight: 500;
+  font-size: 2.5rem;
+  line-height: 2.9375rem;
+  margin-bottom: 0.9375rem;
+}
+
+.img-zoom-container {
+  cursor: zoom-in;
+}
+
+.slider-for {
+  margin-bottom: 0.625rem;
+}
+
+.slider-nav .slick-slide {
+  margin: 0px 0.3125rem;
+  cursor: pointer;
+}
+
+.title.h3,
+.desc,
+.desc-sub {
+  margin-bottom: 1.25rem;
+}
+
+.desc-sub-title {
+  font-weight: bold;
+}
+
+.btns .btn-primary {
+  width: 100%;
+  margin-bottom: 1.25rem;
+  padding: 0.75rem 1.25rem;
+}
+.btns .sell:last-child {
+  margin-bottom: 0px;
+}
+.btns .size.btn-primary {
+  padding: 1.25rem;
+  background-color: #ffffff;
+  border: 1px solid #D5D6D6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.btns .size.btn-primary:active {
+  background-color: #ffffff !important;
+  border-color: #D5D6D6;
+  color: #333333 !important;
+}
+.btns .size.btn-primary:hover {
+  background-color: #ffffff !important;
+  border-color: #333333;
+  color: #333333 !important;
+}
+.btns .buy.btn-primary {
+  background-color: #F04E40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.btns .buy.btn-primary:hover {
+  background-color: #0f985b;
+}
+.btns .buy.btn-primary:active {
+  background-color: #F04E40 !important;
+}
+.btns .buy.btn-primary .sub-content {
+  color: #FEE8D8;
+}
+.btns .buy.btn-primary .buy-text .main-content {
+  text-align: center;
+}
+.btns .sell.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.btns .sell.btn-primary .sub-content {
+  color: #FEE8D8;
+}
+.btns .size-details,
+.btns .main-content {
+  font-size: 1.875rem;
+  font-weight: bold;
+  line-height: 2.625rem;
+}
+.btns .size-text,
+.btns .dropdown-arrow {
+  font-size: 1.25rem;
+  color: #ABACAD;
+  line-height: 1.75rem;
+}
+.btns .size-details {
+  color: #333333;
+}
+.btns .left-content,
+.btns .right-content {
+  text-align: left;
+  color: #ffffff;
+}
+.btns .left-content {
+  width: 55%;
+  border-right: 1px solid #ffffff;
+}
+.btns .right-content {
+  width: 45%;
+  padding-left: 1.25rem;
+}
+
+/*# sourceMappingURL=product-info.css.map */
