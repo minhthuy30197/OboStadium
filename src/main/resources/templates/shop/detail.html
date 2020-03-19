@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(
+                                                ~{:: title},
+                                                'short-header',
+                                                ~{:: #css-resources},
+                                                ~{:: #js-resources},
+                                                ~{:: #main-content}
+                                               )}">
+
+<head>
+    <title>Sản phẩm</title>
+
+    <th:block id="css-resources">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/header.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/products.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/index/product-showcase.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/product-details/product-info.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/product-details/size-choose.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/product-details/size-guide-table.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/except-home-page.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/product-details.css}"/>
+    </th:block>
+</head>
+<body>
+<main id="main-content">
+    <!-- Breadcrum Section-->
+    <div class="breadcrumb container">
+        <a class="previous-page" href="/">Trang chủ</a>
+        <i class="fas fa-chevron-right arrow"></i>
+        <a class="previous-page" href="/san-pham">Sản phẩm</a>
+        <i class="fas fa-chevron-right arrow"></i>
+        <span class="current-page" th:text="${product.name}"></span>
+    </div>
+
+    <!-- Products Content Section-->
+    <section class="product-content-wrapper container">
+        <div class="common-info">
+            <div class="name" th:text="${product.name}"></div>
+        </div>
+        <div class="main-info row">
+            <div class="product-image col-lg-6">
+                <div class="slider slider-for">
+                    <div class="img-zoom-container">
+                        <img class="img-fluid" th:src="${product.productImages[0]}" alt="image-1"/>
+                    </div>
+                </div>
+                <div class="slider slider-nav">
+                    <div th:each="img, index : ${product.productImages}">
+                        <img class="img-fluid" th:src="${img}" th:alt="'img-'+${index.index}"/>
+                    </div>
+                </div>
+            </div>
+            <div class="product-info col-lg-6">
+                <div class="title h3">Mô tả sản phẩm</div>
+                <div class="desc" th:text="${product.description}"></div>
+                <div class="desc-sub">
+                    <span class="desc-sub-title">Hãng: </span>
+                    <span th:text="${product.brand.name}"></span>
+                </div>
+                <div class="desc-sub">
+                    <span class="desc-sub-title">Đã bán: </span>
+                    <span th:text="${product.totalSold} + ' đôi'"></span>
+                </div>
+                <div class="desc-sub">
+                    <span class="desc-sub-title">Tình trạng: </span>
+                    <span th:if="${canBuy}">Còn hàng</span>
+                    <span th:unless="${canBuy}" style="color:#f04e40">Hết hàng</span>
+                </div>
+                <div class="btns" th:if="${canBuy} == true">
+                    <div class="size-btn" data-toggle="modal" data-target="#sizeChooseModal">
+                        <button class="btn btn-primary size trans-btn">
+                            <span class="size-text">Size</span>
+                            <span class="size-details"></span>
+                            <i class="fas fa-chevron-down dropdown-arrow"></i>
+                        </button>
+                    </div>
+                    <a class="buy-btn" href="./buy-page.html">
+                        <button class="btn btn-primary buy red-btn">
+                            <div class="ask-text left-content">
+                                <th:block th:if="${product.promotionPrice}">
+                                    <div class="ask-desc sub-content old-price"><span class="text-price" th:text="${product.price}"></span> &#x20AB;</div>
+                                    <div class="ask-price main-content"><span class="text-price" th:text="${product.promotionPrice}"></span> &#x20AB;</div>
+                                </th:block>
+                                <th:block th:unless="${product.promotionPrice}">
+                                    <div class="ask-desc sub-content">Giá bán ưu đãi</div>
+                                    <div class="ask-price main-content"><span class="text-price" th:text="${product.price}"></span> &#x20AB;</div>
+                                </th:block>
+                            </div>
+                            <div class="buy-text right-content">
+                                <div class="buy-now main-content">Mua ngay</div>
+                            </div>
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="break-section container-fluid"></div>
+
+    <!-- Onfeet Images Section-->
+    <div class="instagram-image container">
+        <div class="row">
+            <div class="col-12">
+                <div class="title">
+                    <h2 class="h2">H&igrave;nh &#x1EA3;nh on feet</h2>
+                    <p class="sub-title">H&atilde;y tag ch&uacute;ng t&ocirc;i @obostadium</p>
+                </div>
+                <div class="slide-btn"></div>
+            </div>
+        </div>
+        <div id="instafeed">
+            <div class="col-lg-3 instaimg" th:each="img, index : ${product.onfeetImages}">
+                <div class="instaimg-wrap">
+                    <img th:src="${img}" th:alt="'img' + ${index}" class="img-fluid insta-img">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="break-section container-fluid"></div>
+
+    <!-- Related Products Section -->
+    <section class="products-showcase container">
+        <div class="row">
+            <div class="title col-12">
+                <h2 class="h2">SẢN PHẨM LIÊN QUAN</h2>
+            </div>
+        </div>
+        <div class="row product-row d-flex justify-content-md-between">
+            <th:block th:each="product : ${relatedProducts}">
+                <a class="product product-link position-relative" th:id="${product.id}" target="_blank" th:href="@{/san-pham/{id}(id=${product.id})}">
+                    <div class="card">
+                        <img th:src="${product.image}" class="card-img-top" th:alt="${product.name}">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${product.name}"></h5>
+                            <th:block th:if="${product.promotionPrice}">
+                                <p class="price"><span class="text-price" th:text="${product.promotionPrice}"></span> &#x20AB;</p>
+                                <p class="old-price"><span class="text-price" th:text="${product.price}"></span> &#x20AB;</p>
+                            </th:block>
+                            <th:block th:unless="${product.promotionPrice}">
+                                <p class="price"><span class="text-price" th:text="${product.price}"></span> &#x20AB;</p>
+                            </th:block>
+                            <p class="card-text sold">Đã bán <span th:text="${product.totalSold}"></span> đôi</p>
+                        </div>
+                    </div>
+                    <div class="shadow mx-auto position-absolute"></div>
+                </a>
+            </th:block>
+        </div>
+    </section>
+
+    <!-- Modals-->
+    <th:block th:replace="~{fragment/size_choose_modal :: size-choose-modal}"></th:block>
+</main>
+
+<th:block id="js-resources">
+    <script th:src="@{/script/except-home-page.js}"></script>
+    <script th:src="@{/script/size-choose.js}"></script>
+    <script th:src="@{/script/product-details.js}"></script>
+    <script th:src="@{/vendor/zoom-master/jquery.zoom.min.js}" type="text/javascript"></script>
+    <script th:inline="javascript">
+        let sizeVn = [[${sizeVn}]];
+
+        let sizeUs = [[${sizeUs}]];
+
+        let sizeCm = [[${sizeCm}]];
+
+        function render() {
+          for (let i = 0; i < sizeVn.length; i++) {
+            let sizeChoose = `
+            <div class="item" data-size="${sizeUs[i]}US | ${sizeVn[i]}VN | ${sizeCm[i]}CM" data-id="${sizeVn[i]}">
+                ${sizeVn[i]}
+            </div>
+            `;
+
+            $('.size .select-filter').append(sizeChoose);
+          };
+        };
+
+        function sizeGuideRender() {
+          let tr = '';
+          for (let i = 0; i < sizeVn.length; i++) {
+            tr += `
+            <tr>
+              <td>${sizeVn[i]}</td>
+              <td>${sizeUs[i]}</td>
+              <td>${sizeCm[i]}</td>
+            </tr>
+            `;
+          }
+          $('.side-guide-table tbody').html(tr);
+        }
+
+        function activeSize() {
+          let availableSizes = [[${availableSizes}]]
+
+          for (let i = 0; i < sizeVn.length; i++) {
+            if (sizeVn[i] == availableSizes[0]) {
+              $('.size-details').text(sizeUs[i] + "US | " + sizeVn[i] + "VN | " + sizeCm[i] + "CM")
+              break;
+            }
+          }
+
+          $('.item').addClass('cross')
+          $(`.item[data-size='${$('.size-details').text()}']`).addClass('size-choose').removeClass('cross');
+
+          for (let i = 0; i < availableSizes.length; i++) {
+            $(`.item[data-id='${availableSizes[i]}']`).removeClass('cross');
+          }
+        }
+    </script>
+</th:block>
+</body>
+</html>
+
+
+
+
+
+

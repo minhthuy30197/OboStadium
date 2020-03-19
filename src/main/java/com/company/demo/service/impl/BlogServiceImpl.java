@@ -20,7 +20,7 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Page<Post> getListPost(int page) {
-        Page<Post> posts = postRepository.findAll(PageRequest.of(page, LIMIT_POST_PER_PAGE, Sort.by("publishedAt").descending().and(Sort.by("id").descending())));
+        Page<Post> posts = postRepository.findAllByStatus(PUBLIC_POST, PageRequest.of(page, LIMIT_POST_PER_PAGE, Sort.by("publishedAt").descending().and(Sort.by("id").descending())));
         return posts;
     }
 
@@ -35,8 +35,14 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<Post> getLatestPost(long id) {
-        List<Post> posts = postRepository.findAllByIdNot(id, PageRequest.of(0, LIMIT_POST_PER_PAGE, Sort.by("publishedAt").descending().and(Sort.by("id").descending())));
+    public List<Post> getLatestPostsNotId(long id) {
+        List<Post> posts = postRepository.getLatestPostsNotId(PUBLIC_POST, id, 8);
+        return posts;
+    }
+
+    @Override
+    public List<Post> getLatestPost() {
+        List<Post> posts = postRepository.getLatestPosts(PUBLIC_POST, 8);
         return posts;
     }
 }

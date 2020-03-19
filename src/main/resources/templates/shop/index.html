@@ -22,55 +22,29 @@
 </head>
 <body>
 <main id="main-content">
-    <!--  Best seller product -->
-    <section class="products-showcase best-seller container">
-        <div class="row">
-            <div class="title col-12">
-                <h2 class="h2">Sản phẩm bán chạy</h2><a
-                    class="see-more-btn-text text-uppercase" href="/products">Xem Thêm</a>
-            </div>
-        </div>
-        <div class="row product-row d-flex justify-content-md-between">
-            <th:block th:each="product : ${bestSellerProducts}">
-                <a class="product position-relative" th:href="@{/products/{id}(id=${product.id})}">
-                    <div class="card"><img class="card-img-top"
-                                           th:src="${product.image}"
-                                           th:alt="${product.name}"/>
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="${product.name}"></h5>
-                            <p class="price"><span th:text="${product.price}"></span> &#x20AB;</p>
-                            <p class="card-text sold">&Dstrok;&atilde; b&aacute;n <span th:text="${product.totalSold}"></span> &dstrok;&ocirc;i</p>
-                        </div>
-                    </div>
-                    <div class="shadow mx-auto position-absolute"></div>
-                </a>
-            </th:block>
-        </div>
-    </section>
-    <!-- Break Banner-->
-    <section class="break-banner">
-        <a href="./product-details.html">
-            <img class="img-fluid" id="promo-banner-1" th:src="@{/image/banner/promo-banner-1-lg.png}" alt="promo-banner-1"/>
-        </a>
-    </section>
-
     <!-- New product -->
     <section class="products-showcase under-retail container">
         <div class="row">
             <div class="title col-12">
-                <h2 class="h2">ĐẬP HỘP HÀNG MỚI</h2><a class="see-more-btn-text text-uppercase" href="/products">Xem
+                <h2 class="h2">ĐẬP HỘP HÀNG MỚI</h2><a class="see-more-btn-text text-uppercase" href="/san-pham">Xem
                 Th&ecirc;m</a>
             </div>
         </div>
         <div class="row product-row d-flex justify-content-md-between">
             <th:block th:each="product : ${newProducts}">
-                <a class="product position-relative" th:href="@{/products/{id}(id=${product.id})}">
+                <a class="product position-relative" th:href="@{/san-pham/{id}(id=${product.id})}">
                     <div class="card"><img class="card-img-top"
                                            th:src="${product.image}"
                                            th:alt="${product.name}"/>
                         <div class="card-body">
                             <h5 class="card-title" th:text="${product.name}"></h5>
-                            <p class="price"><span th:text="${product.price}"></span> &#x20AB;</p>
+                            <th:block th:if="${product.promotionPrice}">
+                                <p class="price"><span class="text-price" th:text="${product.promotionPrice}"></span> &#x20AB;</p>
+                                <p class="old-price"><span class="text-price" th:text="${product.price}"></span> &#x20AB;</p>
+                            </th:block>
+                            <th:block th:unless="${product.promotionPrice}">
+                                <p class="price"><span class="text-price" th:text="${product.price}"></span> &#x20AB;</p>
+                            </th:block>
                             <p class="card-text sold">&Dstrok;&atilde; b&aacute;n <span th:text="${product.totalSold}"></span> &dstrok;&ocirc;i</p>
                         </div>
                     </div>
@@ -81,7 +55,45 @@
     </section>
     <!-- Break Banner-->
     <section class="break-banner">
-        <a href="./product-details.html">
+        <a href="/san-pham">
+            <img class="img-fluid" id="promo-banner-1" th:src="@{/image/banner/promo-banner-1-lg.png}" alt="promo-banner-1"/>
+        </a>
+    </section>
+
+    <!--  Best seller product -->
+    <section class="products-showcase best-seller container">
+        <div class="row">
+            <div class="title col-12">
+                <h2 class="h2">Sản phẩm bán chạy</h2><a
+                    class="see-more-btn-text text-uppercase" href="/san-pham">Xem Thêm</a>
+            </div>
+        </div>
+        <div class="row product-row d-flex justify-content-md-between">
+            <th:block th:each="product : ${bestSellerProducts}">
+                <a class="product position-relative" th:href="@{/san-pham/{id}(id=${product.id})}">
+                    <div class="card"><img class="card-img-top"
+                                           th:src="${product.image}"
+                                           th:alt="${product.name}"/>
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${product.name}"></h5>
+                            <th:block th:if="${product.promotionPrice}">
+                                <p class="price"><span class="text-price" th:text="${product.promotionPrice}"></span> &#x20AB;</p>
+                                <p class="old-price"><span class="text-price" th:text="${product.price}"></span> &#x20AB;</p>
+                            </th:block>
+                            <th:block th:unless="${product.promotionPrice}">
+                                <p class="price"><span class="text-price" th:text="${product.price}"></span> &#x20AB;</p>
+                            </th:block>
+                            <p class="card-text sold">&Dstrok;&atilde; b&aacute;n <span th:text="${product.totalSold}"></span> &dstrok;&ocirc;i</p>
+                        </div>
+                    </div>
+                    <div class="shadow mx-auto position-absolute"></div>
+                </a>
+            </th:block>
+        </div>
+    </section>
+    <!-- Break Banner-->
+    <section class="break-banner">
+        <a href="/san-pham">
             <img class="img-fluid" id="promo-banner-2" th:src="@{/image/banner/promo-banner-2-lg.png}" alt="promo-banner-2"/>
         </a>
     </section>
@@ -90,18 +102,24 @@
     <section class="products-showcase staffs-choose container">
         <div class="row">
             <div class="title col-12">
-                <h2 class="h2">OBO LỰA CHỌN</h2><a class="see-more-btn-text text-uppercase" href="/products">Xem Th&ecirc;m</a>
+                <h2 class="h2">OBO LỰA CHỌN</h2><a class="see-more-btn-text text-uppercase" href="/san-pham">Xem Th&ecirc;m</a>
             </div>
         </div>
         <div class="row product-row d-flex justify-content-md-between">
-            <th:block th:each="product : ${oboChoiceProducts}">
-                <a class="product position-relative" th:href="@{/products/{id}(id=${product.id})}">
+            <th:block th:each="product : ${suggestProducts}">
+                <a class="product position-relative" th:href="@{/san-pham/{id}(id=${product.id})}">
                     <div class="card"><img class="card-img-top"
                                            th:src="${product.image}"
                                            th:alt="${product.name}"/>
                         <div class="card-body">
                             <h5 class="card-title" th:text="${product.name}"></h5>
-                            <p class="price"><span th:text="${product.price}"></span> &#x20AB;</p>
+                            <th:block th:if="${product.promotionPrice}">
+                                <p class="price"><span class="text-price" th:text="${product.promotionPrice}"></span> &#x20AB;</p>
+                                <p class="old-price"><span class="text-price" th:text="${product.price}"></span> &#x20AB;</p>
+                            </th:block>
+                            <th:block th:unless="${product.promotionPrice}">
+                                <p class="price"><span class="text-price" th:text="${product.price}"></span> &#x20AB;</p>
+                            </th:block>
                             <p class="card-text sold">&Dstrok;&atilde; b&aacute;n <span th:text="${product.totalSold}"></span> &dstrok;&ocirc;i</p>
                         </div>
                     </div>
@@ -112,7 +130,7 @@
     </section>
     <!-- Break Banner-->
     <section class="break-banner">
-        <a href="./product-details.html">
+        <a href="/san-pham">
             <img class="img-fluid" id="promo-banner-3" th:src="@{/image/banner/promo-banner-3-lg.png}" alt="promo-banner-3"/>
         </a>
     </section>
@@ -179,17 +197,17 @@
         <div class="row">
             <div class="title col-12">
                 <h2 class="h2">Bài viết mới</h2><a class="see-more-btn-text text-uppercase"
-                                                                        href="/posts">Xem Th&ecirc;m</a>
+                                                                        href="/tin-tuc">Xem Th&ecirc;m</a>
             </div>
         </div>
         <div class="carousel">
             <th:block th:each="post : ${latestPosts}">
-                <a class="news position-relative" th:href="@{/posts/{id}(id=${post.id})}">
+                <a class="news position-relative" th:href="@{/tin-tuc/{id}(id=${post.id})}">
                     <div class="card"><img class="card-img-top" th:src="${post.thumbnail}" th:alt="${post.title}"/>
                         <div class="card-body">
                             <h5 class="card-title" th:text="${post.title}"></h5>
                             <p class="card-text news-short-desc" th:text="${post.description}"></p>
-                            <p class="card-text author">By <span class="name" th:text="${post.author}"></span> &middot; <span th:text="${post.date}"></span></p>
+                            <p class="card-text author">By <span class="name" th:text="${post.createdBy.fullName}"></span> &middot; <span class="date" th:text="${post.publishedAt}"></span></p>
                         </div>
                     </div>
                     <div class="shadow mx-auto position-absolute"></div>

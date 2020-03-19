@@ -1,5 +1,6 @@
 $(function () {
   formatDate();
+  formatMoney();
   resetModal();
   SIGNUP_DATA = DB.getAccountData();
   CURRENT_SIGNED_ACCOUNT = DB.getSignedAccount();
@@ -403,6 +404,13 @@ function formatDate() {
      let textDate = $(this).text();
      let date = new Date(textDate);
      $(this).text(date.toLocaleDateString("en-US"))
+   });
+}
+
+function formatMoney() {
+   $('.text-price').each(function (index, element) {
+        money = $(element).text()
+        $(element).text(money.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ","))
    });
 }
 

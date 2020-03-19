@@ -18,6 +18,7 @@
 #sizeChooseModal .size .select-filter .item,
 #sizeGuideModal .size .select-filter .item {
   width: 100%;
+  min-height: 70px;
   margin: 0px;
   text-align: center;
   border: 1px solid #333333;

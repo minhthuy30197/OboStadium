@@ -11,5 +11,7 @@ public interface BlogService {
 
     public Post getPostById(long id);
 
-    public List<Post> getLatestPost(long id);
+    public List<Post> getLatestPostsNotId(long id);
+
+    public List<Post> getLatestPost();
 }

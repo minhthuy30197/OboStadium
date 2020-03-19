@@ -1,15 +1,3 @@
-function activeSize() {
-  $(`.item[data-size='${$('.size-details').text()}']`).addClass('size-choose');
-
-  let getActiveProduct = productData.find(item => {
-    return item['id'] == localStorage.getItem('sessionsProduct');
-  })
-
-  for (let i = 0; i < getActiveProduct['available_size'].length; i++) {
-    $(`.item[data-id='${getActiveProduct['available_size'][i]}']`).addClass('cross');
-  }
-}
-
 $(document).on('click', function (e) {
   let target = e.target;
 
