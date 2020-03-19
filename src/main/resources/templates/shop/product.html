@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(
+                                                ~{:: title},
+                                                'short-header',
+                                                ~{:: #css-resources},
+                                                ~{:: #js-resources},
+                                                ~{:: #main-content}
+                                               )}">
+
+<head>
+    <title>Sản phẩm</title>
+
+    <th:block id="css-resources">
+        <link rel="stylesheet" type="text/css" th:href="@{/vendor/pagination/simplePagination.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/header.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/products.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/shop/filter-bar.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/shop/product-showing.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/shop/filter-bar-small.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/except-home-page.css}"/>
+    </th:block>
+</head>
+<body>
+<main id="main-content">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb container">
+        <a class="previous-page" href="/">Trang chủ</a>
+        <i class="fas fa-chevron-right arrow"></i>
+        <span class="current-page">Sản phẩm</span>
+    </div>
+
+    <!-- Main content -->
+    <div class="shop-content-wrapper container">
+        <div class="row">
+            <!-- Filter -->
+            <div class="filter-bar col-lg-3">
+                <div class="filter-header content">
+                    <div class="left-side d-flex align-items-center"><i class="fas fa-sliders-h"></i>
+                        <div class="text">Lọc</div>
+                    </div>
+                    <button class="clear-filter btn btn-primary" disabled="disabled">Bỏ lọc</button>
+                </div>
+                <div class="break-line"></div>
+
+                <!-- Brand -->
+                <div class="brand content">
+                    <div class="title" data-toggle="collapse" href="#brand-collapse" role="button" aria-expanded="false"
+                         aria-controls="brand-collapse">
+                        <div class="text">Thương hiệu</div>
+                        <i class="fas fa-chevron-up"></i>
+                    </div>
+                    <div class="select-filter collapse show" id="brand-collapse">
+                        <th:block th:each="brand : ${brands}">
+                            <div class="item">
+                                <div class="pretty p-svg p-curve">
+                                    <input class="filter-checkbox" type="checkbox" th:data-id="${brand.id}"/>
+                                    <div class="state p-success">
+                                        <svg class="svg svg-icon" viewbox="0 0 20 20">
+                                            <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z"
+                                                  style="stroke: white;fill:white;"></path>
+                                        </svg>
+                                        <label class="checkbox-label" th:text="${brand.name}"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </th:block>
+                    </div>
+                </div>
+                <div class="break-line"></div>
+
+                <!-- Category -->
+                <div class="category content">
+                    <div class="title" data-toggle="collapse" href="#categories-collapse" role="button"
+                         aria-expanded="false" aria-controls="categories-collapse">
+                        <div class="text">Danh mục</div>
+                        <i class="fas fa-chevron-up"></i>
+                    </div>
+                    <div class="select-filter collapse show" id="categories-collapse">
+                        <th:block th:each="category : ${categories}">
+                            <div class="item">
+                                <div class="pretty p-svg p-curve">
+                                    <input class="filter-checkbox" type="checkbox" th:data-id="${category.id}"/>
+                                    <div class="state p-success">
+                                        <svg class="svg svg-icon" viewbox="0 0 20 20">
+                                            <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z"
+                                                  style="stroke: white;fill:white;"></path>
+                                        </svg>
+                                        <label class="checkbox-label" th:text="${category.name}"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </th:block>
+                    </div>
+                </div>
+                <div class="break-line"></div>
+
+                <!-- Size -->
+                <div class="size content">
+                    <div class="title" data-toggle="collapse" href="#size-collapse" role="button" aria-expanded="false"
+                         aria-controls="size-collapse">
+                        <div class="text">Size</div>
+                        <i class="fas fa-chevron-up"></i>
+                    </div>
+                    <div class="select-filter collapse show" id="size-collapse">
+                        <th:block th:each="size : ${sizeVn}">
+                            <div class="item" data-id="${sizeVn[i]}" th:text="${size}"></div>
+                        </th:block>
+                    </div>
+                </div>
+                <div class="break-line"></div>
+
+                <!-- Price -->
+                <div class="price-range content">
+                    <div class="title">
+                        <div class="text">Khoảng gi&aacute;</div>
+                    </div>
+                    <input class="form-control price-input" id="from-price" type="text" placeholder="Từ"
+                           onkeypress="return priceInputValidate(event)"/>
+                    <input class="form-control price-input" id="to-price" type="text" placeholder="Đến" pattern="[0-9]"
+                           onkeypress="return priceInputValidate(event)"/>
+                </div>
+            </div>
+
+            <!-- List product -->
+            <div class="product-showing col-lg-9 col-12">
+                <div class="sort">
+                    <div class="filter-icon" data-toggle="modal" data-target="#filterModal"><i class="fas fa-filter"></i></div>
+                </div>
+
+                <div class="product-row">
+                    <th:block th:each="product : ${listProduct}">
+                        <a class="product position-relative" target="_blank" th:href="@{/san-pham/{slug}/{id}(id=${product.id}, slug=${product.slug})}">
+                            <div class="card"><img class="card-img-top"
+                                                   th:src="${product.image}"
+                                                   th:alt="${product.name}"/>
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${product.name}"></h5>
+                                    <th:block th:if="${product.promotionPrice}">
+                                        <p class="price"><span class="text-price" th:text="${product.promotionPrice}"></span> &#x20AB;</p>
+                                        <p class="old-price"><span class="text-price" th:text="${product.price}"></span> &#x20AB;</p>
+                                    </th:block>
+                                    <th:block th:unless="${product.promotionPrice}">
+                                        <p class="price"><span class="text-price" th:text="${product.price}"></span> &#x20AB;</p>
+                                    </th:block>
+                                    <p class="card-text sold">&Dstrok;&atilde; b&aacute;n <span th:text="${product.totalSold}"></span> &dstrok;&ocirc;i</p>
+                                </div>
+                            </div>
+                            <div class="shadow mx-auto position-absolute"></div>
+                        </a>
+                    </th:block>
+                </div>
+                <br>
+                <!-- Pagination -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination" id="pagination"></ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal filter -->
+    <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="filterModalLabel">Lọc sản phẩm</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="filter-bar small-size">
+                        <div class="brand content">
+                            <div class="title" data-toggle="collapse" href="#brand-collapse-1" role="button"
+                                 aria-expanded="false" aria-controls="brand-collapse">
+                                <div class="text">Thương hiệu</div>
+                                <i class="fas fa-chevron-up"></i>
+                            </div>
+                            <div class="select-filter collapse show" id="brand-collapse-1">
+                                <th:block th:each="brand : ${brands}">
+                                    <div class="item">
+                                        <div class="pretty p-svg p-curve">
+                                            <input class="filter-checkbox" type="checkbox" th:data-id="${brand.id}"/>
+                                            <div class="state p-success">
+                                                <svg class="svg svg-icon" viewbox="0 0 20 20">
+                                                    <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z"
+                                                          style="stroke: white;fill:white;"></path>
+                                                </svg>
+                                                <label class="checkbox-label" th:text="${brand.name}"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th:block>
+                            </div>
+                        </div>
+                        <div class="break-line"></div>
+                        <div class="category content">
+                            <div class="title" data-toggle="collapse" href="#categories-collapse-1" role="button"
+                                 aria-expanded="false" aria-controls="categories-collapse">
+                                <div class="text">Danh mục</div>
+                                <i class="fas fa-chevron-up"></i>
+                            </div>
+                            <div class="select-filter collapse show" id="categories-collapse-1">
+                                <th:block th:each="category : ${categories}">
+                                    <div class="item">
+                                        <div class="pretty p-svg p-curve">
+                                            <input class="filter-checkbox" type="checkbox" th:data-id="${category.id}"/>
+                                            <div class="state p-success">
+                                                <svg class="svg svg-icon" viewbox="0 0 20 20">
+                                                    <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z"
+                                                      style="stroke: white;fill:white;"></path>
+                                                </svg>
+                                                <label class="checkbox-label" th:text="${category.name}"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th:block>
+                            </div>
+                        </div>
+                        <div class="break-line"></div>
+                        <div class="size content">
+                            <div class="title" data-toggle="collapse" href="#size-collapse-1" role="button" aria-expanded="false"
+                                 aria-controls="size-collapse">
+                                <div class="text">Size</div>
+                                <i class="fas fa-chevron-up"></i>
+                            </div>
+                            <div class="select-filter collapse show" id="size-collapse-1">
+                                <th:block th:each="size : ${sizeVn}">
+                                    <div class="item" data-id="${sizeVn[i]}" th:text="${size}"></div>
+                                </th:block>
+                            </div>
+                        </div>
+                        <div class="break-line"></div>
+                        <div class="price-range content">
+                            <div class="title">
+                                <div class="text">Khoảng gi&aacute;</div>
+                            </div>
+                            <input class="form-control price-input" id="from-price-small" type="text" placeholder="Từ"
+                                   onkeypress="return priceInputValidate(event)"/>
+                            <input class="form-control price-input" id="to-price-small" type="text" placeholder="Đến"
+                                   pattern="[0-9]" onkeypress="return priceInputValidate(event)"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="clear-filter btn btn-primary" disabled="disabled">Bỏ lọc</button>
+                    <button class="btn btn-primary apply-price small red-btn">Áp dụng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<th:block id="js-resources">
+    <script type="text/javascript" th:src="@{/vendor/pagination/jquery.simplePagination.js}"></script>
+    <script th:src="@{/script/except-home-page.js}"></script>
+    <script th:src="@{/script/shop.js}"></script>
+    <script th:inline="javascript">
+        $(function () {
+          pagination();
+        });
+
+        function pagination() {
+            $('#pagination').pagination({
+                pages: [[${totalPages}]],
+                currentPage: [[${currentPage}]],
+                cssStyle: '',
+                prevText: '<span aria-hidden="true">&laquo;</span>',
+                nextText: '<span aria-hidden="true">&raquo;</span>',
+                onInit: function () {
+                    // fire first page loading
+                },
+                onPageClick: function (page, evt) {
+                    $('#pagination .active .current').addClass('page-link')
+                    $('#pagination .ellipse.clickable').addClass('page-link')
+                    $('#pagination .disabled .current.prev').addClass('page-link')
+                    $('#pagination .disabled .current.next').addClass('page-link')
+                    location.href = "/san-pham?page="+page
+                }
+            });
+
+            $('#pagination .active .current').addClass('page-link')
+            $('#pagination .ellipse.clickable').addClass('page-link')
+            $('#pagination .disabled .current.prev').addClass('page-link')
+            $('#pagination .disabled .current.next').addClass('page-link')
+        }
+    </script>
+</th:block>
+</body>
+</html>
+
+

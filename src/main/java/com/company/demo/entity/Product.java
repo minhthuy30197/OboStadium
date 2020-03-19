@@ -18,6 +18,7 @@ import java.util.ArrayList;
                                 columns = {
                                         @ColumnResult(name = "id", type = Long.class),
                                         @ColumnResult(name = "name", type = String.class),
+                                        @ColumnResult(name = "slug", type = String.class),
                                         @ColumnResult(name = "price", type = Long.class),
                                         @ColumnResult(name = "total_sold", type = Integer.class),
                                         @ColumnResult(name = "image", type = String.class)
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 @NamedNativeQuery(
         name = "getListNewProduct",
         resultSetMapping = "productInfoDto",
-        query = "SELECT pro.id, pro.name, pro.price, pro.total_sold, pro.product_images ->> \"$[0]\" as image \n" +
+        query = "SELECT pro.id, pro.name, pro.slug, pro.price, pro.total_sold, pro.product_images ->> \"$[0]\" as image \n" +
                 "FROM product pro\n" +
                 "WHERE pro.is_available = true\n" +
                 "ORDER BY created_at desc\n" +
@@ -38,7 +39,7 @@ import java.util.ArrayList;
 @NamedNativeQuery(
         name = "getListBestSellerProduct",
         resultSetMapping = "productInfoDto",
-        query = "SELECT pro.id, pro.name, pro.price, pro.total_sold, pro.product_images ->> \"$[0]\" as image \n" +
+        query = "SELECT pro.id, pro.name, pro.slug, pro.price, pro.total_sold, pro.product_images ->> \"$[0]\" as image \n" +
                 "FROM product pro\n" +
                 "WHERE pro.is_available = true\n" +
                 "ORDER BY total_sold desc\n" +
@@ -47,7 +48,7 @@ import java.util.ArrayList;
 @NamedNativeQuery(
         name = "getListSuggestProduct",
         resultSetMapping = "productInfoDto",
-        query = "SELECT pro.id, pro.name, pro.price, pro.total_sold, pro.product_images ->> \"$[0]\" as image \n" +
+        query = "SELECT pro.id, pro.name, pro.slug, pro.price, pro.total_sold, pro.product_images ->> \"$[0]\" as image \n" +
                 "FROM product pro\n" +
                 "WHERE pro.is_available = true AND pro.id IN (?1)\n" +
                 "LIMIT ?2 \n"
@@ -55,12 +56,19 @@ import java.util.ArrayList;
 @NamedNativeQuery(
         name = "getRelatedProducts",
         resultSetMapping = "productInfoDto",
-        query = "SELECT pro.id, pro.name, pro.price, pro.total_sold, pro.product_images ->> \"$[0]\" as image \n" +
+        query = "SELECT pro.id, pro.name, pro.slug, pro.price, pro.total_sold, pro.product_images ->> \"$[0]\" as image \n" +
                 "FROM product pro\n" +
                 "WHERE pro.is_available = true AND\n" +
                 "pro.id != ?1 AND\n" +
                 "((pro.category_ids IN (?2)) OR (pro.brand_id = ?3))\n" +
                 "LIMIT ?4\n"
+)
+@NamedNativeQuery(
+        name = "searchProduct",
+        resultSetMapping = "productInfoDto",
+        query = "SELECT pro.id, pro.name, pro.slug, pro.price, pro.total_sold, pro.product_images ->> \"$[0]\" as image \n" +
+                "FROM product pro\n"+
+                "WHERE is_available = true"
 )
 @Setter
 @Getter
@@ -80,6 +88,9 @@ public class Product {
 
     @Column(name = "name", nullable = false, length = 300)
     private String name;
+
+    @Column(name = "slug", nullable = false)
+    private String slug;
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;

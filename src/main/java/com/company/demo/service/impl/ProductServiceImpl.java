@@ -1,25 +1,15 @@
 package com.company.demo.service.impl;
 
-import com.company.demo.entity.Configuration;
-import com.company.demo.entity.Product;
-import com.company.demo.entity.ProductSize;
-import com.company.demo.entity.Promotion;
-import com.company.demo.exception.NotFoundException;
-import com.company.demo.model.dto.DetailProductInfoDto;
-import com.company.demo.model.dto.ProductInfoDto;
-import com.company.demo.model.mapper.ProductMapper;
-import com.company.demo.repository.ConfigurationRepository;
-import com.company.demo.repository.ProductRepository;
-import com.company.demo.repository.ProductSizeRepository;
-import com.company.demo.repository.PromotionRepository;
-import com.company.demo.service.ProductService;
+import com.company.demo.entity.*;
+import com.company.demo.exception.*;
+import com.company.demo.model.dto.*;
+import com.company.demo.model.mapper.*;
+import com.company.demo.repository.*;
+import com.company.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
+import java.util.*;
 import static com.company.demo.config.Constant.*;
 
 @Component
@@ -106,6 +96,15 @@ public class ProductServiceImpl implements ProductService {
         for (ProductSize productSize : sizes) {
             result.add(productSize.getSize());
         }
+
+        return result;
+    }
+
+    @Override
+    public ListProductDto searchProduct(int page) {
+        Page<ProductInfoDto> products = productRepository.searchProduct(PageRequest.of(page, 16));
+
+        ListProductDto result = new ListProductDto(checkPromotion(products.getContent()), products.getTotalPages(), ++page);
 
         return result;
     }

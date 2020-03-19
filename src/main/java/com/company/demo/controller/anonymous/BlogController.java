@@ -38,7 +38,7 @@ public class BlogController {
         return "blog/blog";
     }
 
-    @GetMapping("/tin-tuc/{id}")
+    @GetMapping("/tin-tuc/{slug}/{id}")
     public String getPostDetailPage(Model model, @PathVariable long id) {
         Post post = blogService.getPostById(id);
         List<Post> latestPosts = blogService.getLatestPostsNotId(id);

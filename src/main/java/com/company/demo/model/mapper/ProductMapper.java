@@ -10,6 +10,7 @@ public class ProductMapper {
         rs.setBrand(product.getBrand());
         rs.setDescription(product.getDescription());
         rs.setName(product.getName());
+        rs.setSlug(product.getSlug());
         rs.setOnfeetImages(product.getOnfeetImages());
         rs.setProductImages(product.getProductImages());
         rs.setTotalSold(product.getTotalSold());

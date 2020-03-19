@@ -9,7 +9,7 @@
                                                )}">
 
 <head>
-    <title>Sản phẩm</title>
+    <title th:text="${product.name}"></title>
 
     <th:block id="css-resources">
         <link rel="stylesheet" type="text/css" th:href="@{/css/components/header.css}"/>
@@ -65,7 +65,7 @@
                 <div class="desc-sub">
                     <span class="desc-sub-title">Tình trạng: </span>
                     <span th:if="${canBuy}">Còn hàng</span>
-                    <span th:unless="${canBuy}" style="color:#f04e40">Hết hàng</span>
+                    <span th:unless="${canBuy}" style="color:#f04e40">Tạm hết hàng</span>
                 </div>
                 <div class="btns" th:if="${canBuy} == true">
                     <div class="size-btn" data-toggle="modal" data-target="#sizeChooseModal">
@@ -128,7 +128,7 @@
         </div>
         <div class="row product-row d-flex justify-content-md-between">
             <th:block th:each="product : ${relatedProducts}">
-                <a class="product product-link position-relative" th:id="${product.id}" target="_blank" th:href="@{/san-pham/{id}(id=${product.id})}">
+                <a class="product product-link position-relative" th:id="${product.id}" target="_blank" th:href="@{/san-pham/{slug}/{id}(id=${product.id}, slug=${product.slug})}">
                     <div class="card">
                         <img th:src="${product.image}" class="card-img-top" th:alt="${product.name}">
                         <div class="card-body">

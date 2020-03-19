@@ -1,15 +1,21 @@
 package com.company.demo.controller.anonymous;
 
+import com.company.demo.entity.Brand;
+import com.company.demo.entity.Category;
 import com.company.demo.entity.Post;
 import com.company.demo.model.dto.DetailProductInfoDto;
+import com.company.demo.model.dto.ListProductDto;
 import com.company.demo.model.dto.ProductInfoDto;
 import com.company.demo.service.BlogService;
+import com.company.demo.service.BrandService;
+import com.company.demo.service.CategoryService;
 import com.company.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import static com.company.demo.config.Constant.*;
 import java.util.List;
 
@@ -20,6 +26,12 @@ public class ShopController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private BrandService brandService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping("/")
     public String getIndexPage(Model model) {
@@ -42,7 +54,38 @@ public class ShopController {
         return "shop/index";
     }
 
-    @GetMapping("/san-pham/{id}")
+    @GetMapping("/san-pham")
+    public String getShopPage(Model model, @RequestParam(required = false) Integer page) {
+        // Get list brand
+        List<Brand> brands = brandService.getListBrand();
+        model.addAttribute("brands", brands);
+
+        // Get list category
+        List<Category> categories = categoryService.getListCategory();
+        model.addAttribute("categories", categories);
+
+        // Render list size
+        model.addAttribute("sizeVn", SIZE_VN);
+
+        // Get list product
+        // Validate page number
+        if (page == null) {
+            page = 0;
+        } else {
+            page--;
+            if (page < 0) {
+                page = 0;
+            }
+        }
+        ListProductDto result = productService.searchProduct(page);
+        model.addAttribute("totalPages", result.getTotalPages());
+        model.addAttribute("currentPage", result.getCurrentPage());
+        model.addAttribute("listProduct", result.getProducts());
+
+        return "shop/product";
+    }
+
+    @GetMapping("/san-pham/{slug}/{id}")
     public String getDetailProductPage(Model model, @PathVariable long id) {
         // Get detail info
         DetailProductInfoDto product = productService.getDetailProductById(id);

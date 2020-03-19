@@ -47,7 +47,7 @@
         </div>
         <div class="carousel">
             <th:block th:each="post : ${latestPosts}">
-                <a th:href="@{/tin-tuc/{id}(id=${post.id})}">
+                <a th:href="@{/tin-tuc/{slug}/{id}(id=${post.id}, slug=${post.slug})}">
                     <div class="news position-relative">
                         <div class="card"><img class="card-img-top" th:src="${post.thumbnail}" th:alt="${post.title}"/>
                             <div class="card-body">

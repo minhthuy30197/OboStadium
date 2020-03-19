@@ -2,12 +2,6 @@ $(window).resize(changeUi);
 
 $(function() {
   changeUi();
-  sortNewArrival();
-  pagination();
-});
-
-$('.sort-content').on('click', function() {
-  $('.sort-dropdown').toggle();
 });
 
 function changeUi() {
@@ -29,24 +23,6 @@ function changeUi() {
 
 changeUi();
 
-$('.see-more').on('click', function() {
-  $(this)
-    .prev()
-    .toggle('fast', function() {
-      setTimeout(() => {
-        if ($(this).css('display') == 'block') {
-          $(this)
-            .next()
-            .text('Rút gọn');
-        } else {
-          $(this)
-            .next()
-            .text('Xem thêm');
-        }
-      }, 100);
-    });
-});
-
 $('.filter-bar .title').on('click', function() {
   if ($(this).hasClass('collapsed') == false) {
     $(this)
@@ -66,12 +42,10 @@ $('.filter-bar .title').on('click', function() {
 });
 
 // Filter function
-
 let brand = [];
 let gender = [];
 let size = [];
 let price = [{}];
-let releaseDate = [];
 let dataSorted;
 $(document).on('change', function(e) {
   let target = e.target;
@@ -79,7 +53,10 @@ $(document).on('change', function(e) {
   gender = $('.category .select-filter .filter-checkbox:checked');
   price['from'] = $('#from-price').val();
   price['to'] = $('#to-price').val();
-  releaseDate = $('.release-date .select-filter .filter-checkbox:checked');
+  console.log(brand)
+  console.log(gender)
+  console.log(price['from'])
+  console.log(price['to'])
 
   if ($('.brand .select-filter .filter-checkbox').is(':checked') == false) {
     $(`.product-link`).show();
@@ -146,97 +123,4 @@ $(document).on('click', function(e) {
       $('.price-input.small').val('');
     }
   }
-
-  if (target.closest('.filter-icon')) {
-    $('.size .select-filter').html('');
-  }
-
-  if (target.closest('.sort-item')) {
-    $('.sort-item').removeClass('active');
-
-    $('.sort-name').text($(target).text());
-    if ($(target).text() == $('.sort-name').text()) {
-      $(target).addClass('active');
-    }
-  }
-
-  if (!target.closest('.sort-content')) {
-    $('.sort-dropdown').css('display', 'none');
-  }
 });
-
-function convertTime(time) {
-  return new Date(time * 1000).toLocaleDateString();
-}
-
-function renderFilterData() {
-
-}
-
-function sortNewArrival() {
-
-}
-
-function bestSeller() {
-  dataSorted = DB.getProducts();
-  let bestSellerData = dataSorted.sort((a, b) => {
-    return b['total_sold'] - a['total_sold'];
-  });
-
-  $('.product-row').html('');
-  $('.product-row').html(productElements(bestSellerData));
-}
-
-function lowToHighPrice() {
-  dataSorted = DB.getProducts();
-  let lowToHighPriceData = dataSorted.sort((a, b) => {
-    return a['sell_price'] - b['sell_price'];
-  });
-
-  $('.product-row').html('');
-  $('.product-row').html(productElements(lowToHighPriceData));
-}
-
-function highToLowPrice() {
-  dataSorted = DB.getProducts();
-  let highToLowData = dataSorted.sort((a, b) => {
-    return b['sell_price'] - a['sell_price'];
-  });
-
-  $('.product-row').html('');
-  $('.product-row').html(productElements(highToLowData));
-}
-
-$(document).on('click', function(e) {
-  let target = e.target;
-
-  if (target.closest('.sort-item')) {
-    $('.product-row')
-      .data('paginate')
-      .kill();
-    pagination();
-    $('.product-row')
-      .data('paginate')
-      .switchPage(1);
-  }
-});
-
-$('.new-arrival').on('click', function() {
-  sortNewArrival();
-});
-
-$('.best-seller').on('click', function() {
-  bestSeller();
-});
-
-$('.low-to-high-price').on('click', function() {
-  lowToHighPrice();
-});
-
-$('.high-to-low-price').on('click', function() {
-  highToLowPrice();
-});
-
-function pagination() {
-
-}

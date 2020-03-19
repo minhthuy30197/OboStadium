@@ -14,6 +14,8 @@ public class DetailProductInfoDto {
 
     private String name;
 
+    private String slug;
+
     private long price;
 
     private int totalSold;

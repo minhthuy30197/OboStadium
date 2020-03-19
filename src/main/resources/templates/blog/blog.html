@@ -24,7 +24,7 @@
     <!-- List Post -->
     <section class="news-wrapper container">
         <th:block th:each="post, index : ${listPost}">
-            <a class="news" th:href="@{/tin-tuc/{id}(id=${post.id})}">
+            <a class="news" th:href="@{/tin-tuc/{slug}/{id}(id=${post.id}, slug=${post.slug})}">
                 <th:block th:if="${index.even}">
                     <div class="row">
                         <div class="thumbnail col-lg-6 col-12">

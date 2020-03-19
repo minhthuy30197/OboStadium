@@ -32,7 +32,7 @@
         </div>
         <div class="row product-row d-flex justify-content-md-between">
             <th:block th:each="product : ${newProducts}">
-                <a class="product position-relative" th:href="@{/san-pham/{id}(id=${product.id})}">
+                <a class="product position-relative" th:href="@{/san-pham/{slug}/{id}(id=${product.id}, slug=${product.slug})}">
                     <div class="card"><img class="card-img-top"
                                            th:src="${product.image}"
                                            th:alt="${product.name}"/>
@@ -70,7 +70,7 @@
         </div>
         <div class="row product-row d-flex justify-content-md-between">
             <th:block th:each="product : ${bestSellerProducts}">
-                <a class="product position-relative" th:href="@{/san-pham/{id}(id=${product.id})}">
+                <a class="product position-relative" th:href="@{/san-pham/{slug}/{id}(id=${product.id}, slug=${product.slug})}">
                     <div class="card"><img class="card-img-top"
                                            th:src="${product.image}"
                                            th:alt="${product.name}"/>
@@ -107,7 +107,7 @@
         </div>
         <div class="row product-row d-flex justify-content-md-between">
             <th:block th:each="product : ${suggestProducts}">
-                <a class="product position-relative" th:href="@{/san-pham/{id}(id=${product.id})}">
+                <a class="product position-relative" th:href="@{/san-pham/{slug}/{id}(id=${product.id}, slug=${product.slug})}">
                     <div class="card"><img class="card-img-top"
                                            th:src="${product.image}"
                                            th:alt="${product.name}"/>
@@ -202,7 +202,7 @@
         </div>
         <div class="carousel">
             <th:block th:each="post : ${latestPosts}">
-                <a class="news position-relative" th:href="@{/tin-tuc/{id}(id=${post.id})}">
+                <a class="news position-relative" th:href="@{/tin-tuc/{slug}/{id}(id=${post.id}, slug=${post.slug})}">
                     <div class="card"><img class="card-img-top" th:src="${post.thumbnail}" th:alt="${post.title}"/>
                         <div class="card-body">
                             <h5 class="card-title" th:text="${post.title}"></h5>
