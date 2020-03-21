@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class ProductInfoDto {
-    private long id;
+    private String id;
 
     private String name;
 
@@ -22,7 +22,7 @@ public class ProductInfoDto {
 
     private long promotionPrice;
 
-    public ProductInfoDto(long id, String name, String slug, long price, int totalSold, String image) {
+    public ProductInfoDto(String id, String name, String slug, long price, int totalSold, String image) {
         this.id = id;
         this.name = name;
         this.slug = slug;

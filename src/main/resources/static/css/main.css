@@ -280,3 +280,8 @@ footer .footer-link .item:hover {
 .pretty.p-toggle .state.p-success label:after {
   background-color: #f04e40 !important;
 }
+
+#toast-container {
+ margin-top: 30px;
+}
+

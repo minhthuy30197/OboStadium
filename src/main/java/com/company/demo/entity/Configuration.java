@@ -25,5 +25,5 @@ public class Configuration {
 
     @Type(type = "json")
     @Column(name = "obo_choices", columnDefinition = "json")
-    private ArrayList<Long> oboChoices;
+    private ArrayList<String> oboChoices;
 }

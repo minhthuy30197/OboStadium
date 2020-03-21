@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Setter
 @EqualsAndHashCode
 public class ProductSizeId implements Serializable {
-    private long productId;
+    private String productId;
 
     private int size;
 }

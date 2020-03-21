@@ -7,22 +7,24 @@
         <link rel="shortcut icon" th:href="@{/image/favicon.ico}" type="image/x-icon"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
         <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-        <!-- Bootstrap CSS-->
+        <!-- Bootstrap CSS -->
         <link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"/>
-        <!-- Slick CSS-->
+        <!-- Slick CSS -->
         <link rel="stylesheet" type="text/css" th:href="@{/vendor/slick/slick.css}"/>
         <link rel="stylesheet" type="text/css" th:href="@{/vendor/slick/slick-theme.css}"/>
-        <!-- Font Awesome CSS-->
+        <!-- Font Awesome CSS -->
         <link rel="stylesheet" type="text/css" th:href="@{/vendor/fontawesome/css/all.css}"/>
-        <!-- Pretty Checkbox CSS-->
+        <!-- Pretty Checkbox CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css"/>
-        <!-- Login Modal-->
+        <!-- Login Modal -->
         <link rel="stylesheet" type="text/css" th:href="@{/css/components/login-modal.css}"/>
-        <!-- Useed in Js-->
+        <!-- Useed in Js -->
         <link rel="stylesheet" type="text/css" th:href="@{/css/used-in-js.css}"/>
-        <!-- Common CSS-->
+        <!-- Common CSS -->
         <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
-        <!-- Components CSS-->
+        <!-- Toastr CSS -->
+        <link th:href="@{/vendor/toastr/toastr.min.css}" rel="stylesheet"/>
+        <!-- Components CSS -->
         <th:block th:replace="${cssResources} ?: ~{}"></th:block>
     </head>
     <body>
@@ -42,6 +44,8 @@
 
         <script type="text/javascript" th:src="@{/vendor/jquery/jquery-3.4.1.min.js}"></script>
         <script type="text/javascript" th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <!-- Toastr JS-->
+        <script type="text/javascript" th:src="@{/vendor/toastr/toastr.min.js}"></script>
         <!-- Main Js-->
         <script type="text/javascript" th:src="@{/script/main.js}"></script>
         <!-- Slick JS-->

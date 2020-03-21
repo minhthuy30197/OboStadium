@@ -19,6 +19,18 @@ main {
   border-radius: 0.25rem;
 }
 
+.no-products {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    min-height: 500px;
+    flex-direction: column;
+}
+
+.no-products img {
+    max-width: 300px;
+}
+
 .breadcrumb {
   margin-bottom: 1.25rem;
   background-color: #ffffff;

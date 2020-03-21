@@ -2,6 +2,7 @@ $(function () {
   formatDate();
   formatMoney();
   resetModal();
+  configToastr();
   SIGNUP_DATA = DB.getAccountData();
   CURRENT_SIGNED_ACCOUNT = DB.getSignedAccount();
   DB.setProducts();
@@ -240,6 +241,26 @@ function convertPrice(currency) {
   }).format(currency);
 
   return convert;
+}
+
+function configToastr() {
+    toastr.options = {
+          "closeButton": true,
+          "debug": false,
+          "newestOnTop": false,
+          "progressBar": false,
+          "positionClass": "toast-top-center",
+          "preventDuplicates": true,
+          "onclick": null,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "1000",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+    }
 }
 
 $(document).on('keyup', function (e) {

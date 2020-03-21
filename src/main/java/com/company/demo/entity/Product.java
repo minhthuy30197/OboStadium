@@ -8,6 +8,7 @@ import org.hibernate.annotations.TypeDef;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 @SqlResultSetMappings(
         value = {
@@ -16,7 +17,7 @@ import java.util.ArrayList;
                         classes = @ConstructorResult(
                                 targetClass = ProductInfoDto.class,
                                 columns = {
-                                        @ColumnResult(name = "id", type = Long.class),
+                                        @ColumnResult(name = "id", type = String.class),
                                         @ColumnResult(name = "name", type = String.class),
                                         @ColumnResult(name = "slug", type = String.class),
                                         @ColumnResult(name = "price", type = Long.class),
@@ -27,6 +28,7 @@ import java.util.ArrayList;
                 )
         }
 )
+@NamedNativeQueries({
 @NamedNativeQuery(
         name = "getListNewProduct",
         resultSetMapping = "productInfoDto",
@@ -35,7 +37,7 @@ import java.util.ArrayList;
                 "WHERE pro.is_available = true\n" +
                 "ORDER BY created_at desc\n" +
                 "LIMIT ?1 \n"
-)
+),
 @NamedNativeQuery(
         name = "getListBestSellerProduct",
         resultSetMapping = "productInfoDto",
@@ -44,7 +46,7 @@ import java.util.ArrayList;
                 "WHERE pro.is_available = true\n" +
                 "ORDER BY total_sold desc\n" +
                 "LIMIT ?1 \n"
-)
+),
 @NamedNativeQuery(
         name = "getListSuggestProduct",
         resultSetMapping = "productInfoDto",
@@ -52,7 +54,7 @@ import java.util.ArrayList;
                 "FROM product pro\n" +
                 "WHERE pro.is_available = true AND pro.id IN (?1)\n" +
                 "LIMIT ?2 \n"
-)
+),
 @NamedNativeQuery(
         name = "getRelatedProducts",
         resultSetMapping = "productInfoDto",
@@ -60,16 +62,39 @@ import java.util.ArrayList;
                 "FROM product pro\n" +
                 "WHERE pro.is_available = true AND\n" +
                 "pro.id != ?1 AND\n" +
-                "((pro.category_ids IN (?2)) OR (pro.brand_id = ?3))\n" +
-                "LIMIT ?4\n"
-)
+                "pro.brand_id = ?2\n" +
+                "ORDER BY pro.created_at, pro.total_sold desc\n" +
+                "LIMIT ?3\n"
+),
 @NamedNativeQuery(
-        name = "searchProduct",
+        name = "searchProductBySize",
         resultSetMapping = "productInfoDto",
-        query = "SELECT pro.id, pro.name, pro.slug, pro.price, pro.total_sold, pro.product_images ->> \"$[0]\" as image \n" +
-                "FROM product pro\n"+
-                "WHERE is_available = true"
-)
+        query = "SELECT DISTINCT d.*\n" +
+                "FROM (\n" +
+                "SELECT DISTINCT product.id, product.name, product.slug, product.price, product.total_sold, product.product_images ->> \"$[0]\" as image\n" +
+                "FROM product \n" +
+                "INNER JOIN product_category \n" +
+                "ON product.id = product_category.product_id \n" +
+                "WHERE product.is_available = true AND product.brand_id IN (?1) AND product_category.category_id IN (?2)\n" +
+                "AND product.price > ?3 AND product.price < ?4) as d\n" +
+                "INNER JOIN product_size \n" +
+                "ON product_size.product_id = d.id\n" +
+                "WHERE product_size.size IN (?5)\n" +
+                "LIMIT ?6\n"+
+                "OFFSET ?7"
+),
+@NamedNativeQuery(
+        name = "searchProductAllSize",
+        resultSetMapping = "productInfoDto",
+        query = "SELECT DISTINCT product.id, product.name, product.slug, product.price, product.total_sold, product.product_images ->> \"$[0]\" as image\n" +
+                "FROM product \n" +
+                "INNER JOIN product_category \n" +
+                "ON product.id = product_category.product_id \n" +
+                "WHERE product.is_available = true AND product.brand_id IN (?1) AND product_category.category_id IN (?2)\n" +
+                "AND product.price > ?3 AND product.price < ?4\n" +
+                "LIMIT ?5\n" +
+                "OFFSET ?6"
+)})
 @Setter
 @Getter
 @NoArgsConstructor
@@ -82,9 +107,8 @@ import java.util.ArrayList;
 )
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private long id;
+    private String id;
 
     @Column(name = "name", nullable = false, length = 300)
     private String name;
@@ -111,9 +135,13 @@ public class Product {
     @Column(name = "is_available", columnDefinition = "TINYINT(1)")
     private boolean isAvailable;
 
-    @Type(type = "json")
-    @Column(name = "category_ids", columnDefinition = "json")
-    private ArrayList<Integer> categoryIds;
+    @ManyToMany
+    @JoinTable(
+            name = "product_category",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private List<Category> categories;
 
     @Type(type = "json")
     @Column(name = "product_images", columnDefinition = "json")

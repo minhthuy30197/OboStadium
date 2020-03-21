@@ -10,7 +10,7 @@ import java.util.ArrayList;
 @AllArgsConstructor
 @ToString
 public class DetailProductInfoDto {
-    private long id;
+    private String id;
 
     private String name;
 

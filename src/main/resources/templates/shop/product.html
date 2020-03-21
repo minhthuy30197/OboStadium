@@ -54,7 +54,7 @@
                         <th:block th:each="brand : ${brands}">
                             <div class="item">
                                 <div class="pretty p-svg p-curve">
-                                    <input class="filter-checkbox" type="checkbox" th:data-id="${brand.id}"/>
+                                    <input class="filter-checkbox check-brand" type="checkbox" th:value="${brand.id}"/>
                                     <div class="state p-success">
                                         <svg class="svg svg-icon" viewbox="0 0 20 20">
                                             <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z"
@@ -80,7 +80,7 @@
                         <th:block th:each="category : ${categories}">
                             <div class="item">
                                 <div class="pretty p-svg p-curve">
-                                    <input class="filter-checkbox" type="checkbox" th:data-id="${category.id}"/>
+                                    <input class="filter-checkbox check-category" type="checkbox" th:value="${category.id}"/>
                                     <div class="state p-success">
                                         <svg class="svg svg-icon" viewbox="0 0 20 20">
                                             <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z"
@@ -104,7 +104,7 @@
                     </div>
                     <div class="select-filter collapse show" id="size-collapse">
                         <th:block th:each="size : ${sizeVn}">
-                            <div class="item" data-id="${sizeVn[i]}" th:text="${size}"></div>
+                            <div class="item check-size" th:data-id="${size}" th:text="${size}"></div>
                         </th:block>
                     </div>
                 </div>
@@ -119,6 +119,7 @@
                            onkeypress="return priceInputValidate(event)"/>
                     <input class="form-control price-input" id="to-price" type="text" placeholder="Đến" pattern="[0-9]"
                            onkeypress="return priceInputValidate(event)"/>
+                    <button class="btn btn-primary apply-price red-btn" id="apply-price-web">Áp dụng</button>
                 </div>
             </div>
 
@@ -127,7 +128,10 @@
                 <div class="sort">
                     <div class="filter-icon" data-toggle="modal" data-target="#filterModal"><i class="fas fa-filter"></i></div>
                 </div>
-
+                <div class="no-products">
+                    <img th:src="@{/image/noresult.png}" alt="noresult.png">
+                    <h4>Không tìm thấy sản phẩm phù hợp</h4>
+                </div>
                 <div class="product-row">
                     <th:block th:each="product : ${listProduct}">
                         <a class="product position-relative" target="_blank" th:href="@{/san-pham/{slug}/{id}(id=${product.id}, slug=${product.slug})}">
@@ -171,6 +175,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="filter-bar small-size">
+                        <!-- Brand -->
                         <div class="brand content">
                             <div class="title" data-toggle="collapse" href="#brand-collapse-1" role="button"
                                  aria-expanded="false" aria-controls="brand-collapse">
@@ -181,7 +186,7 @@
                                 <th:block th:each="brand : ${brands}">
                                     <div class="item">
                                         <div class="pretty p-svg p-curve">
-                                            <input class="filter-checkbox" type="checkbox" th:data-id="${brand.id}"/>
+                                            <input class="filter-checkbox check-brand checkbox-mobile" type="checkbox" th:value="${brand.id}"/>
                                             <div class="state p-success">
                                                 <svg class="svg svg-icon" viewbox="0 0 20 20">
                                                     <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z"
@@ -195,6 +200,8 @@
                             </div>
                         </div>
                         <div class="break-line"></div>
+
+                        <!-- Category -->
                         <div class="category content">
                             <div class="title" data-toggle="collapse" href="#categories-collapse-1" role="button"
                                  aria-expanded="false" aria-controls="categories-collapse">
@@ -205,7 +212,7 @@
                                 <th:block th:each="category : ${categories}">
                                     <div class="item">
                                         <div class="pretty p-svg p-curve">
-                                            <input class="filter-checkbox" type="checkbox" th:data-id="${category.id}"/>
+                                            <input class="filter-checkbox check-category checkbox-mobile" type="checkbox" th:value="${category.id}"/>
                                             <div class="state p-success">
                                                 <svg class="svg svg-icon" viewbox="0 0 20 20">
                                                     <path d="M7.629,14.566c0.125,0.125,0.291,0.188,0.456,0.188c0.164,0,0.329-0.062,0.456-0.188l8.219-8.221c0.252-0.252,0.252-0.659,0-0.911c-0.252-0.252-0.659-0.252-0.911,0l-7.764,7.763L4.152,9.267c-0.252-0.251-0.66-0.251-0.911,0c-0.252,0.252-0.252,0.66,0,0.911L7.629,14.566z"
@@ -219,6 +226,8 @@
                             </div>
                         </div>
                         <div class="break-line"></div>
+
+                        <!-- Size -->
                         <div class="size content">
                             <div class="title" data-toggle="collapse" href="#size-collapse-1" role="button" aria-expanded="false"
                                  aria-controls="size-collapse">
@@ -227,11 +236,13 @@
                             </div>
                             <div class="select-filter collapse show" id="size-collapse-1">
                                 <th:block th:each="size : ${sizeVn}">
-                                    <div class="item" data-id="${sizeVn[i]}" th:text="${size}"></div>
+                                    <div class="item check-size checkbox-mobile" th:data-id="${size}" th:text="${size}"></div>
                                 </th:block>
                             </div>
                         </div>
                         <div class="break-line"></div>
+
+                        <!-- Price -->
                         <div class="price-range content">
                             <div class="title">
                                 <div class="text">Khoảng gi&aacute;</div>
@@ -245,7 +256,7 @@
                 </div>
                 <div class="modal-footer">
                     <button class="clear-filter btn btn-primary" disabled="disabled">Bỏ lọc</button>
-                    <button class="btn btn-primary apply-price small red-btn">Áp dụng</button>
+                    <button class="btn btn-primary apply-price small red-btn" id="apply-price-mobile">Áp dụng</button>
                 </div>
             </div>
         </div>
@@ -257,34 +268,240 @@
     <script th:src="@{/script/except-home-page.js}"></script>
     <script th:src="@{/script/shop.js}"></script>
     <script th:inline="javascript">
+        let brandIds = [[${brandIds}]];
+        let categoryIds = [[${categoryIds}]];
+        let currentPage = [[${currentPage}]];
+        let totalPages = [[${totalPages}]];
+        let checkedCategories = [];
+        let checkedBrands = [];
+        let checkedSizes = [];
+        let minPrice = 0;
+        let maxPrice = 0;
+
         $(function () {
           pagination();
         });
 
         function pagination() {
-            $('#pagination').pagination({
-                pages: [[${totalPages}]],
-                currentPage: [[${currentPage}]],
-                cssStyle: '',
-                prevText: '<span aria-hidden="true">&laquo;</span>',
-                nextText: '<span aria-hidden="true">&raquo;</span>',
-                onInit: function () {
-                    // fire first page loading
-                },
-                onPageClick: function (page, evt) {
-                    $('#pagination .active .current').addClass('page-link')
-                    $('#pagination .ellipse.clickable').addClass('page-link')
-                    $('#pagination .disabled .current.prev').addClass('page-link')
-                    $('#pagination .disabled .current.next').addClass('page-link')
-                    location.href = "/san-pham?page="+page
-                }
-            });
+            if (totalPages > 0) {
+                $('#pagination').show();
+                $('#pagination').pagination({
+                    pages: totalPages,
+                    currentPage: currentPage,
+                    cssStyle: '',
+                    prevText: '<span aria-hidden="true">&laquo;</span>',
+                    nextText: '<span aria-hidden="true">&raquo;</span>',
+                    onInit: function () {
+                        // fire first page loading
+                    },
+                    onPageClick: function (page, evt) {
+                        currentPage = page;
+                        searchProduct();
+                        $('body,html').animate({scrollTop:0},800);
+                    }
+                });
 
-            $('#pagination .active .current').addClass('page-link')
-            $('#pagination .ellipse.clickable').addClass('page-link')
-            $('#pagination .disabled .current.prev').addClass('page-link')
-            $('#pagination .disabled .current.next').addClass('page-link')
+                $('#pagination .active .current').addClass('page-link');
+                $('#pagination .ellipse.clickable').addClass('page-link');
+                $('#pagination .disabled .current.prev').addClass('page-link');
+                $('#pagination .disabled .current.next').addClass('page-link');
+            } else {
+                $('#pagination').hide();
+            }
         }
+
+        // Filter function
+        $(".check-brand").change( function(){
+            checkedBrands = $(".check-brand:checked").map(function(){
+                return $(this).val();
+            }).get();
+
+            if (!$(this).hasClass('checkbox-mobile')) {
+                currentPage = 1;
+                searchProduct();
+            }
+        });
+
+        $(".check-category").change( function(){
+            checkedCategories = $("check-category:checked").map(function(){
+                return $(this).val();
+            }).get();
+
+            if (!$(this).hasClass('checkbox-mobile')) {
+                currentPage = 1;
+                searchProduct();
+            }
+        });
+
+        $(".check-size").click( function(){
+            $(this).toggleClass('size-choose');
+
+            checkedSizes = $(".check-size.size-choose").map(function(){
+                return $(this).data("id");
+            }).get();
+
+            if (!$(this).hasClass('checkbox-mobile')) {
+                currentPage = 1;
+                searchProduct();
+            }
+        });
+
+        $('#apply-price-web').click(function() {
+            minPrice = parseInt($('.price-input#from-price').val());
+            maxPrice = parseInt($('.price-input#to-price').val());
+
+            if (isNaN(minPrice) && isNaN(maxPrice)) {
+                toastr.warning("Khoảng giá không hợp lệ");
+                return;
+            }
+            if (minPrice > 999999999999 || maxPrice > 999999999999) {
+                toastr.warning("Khoảng giá quá lớn");
+                return;
+            }
+
+            currentPage = 1;
+            searchProduct();
+        })
+
+        $('#apply-price-mobile').click(function() {
+            minPrice = parseInt($('.price-input#from-price-small').val());
+            maxPrice = parseInt($('.price-input#to-price-small').val());
+
+            if (isNaN(minPrice)) {
+                minPrice = 0;
+            }
+            if (isNaN(maxPrice)) {
+                maxPrice = 0;
+            }
+            if (minPrice > 999999999999 || maxPrice > 999999999999) {
+                toastr.warning("Khoảng giá quá lớn");
+                return;
+            }
+
+            currentPage = 1;
+            searchProduct();
+        })
+
+        function searchProduct() {
+            if (checkedSizes.length > 0 || checkedBrands.length > 0 || checkedCategories.length > 0 || minPrice > 0 || maxPrice > 0) {
+                $('.clear-filter')
+                    .removeAttr('disabled');
+            } else {
+                $('.clear-filter')
+                    .attr('disabled', 'disabled');
+            }
+
+            if (checkedBrands.length == 0) {
+                checkedBrands = brandIds;
+            }
+            if (checkedCategories.length == 0) {
+                checkedCategories = categoryIds;
+            }
+            if (maxPrice == 0) {
+                maxPrice = 999999999999;
+            }
+            req = {
+				brands: checkedBrands,
+				categories: checkedCategories,
+				sizes: checkedSizes,
+				min_price: minPrice,
+				max_price: maxPrice,
+				page: currentPage
+			}
+			var myJSON = JSON.stringify(req);
+			$.ajax({
+			   	url: '/san-pham/loc',
+			   	type: 'POST',
+			   	data: myJSON,
+			   	dataType: "json",
+			   	contentType: "application/json; charset=utf-8",
+			   	success: function(data) {
+			   	    genProductList(data.products);
+			   	    currentPage = data.currentPage;
+			   	    totalPages = data.totalPages;
+			   	    pagination();
+			   	    $('#filterModal').modal('hide');
+			   	},
+			   	error: function(data) {
+			   		toastr.warning(data.responseJSON.message)
+			   	},
+			});
+        }
+
+        function genProductList(products) {
+            if (products.length > 0) {
+                let html = '';
+                for (product of products) {
+                    html += `<a class="product position-relative" target="_blank" href="/san-pham/${product.slug}/${product.id}">
+                            <div class="card"><img class="card-img-top"
+                                                   src="${product.image}"
+                                                   alt="${product.name}"/>
+                                <div class="card-body">
+                                    <h5 class="card-title">${product.name}</h5>`
+                    if (product.promotionPrice != null) {
+                        html += `<p class="price"><span class="text-price">${product.promotionPrice}</span> &#x20AB;</p>
+                                 <p class="old-price"><span class="text-price">${product.price}</span> &#x20AB;</p>`
+                    } else {
+                        html += `<p class="price"><span class="text-price">${product.price}</span> &#x20AB;</p>`
+                    }
+                    html += `
+                                    <p class="card-text sold">Đã bán <span>${product.totalSold}</span> đôi</p>
+                                </div>
+                            </div>
+                            <div class="shadow mx-auto position-absolute"></div>
+                        </a>`
+                }
+                $('.product-row').html(html);
+                $('.no-products').css('display','none');
+                formatMoney();
+            } else {
+                $('.product-row').html("");
+                $('.no-products').css('display','flex');
+            }
+        }
+
+        $("#from-price").keyup(function(){
+          if (
+            $('.price-input#from-price').val() == '' &&
+            $('.price-input#to-price').val() == ''
+          ) {
+            $('.apply-price:not(.small)').attr('disabled', 'disabled');
+          } else {
+            $('.apply-price:not(.small)').removeAttr('disabled');
+          }
+        });
+
+        $("#to-price").keyup(function(){
+          if (
+            $('.price-input#from-price').val() == '' &&
+            $('.price-input#to-price').val() == ''
+          ) {
+            $('.apply-price:not(.small)').attr('disabled', 'disabled');
+          } else {
+            $('.apply-price:not(.small)').removeAttr('disabled');
+          }
+        });
+
+        $(".clear-filter").click( function(){
+            checkedSizes = [];
+            checkedBrands = [];
+            checkedCategories = [];
+            minPrice = 0;
+            maxPrice = 0;
+            currentPage = 1;
+            searchProduct();
+
+            $('.filter-bar input').prop('checked', false);
+            $('.clear-filter')
+              .not('.modal-footer .clear-filter')
+              .attr('disabled', 'disabled');
+
+            $('.filter-bar input').prop('checked', false);
+            $('.size .item').removeClass('size-choose');
+            $('.price-input').val('');
+            $('.price-input.small').val('');
+            $('.apply-price:not(.small)').attr('disabled', 'disabled');
+        })
     </script>
 </th:block>
 </body>

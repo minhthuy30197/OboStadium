@@ -3,6 +3,7 @@ package com.company.demo.service;
 import com.company.demo.model.dto.DetailProductInfoDto;
 import com.company.demo.model.dto.ListProductDto;
 import com.company.demo.model.dto.ProductInfoDto;
+import com.company.demo.model.request.FilterProductReq;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -14,11 +15,11 @@ public interface ProductService {
 
     public List<ProductInfoDto> getListSuggestProduct();
 
-    public DetailProductInfoDto getDetailProductById(long id);
+    public DetailProductInfoDto getDetailProductById(String id);
 
-    public List<ProductInfoDto> getRelatedProducts(long id);
+    public List<ProductInfoDto> getRelatedProducts(String id);
 
-    public List<Integer> getListAvailableSize(long id);
+    public List<Integer> getListAvailableSize(String id);
 
-    public ListProductDto searchProduct(int page);
+    public ListProductDto searchProduct(FilterProductReq req);
 }

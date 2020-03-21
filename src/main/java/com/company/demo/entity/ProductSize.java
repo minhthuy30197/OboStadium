@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class ProductSize {
     @Id
     @Column(name="product_id")
-    private long productId;
+    private String productId;
 
     @Id
     @Column(name = "size")
