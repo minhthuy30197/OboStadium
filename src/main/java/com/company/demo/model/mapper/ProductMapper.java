@@ -2,6 +2,7 @@ package com.company.demo.model.mapper;
 
 import com.company.demo.entity.Product;
 import com.company.demo.model.dto.DetailProductInfoDto;
+import com.company.demo.model.dto.ProductInfoDto;
 
 public class ProductMapper {
     public static DetailProductInfoDto toDetailProductInfoDto(Product product) {

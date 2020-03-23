@@ -28,7 +28,6 @@ import java.util.List;
                 )
         }
 )
-@NamedNativeQueries({
 @NamedNativeQuery(
         name = "getListNewProduct",
         resultSetMapping = "productInfoDto",
@@ -37,7 +36,7 @@ import java.util.List;
                 "WHERE pro.is_available = true\n" +
                 "ORDER BY created_at desc\n" +
                 "LIMIT ?1 \n"
-),
+)
 @NamedNativeQuery(
         name = "getListBestSellerProduct",
         resultSetMapping = "productInfoDto",
@@ -46,7 +45,7 @@ import java.util.List;
                 "WHERE pro.is_available = true\n" +
                 "ORDER BY total_sold desc\n" +
                 "LIMIT ?1 \n"
-),
+)
 @NamedNativeQuery(
         name = "getListSuggestProduct",
         resultSetMapping = "productInfoDto",
@@ -54,7 +53,7 @@ import java.util.List;
                 "FROM product pro\n" +
                 "WHERE pro.is_available = true AND pro.id IN (?1)\n" +
                 "LIMIT ?2 \n"
-),
+)
 @NamedNativeQuery(
         name = "getRelatedProducts",
         resultSetMapping = "productInfoDto",
@@ -65,7 +64,7 @@ import java.util.List;
                 "pro.brand_id = ?2\n" +
                 "ORDER BY pro.created_at, pro.total_sold desc\n" +
                 "LIMIT ?3\n"
-),
+)
 @NamedNativeQuery(
         name = "searchProductBySize",
         resultSetMapping = "productInfoDto",
@@ -82,7 +81,7 @@ import java.util.List;
                 "WHERE product_size.size IN (?5)\n" +
                 "LIMIT ?6\n"+
                 "OFFSET ?7"
-),
+)
 @NamedNativeQuery(
         name = "searchProductAllSize",
         resultSetMapping = "productInfoDto",
@@ -94,7 +93,21 @@ import java.util.List;
                 "AND product.price > ?3 AND product.price < ?4\n" +
                 "LIMIT ?5\n" +
                 "OFFSET ?6"
-)})
+)
+@NamedNativeQuery(
+        name = "searchProductByKeyword",
+        resultSetMapping = "productInfoDto",
+        query = "SELECT DISTINCT product.id, product.name, product.slug, product.price, product.total_sold, product.product_images ->> \"$[0]\" as image\n" +
+                "FROM product \n" +
+                "INNER JOIN product_category \n" +
+                "ON product.id = product_category.product_id \n" +
+                "INNER JOIN category\n" +
+                "ON category.id = product_category.category_id\n" +
+                "WHERE product.is_available = true AND (product.name LIKE CONCAT('%',:keyword,'%') OR category.name LIKE CONCAT('%',:keyword,'%'))\n" +
+                "LIMIT :limit\n" +
+                "OFFSET :offset"
+)
+
 @Setter
 @Getter
 @NoArgsConstructor

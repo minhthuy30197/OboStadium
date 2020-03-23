@@ -4,6 +4,7 @@ import com.company.demo.entity.Product;
 import com.company.demo.model.dto.ProductInfoDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
@@ -20,6 +21,18 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 
     @Query(nativeQuery = true, name = "getRelatedProducts")
     public List<ProductInfoDto> getRelatedProducts(String id, int brandId, int limit);
+
+    @Query(nativeQuery = true, name = "searchProductByKeyword")
+    public List<ProductInfoDto> searchProductByKeyword(@Param("keyword") String keyword, @Param("limit") int limit, @Param("offset") int offset);
+
+    @Query(nativeQuery = true, value = "SELECT count(DISTINCT product.id)\n" +
+            "FROM product \n" +
+            "INNER JOIN product_category \n" +
+            "ON product.id = product_category.product_id \n" +
+            "INNER JOIN category\n" +
+            "ON category.id = product_category.category_id\n" +
+            "WHERE product.is_available = true AND (product.name LIKE CONCAT('%',:keyword,'%') OR category.name LIKE CONCAT('%',:keyword,'%'))\n")
+    public int countProductByKeyword(@Param("keyword") String keyword);
 
     @Query(nativeQuery = true, name = "searchProductBySize")
     public List<ProductInfoDto> searchProductBySize(List<Integer> brands, List<Integer> categories, long minPrice, long maxPrice, List<Integer> sizes, int limit, int offset);

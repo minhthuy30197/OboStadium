@@ -5,7 +5,6 @@ $(function () {
   configToastr();
   SIGNUP_DATA = DB.getAccountData();
   CURRENT_SIGNED_ACCOUNT = DB.getSignedAccount();
-  DB.setProducts();
   if (DB.getSignedStatus() == true) {
     signedValidate(DB.getSignedStatus());
   } else {
@@ -223,16 +222,6 @@ $(document).on('click', function (e) {
       localStorage.setItem('sessionsProduct', productId);
     }
   }
-
-  // Close search result
-
-  if (!target.closest('.search-result')) {
-    $('.search-result').css('display', 'none');
-  }
-
-  if (target.closest('.search-input')) {
-    $('.search-result').css('display', 'block');
-  }
 })
 
 function convertPrice(currency) {
@@ -262,52 +251,6 @@ function configToastr() {
           "hideMethod": "fadeOut"
     }
 }
-
-$(document).on('keyup', function (e) {
-  let target = e.target;
-
-  if (target.closest('.search-input')) {
-    let isExisted = false;
-    let result = DB.getProducts().filter(data => {
-      return data['name'].toLowerCase().indexOf($(target).val()) !== -1;
-    });
-
-    if (result.length >= 1) {
-      isExisted = true;
-    }
-
-    if ($(target).val() == "") {
-      $('.search-result').css('display', 'none')
-    } else {
-      $('.search-result').css('display', 'block')
-    }
-
-    if (isExisted == true) {
-      let searchedProduct = "";
-      for (let i = 0; i < result.length; i++) {
-        searchedProduct += `
-    <a class="product-wrapper" href="./product-details.html">
-      <img class="img-fluid search-product-image" src="${result[i]['thumbnail']}" alt="${result[i]['name']}" />
-      <div class="search-product-details">
-          <div class="search-product-brand">${result[i]['brand']}</div>
-          <div class="search-product-name">${result[i]['name']}</div>
-          <div class="search-products-prices">
-              <div class="search-products-buy"><span class="text">Giá đặt bán thấp nhất: </span><span class="price-showing">${convertPrice(result[i]['sell_price'])} ₫</span></div>
-              <div class="search-products-sell"><span class="text">Giá đặt mua cao nhất: </span><span class="price-showing">${convertPrice(result[i]['buy_price'])} ₫</span></div>
-          </div>
-      </div>
-    </a>
-    `;
-      }
-      $('.search-result').html(searchedProduct);
-      $('.search-result').css('padding', '0')
-    } else {
-      $('.search-result').html(`Không tìm thấy kết quả`);
-      $('.search-result').css('padding', '20px 0');
-      $('.search-result').css('overflow-y', 'auto');
-    }
-  }
-})
 
 let SIGNUP_DATA = {};
 let CURRENT_SIGNED_ACCOUNT = {
@@ -377,46 +320,6 @@ let DB = {
 
   setSignedAccount: function (data) {
     localStorage.setItem('signed-account', JSON.stringify(data));
-  },
-
-  getCurrentProduct: function () {
-    if (typeof (Storage) !== "undefined") {
-      let data;
-      try {
-        data = JSON.parse(localStorage.getItem('current-product')) || {};
-      } catch (error) {
-        data = {};
-      }
-
-      return data;
-    } else {
-      alert('Sorry! No Web Storage support...');
-      return {};
-    }
-  },
-
-  setCurrentProduct: function (data) {
-    localStorage.setItem('current-product', data);
-  },
-
-  getProducts: function () {
-    if (typeof (Storage) !== "undefined") {
-      let data;
-      try {
-        data = JSON.parse(localStorage.getItem('products')) || {};
-      } catch (error) {
-        data = {};
-      }
-
-      return data;
-    } else {
-      alert('Sorry! No Web Storage support...');
-      return {};
-    }
-  },
-
-  setProducts: function (data) {
-    localStorage.setItem('products', JSON.stringify(data));
   }
 }
 
@@ -456,4 +359,29 @@ function signedValidate(status = false) {
   `;
     $('.account-setting').replaceWith(notSignedLink);
   }
+}
+
+$(document).on('keyup', function (e) {
+  let target = e.target;
+
+  if (target.closest('.search-input')) {
+        var keycode = (e.keyCode ? e.keyCode : e.which);
+        if(keycode == '13'){
+            searchProductByKeyword();
+        }
+  }
+})
+
+
+$('.search-button').click(function() {
+    searchProductByKeyword();
+})
+
+function searchProductByKeyword() {
+    let keyword = $('.search-input').val();
+    if (keyword.length == 0) {
+        toastr.warning("Vui lòng nhập từ khóa tìm kiếm");
+        return
+    }
+    location.href="/tim-kiem?keyword="+keyword;
 }

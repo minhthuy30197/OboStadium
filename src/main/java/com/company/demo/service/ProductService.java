@@ -21,5 +21,7 @@ public interface ProductService {
 
     public List<Integer> getListAvailableSize(String id);
 
-    public ListProductDto searchProduct(FilterProductReq req);
+    public ListProductDto filterProduct(FilterProductReq req);
+
+    public ListProductDto searchProductByKeyword(String keyword, Integer page);
 }

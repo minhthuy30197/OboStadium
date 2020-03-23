@@ -18,7 +18,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import static com.company.demo.config.Constant.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,7 +81,7 @@ public class ShopController {
 
         // Get list product
         FilterProductReq req = new FilterProductReq(brandIds, categoryIds, new ArrayList<>(), (long) 0, Long.MAX_VALUE, 1);
-        ListProductDto result = productService.searchProduct(req);
+        ListProductDto result = productService.filterProduct(req);
         model.addAttribute("totalPages", result.getTotalPages());
         model.addAttribute("currentPage", result.getCurrentPage());
         model.addAttribute("listProduct", result.getProducts());
@@ -108,9 +107,26 @@ public class ShopController {
             }
         }
 
-        ListProductDto result = productService.searchProduct(req);
+        ListProductDto result = productService.filterProduct(req);
 
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/tim-kiem")
+    public String searchProduct(Model model, @RequestParam(required = false) String keyword, @RequestParam(required = false) Integer page) {
+        ListProductDto result = productService.searchProductByKeyword(keyword, page);
+
+        model.addAttribute("totalPages", result.getTotalPages());
+        model.addAttribute("currentPage", result.getCurrentPage());
+        model.addAttribute("listProduct", result.getProducts());
+        model.addAttribute("keyword", keyword);
+        if (result.getProducts().size() > 0) {
+            model.addAttribute("hasResult", true);
+        } else {
+            model.addAttribute("hasResult", false);
+        }
+
+        return "shop/search";
     }
 
     @GetMapping("/san-pham/{slug}/{id}")

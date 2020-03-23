@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(
+                                                ~{:: title},
+                                                'full-header',
+                                                ~{:: #css-resources},
+                                                ~{:: #js-resources},
+                                                ~{:: #main-content}
+                                               )}">
+
+<head>
+    <title>Sản phẩm</title>
+
+    <th:block id="css-resources">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/products.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/vendor/pagination/simplePagination.css}"/>
+        <style>
+            .badge.badge-pill.badge-dark {
+                font-size: 1rem;
+                cursor: pointer;
+            }
+
+            .product-row {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                justify-items: center;
+                grid-gap: 1rem 1rem;
+                margin: 30px 0;
+            }
+
+            @media(max-width: 1200px) {
+                .product-row {
+                    grid-template-columns: repeat(4, 1fr);
+                    grid-gap: 0.8rem 0.8rem;
+                }
+            }
+
+            @media(max-width: 992px) {
+                .product-row {
+                    grid-template-columns: repeat(3, 1fr);
+                }
+            }
+
+            @media(max-width: 768px) {
+                .product-row {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+
+            @media(max-width: 400px) {
+                .product-row {
+                    grid-template-columns: repeat(1, 1fr);
+                    grid-gap: 0.8rem 0rem;
+                }
+            }
+
+            .no-products {
+                text-align: center;
+                min-height: 400px;
+            }
+
+            .no-products img {
+                max-width: 350px;
+            }
+        </style>
+    </th:block>
+</head>
+<body>
+<main id="main-content">
+    <section class="products-showcase under-retail container">
+        <div class="row">
+            <div class="title col-12">
+                <div th:if="${keyword}">
+                    Tìm kiếm&ensp;<span class="badge badge-pill badge-dark keyword"><span th:text="${keyword}"></span>&ensp;<i class="fas fa-times"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="row" th:unless="${hasResult}">
+            <div class="col-12 no-products">
+                <img th:src="@{/image/noresult.png}" alt="noresult.png">
+                <h4>Không tìm thấy sản phẩm phù hợp</h4>
+            </div>
+        </div>
+        <div class="row" th:if="${hasResult}">
+            <div class="product-row">
+                <th:block th:each="product : ${listProduct}">
+                    <a class="product position-relative" target="_blank" th:href="@{/san-pham/{slug}/{id}(id=${product.id}, slug=${product.slug})}">
+                        <div class="card"><img class="card-img-top"
+                                               th:src="${product.image}"
+                                               th:alt="${product.name}"/>
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${product.name}"></h5>
+                                <th:block th:if="${product.promotionPrice}">
+                                    <p class="price"><span class="text-price" th:text="${product.promotionPrice}"></span> &#x20AB;</p>
+                                    <p class="old-price"><span class="text-price" th:text="${product.price}"></span> &#x20AB;</p>
+                                </th:block>
+                                <th:block th:unless="${product.promotionPrice}">
+                                    <p class="price"><span class="text-price" th:text="${product.price}"></span> &#x20AB;</p>
+                                </th:block>
+                                <p class="card-text sold">&Dstrok;&atilde; b&aacute;n <span th:text="${product.totalSold}"></span> &dstrok;&ocirc;i</p>
+                            </div>
+                        </div>
+                        <div class="shadow mx-auto position-absolute"></div>
+                    </a>
+                </th:block>
+            </div>
+
+            <!-- Pagination -->
+            <nav aria-label="Page navigation" style="width:100%">
+                <ul class="pagination" id="pagination"></ul>
+            </nav>
+        </div>
+    </section>
+</main>
+
+<th:block id="js-resources">
+    <script type="text/javascript" th:src="@{/vendor/pagination/jquery.simplePagination.js}"></script>
+    <script th:inline="javascript">
+        $('.keyword').click(function(){
+            location.href = '/san-pham';
+        })
+
+        $(function () {
+          pagination();
+        });
+
+        function pagination() {
+            if ([[${totalPages}]] > 1) {
+                $('#pagination').show();
+                $('#pagination').pagination({
+                    pages: [[${totalPages}]],
+                    currentPage: [[${currentPage}]],
+                    cssStyle: '',
+                    prevText: '<span aria-hidden="true">&laquo;</span>',
+                    nextText: '<span aria-hidden="true">&raquo;</span>',
+                    onInit: function () {
+                        // fire first page loading
+                    },
+                    onPageClick: function (page, evt) {
+                        $('#pagination .active .current').addClass('page-link')
+                        $('#pagination .ellipse.clickable').addClass('page-link')
+                        $('#pagination .disabled .current.prev').addClass('page-link')
+                        $('#pagination .disabled .current.next').addClass('page-link')
+                        location.href = "/tim-kiem?keyword="+[[${keyword}]]+"&page="+page
+                    }
+                });
+
+                $('#pagination .active .current').addClass('page-link');
+                $('#pagination .ellipse.clickable').addClass('page-link');
+                $('#pagination .disabled .current.prev').addClass('page-link');
+                $('#pagination .disabled .current.next').addClass('page-link');
+            } else {
+                $('#pagination').hide();
+            }
+        }
+    </script>
+</th:block>
+</body>
+</html>
+
+
+

@@ -7,8 +7,10 @@ import com.company.demo.model.mapper.*;
 import com.company.demo.model.request.FilterProductReq;
 import com.company.demo.repository.*;
 import com.company.demo.service.*;
+import com.company.demo.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import javax.persistence.EntityManager;
 import java.util.*;
 import static com.company.demo.config.Constant.*;
 
@@ -25,6 +27,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductSizeRepository productSizeRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Override
     public List<ProductInfoDto> getListBestSellerProduct() {
@@ -96,34 +101,51 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ListProductDto searchProduct(FilterProductReq req) {
+    public ListProductDto filterProduct(FilterProductReq req) {
         int limit = 16;
-        if (req.getPage() < 1) {
-            req.setPage(1);
-        }
-        int offset = (req.getPage() - 1) * limit;
+        PageUtil page  = new PageUtil(limit, req.getPage());
 
         // Get list product and totalItems
         int totalItems;
         List<ProductInfoDto> products;
         if (req.getSizes().size() > 0) {
-            products = productRepository.searchProductBySize(req.getBrands(), req.getCategories(), req.getMinPrice(), req.getMaxPrice(), req.getSizes(), limit, offset);
-            System.out.println(products);
+            products = productRepository.searchProductBySize(req.getBrands(), req.getCategories(), req.getMinPrice(), req.getMaxPrice(), req.getSizes(), limit, page.calculateOffset());
+
             totalItems = productRepository.countProductBySize(req.getBrands(), req.getCategories(), req.getMinPrice(), req.getMaxPrice(), req.getSizes());
         } else {
-            products = productRepository.searchProductAllSize(req.getBrands(), req.getCategories(), req.getMinPrice(), req.getMaxPrice(), limit, offset);
+            products = productRepository.searchProductAllSize(req.getBrands(), req.getCategories(), req.getMinPrice(), req.getMaxPrice(), limit, page.calculateOffset());
             totalItems = productRepository.countProductAllSize(req.getBrands(), req.getCategories(), req.getMinPrice(), req.getMaxPrice());
         }
 
         // Calculate total pages
-        int totalPages;
-        if (totalItems % limit == 0) {
-            totalPages = totalItems / limit;
-        } else {
-            totalPages = totalItems / limit + 1;
-        }
+        int totalPages = page.calculateTotalPage(totalItems);
 
         ListProductDto result = new ListProductDto(checkPromotion(products), totalPages, req.getPage());
+
+        return result;
+    }
+
+    @Override
+    public ListProductDto searchProductByKeyword(String keyword, Integer page) {
+        // Validate
+        if (keyword == null) {
+            keyword = "";
+        }
+        if (page == null) {
+            page = 1;
+        }
+
+        int limit = 15;
+        PageUtil pageInfo = new PageUtil(limit, page);
+
+        // Get list product and totalItems
+        List<ProductInfoDto> products = productRepository.searchProductByKeyword(keyword, limit, pageInfo.calculateOffset());
+
+        int totalItems = productRepository.countProductByKeyword(keyword);
+
+        int totalPages = pageInfo.calculateTotalPage(totalItems);
+
+        ListProductDto result = new ListProductDto(checkPromotion(products), totalPages, page);
 
         return result;
     }
