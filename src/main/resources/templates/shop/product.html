@@ -410,10 +410,9 @@
 			}
 			var myJSON = JSON.stringify(req);
 			$.ajax({
-			   	url: '/san-pham/loc',
+			   	url: '/api/san-pham/loc',
 			   	type: 'POST',
 			   	data: myJSON,
-			   	dataType: "json",
 			   	contentType: "application/json; charset=utf-8",
 			   	success: function(data) {
 			   	    genProductList(data.products);
@@ -423,7 +422,8 @@
 			   	    $('#filterModal').modal('hide');
 			   	},
 			   	error: function(data) {
-			   		toastr.warning(data.responseJSON.message)
+			   	    console.log(data);
+			   		toastr.warning(data.responseJSON.message);
 			   	},
 			});
         }

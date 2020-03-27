@@ -40,8 +40,11 @@ public class User {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "status")
-    private int status;
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "status", columnDefinition = "BOOLEAN")
+    private boolean status;
 
     @Column(name = "created_at")
     private Timestamp createdAt;

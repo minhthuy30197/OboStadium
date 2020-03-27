@@ -89,7 +89,7 @@ public class ShopController {
         return "shop/product";
     }
 
-    @PostMapping("/san-pham/loc")
+    @PostMapping("/api/san-pham/loc")
     public ResponseEntity<?> filterProduct(@RequestBody FilterProductReq req) {
         // Validate
         if (req.getMinPrice() == null) {
@@ -112,7 +112,7 @@ public class ShopController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/tim-kiem")
+    @GetMapping("/api/tim-kiem")
     public String searchProduct(Model model, @RequestParam(required = false) String keyword, @RequestParam(required = false) Integer page) {
         ListProductDto result = productService.searchProductByKeyword(keyword, page);
 

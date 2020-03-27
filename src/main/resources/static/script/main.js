@@ -3,17 +3,6 @@ $(function () {
   formatMoney();
   resetModal();
   configToastr();
-  SIGNUP_DATA = DB.getAccountData();
-  CURRENT_SIGNED_ACCOUNT = DB.getSignedAccount();
-  if (DB.getSignedStatus() == true) {
-    signedValidate(DB.getSignedStatus());
-  } else {
-    signedValidate();
-  }
-
-  if (!$.isEmptyObject(DB.getSignedAccount())) {
-    CURRENT_ACCOUNT_DETAILS = DB.getSignedAccount()['current-account-details']['account-details']['email'];
-  }
 
   $(window).scroll(function () {
     if ($(this).scrollTop() > 100) {
@@ -27,8 +16,6 @@ $(function () {
     return false;
   }); 
 })
-
-// Login/Sign up validate
 
 $(document).on('click', function (e) {
   let target = e.target;
@@ -62,44 +49,26 @@ $(document).on('click', function (e) {
       isValid = false;
     }
 
-    // Get data from localStorage
-
     if (isValid == true) {
-
-      CURRENT_ACCOUNT_DETAILS = signInEmailValue;
-
-      $('.invalid-feedback').css('display', 'none');
-      let checkAccount;
-
-      if (!$.isEmptyObject(DB.getAccountData())) {
-        checkAccount = DB.getAccountData()['accounts'].hasOwnProperty(signInEmailValue)
-
-        if (checkAccount) {
-          account = DB.getAccountData()['accounts'][signInEmailValue][0];
-          accountDetails = DB.getAccountData()['accounts'][signInEmailValue][0]['account-details'];
+        req = {
+           email: signInEmailValue,
+           password: signInPasswordValue
         }
-      }
-
-      if (checkAccount == false) {
-        signInEmailInvalid.css('display', 'block');
-        signInEmailInvalid.html('Email không tồn tại');
-
-        isValid = false;
-      } else {
-        if (signInEmailValue == accountDetails['email'] && signInPasswordValue == accountDetails['password']) {
-          $('.modal').modal('hide');
-          signed = true;
-          DB.setSignedStatus(signed);
-          CURRENT_SIGNED_ACCOUNT['current-account-details'] = account;
-
-          DB.setSignedAccount(CURRENT_SIGNED_ACCOUNT);
-          signedValidate(signed);
-        }
-        if (signInPasswordValue !== accountDetails['password']) {
-          signInPasswordInvalid.css('display', 'block');
-          signInPasswordInvalid.html('Password không đúng');
-        }
-      }
+        var myJSON = JSON.stringify(req);
+        $.ajax({
+           url: '/api/login',
+           type: 'POST',
+           data: myJSON,
+           contentType: "application/json; charset=utf-8",
+           success: function(data) {
+               toastr.success("Đăng nhập thành công");
+               signedValidate(true, data.fullName);
+               $('.modal').modal('hide');
+           },
+           error: function(data) {
+               toastr.warning(data.responseJSON.message);
+           },
+        });
     }
   }
 
@@ -145,28 +114,6 @@ $(document).on('click', function (e) {
     }
 
     // Validate email
-    let checkExistedEmail = true;
-
-    if (DB.getAccountData()['current-email'] !== undefined) {
-      // SIGNUP_DATA = DB.getAccountData();
-      let currentExistedEmail = []
-      let currentEmail = SIGNUP_DATA['current-email'];
-
-      for (let i = 0; i < currentEmail.length; i++) {
-        currentExistedEmail.push(currentEmail[i]);
-        if (currentExistedEmail.includes(emailValue)) {
-          checkExistedEmail = false;
-          break;
-        }
-      }
-
-      if (!checkExistedEmail) {
-        emailInvalid.css('display', 'block');
-        emailInvalid.html('Email đã tồn tại, vui lòng chọn email khác');
-        isValid = false;
-      }
-    }
-
     if (emailValue == "") {
       emailInvalid.css('display', 'block');
       emailInvalid.html('Vui lòng nhập email');
@@ -195,22 +142,28 @@ $(document).on('click', function (e) {
       isValid = false;
     }
 
-    // Save to localStorage
-
     if (isValid == true) {
-
-      if (SIGNUP_DATA['accounts'] == undefined) {
-        SIGNUP_DATA['accounts'] = {};
-        SIGNUP_DATA['current-email'] = [];
-      }
-      SIGNUP_DATA['accounts'][emailValue] = [];
-
-      let accounts = { 'email': emailValue, 'password': passwordValue, 'phone': phoneValue, 'full-name': fullNameValue };
-
-      SIGNUP_DATA['accounts'][emailValue].push({ 'account-details': accounts });
-      SIGNUP_DATA['current-email'].push(emailValue)
-      DB.setAccountData(SIGNUP_DATA);
-      $('.modal').modal('hide');
+        req = {
+            full_name: fullNameValue,
+            email: emailValue,
+            password: passwordValue,
+            phone: phoneValue
+        }
+        var myJSON = JSON.stringify(req);
+        $.ajax({
+            url: '/api/register',
+            type: 'POST',
+            data: myJSON,
+            contentType: "application/json; charset=utf-8",
+            success: function(data) {
+                toastr.success("Đăng ký thành công");
+                signedValidate(true, data.fullName);
+                $('.modal').modal('hide');
+            },
+            error: function(data) {
+                toastr.warning(data.responseJSON.message);
+            },
+        });
     }
   }
 
@@ -241,7 +194,7 @@ function configToastr() {
           "positionClass": "toast-top-center",
           "preventDuplicates": true,
           "onclick": null,
-          "showDuration": "300",
+          "showDuration": "2000",
           "hideDuration": "1000",
           "timeOut": "1000",
           "extendedTimeOut": "1000",
@@ -250,77 +203,6 @@ function configToastr() {
           "showMethod": "fadeIn",
           "hideMethod": "fadeOut"
     }
-}
-
-let SIGNUP_DATA = {};
-let CURRENT_SIGNED_ACCOUNT = {
-};
-let CURRENT_ACCOUNT_DETAILS;
-let signed = false;
-let account = false;
-// Local storage
-
-let DB = {
-  getAccountData: function () {
-    if (typeof (Storage) !== "undefined") {
-      let data;
-      try {
-        data = JSON.parse(localStorage.getItem('sign-up')) || {};
-      } catch (error) {
-        data = {};
-      }
-
-      return data;
-    } else {
-      alert('Sorry! No Web Storage support...');
-      return {};
-    }
-  },
-
-  setAccountData: function (data) {
-    localStorage.setItem('sign-up', JSON.stringify(data));
-  },
-
-  // Check signed or not
-  getSignedStatus: function () {
-    if (typeof (Storage) !== "undefined") {
-      let data;
-      try {
-        data = JSON.parse(localStorage.getItem('signed')) || {};
-      } catch (error) {
-        data = {};
-      }
-
-      return data;
-    } else {
-      alert('Sorry! No Web Storage support...');
-      return {};
-    }
-  },
-
-  setSignedStatus: function (data) {
-    localStorage.setItem('signed', data);
-  },
-
-  getSignedAccount: function () {
-    if (typeof (Storage) !== "undefined") {
-      let data;
-      try {
-        data = JSON.parse(localStorage.getItem('signed-account')) || {};
-      } catch (error) {
-        data = {};
-      }
-
-      return data;
-    } else {
-      alert('Sorry! No Web Storage support...');
-      return {};
-    }
-  },
-
-  setSignedAccount: function (data) {
-    localStorage.setItem('signed-account', JSON.stringify(data));
-  }
 }
 
 function formatDate() {
@@ -347,10 +229,10 @@ function resetModal() {
   })
 }
 
-function signedValidate(status = false) {
+function signedValidate(status = false, fullname = '') {
   if (status == true) {
     let signedLink = `
-  <a id="account-setting" class="nav-link account-setting" href="./account.html">Xin chào ${DB.getSignedAccount()['current-account-details']['account-details']['full-name']}</a>`;
+  <a id="account-setting" class="nav-link account-setting" href="./account.html">Xin chào ${fullname}</a>`;
 
     $('.account-setting').replaceWith(signedLink);
   } else {
@@ -383,5 +265,5 @@ function searchProductByKeyword() {
         toastr.warning("Vui lòng nhập từ khóa tìm kiếm");
         return
     }
-    location.href="/tim-kiem?keyword="+keyword;
+    location.href="/api/tim-kiem?keyword="+keyword;
 }

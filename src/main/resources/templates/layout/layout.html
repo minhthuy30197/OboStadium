@@ -52,6 +52,16 @@
         <script type="text/javascript" th:src="@{/vendor/slick/slick.min.js}"></script>
         <!-- Currency-->
         <script type="text/javascript" th:src="@{/vendor/currency/currency.min.js}"></script>
+        <script th:inline="javascript">
+            $(function () {
+                let isLogined = [[${isLogined}]];
+                if (isLogined == true) {
+                    signedValidate(true, [[${user_fullname}]]);
+                } else {
+                    signedValidate();
+                }
+            })
+        </script>
         <!-- Common JS-->
         <th:block th:replace="${jsResources} ?: ~{}"></th:block>
     </body>
