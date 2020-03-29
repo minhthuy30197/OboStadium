@@ -71,6 +71,7 @@
                 </div>
                 <!-- Pricing Section-->
                 <div class="pricing childs">
+                    <h6 class="not-found-size" style="margin-top: 5px; color: #dc3545;"  th:styleappend="notFoundSize ? '' : 'display:none'">Size giày này đã hết. Vui lòng chọn size khác.</h6>
                     <div class="size-btn" data-toggle="modal" data-target="#sizeChooseModal">
                         <button class="btn btn-primary size trans-btn"><span class="size-text">Size</span><span class="size-details">9US | 42.5VN | 26.2CM</span><i class="fas fa-chevron-down dropdown-arrow"></i></button>
                     </div>
@@ -90,7 +91,7 @@
                 <a th:href="@{/san-pham/{slug}/{id}(id=${product.id}, slug=${product.slug})}">
                     <button class="btn btn-secondary confirm-btn">Quay lại</button>
                 </a>
-                <button class="btn btn-primary confirm-btn red-btn" id="btn-buy-now">Mua ngay</button>
+                <button class="btn btn-primary confirm-btn red-btn" id="btn-buy-now" th:style="notFoundSize ? 'display:none': ''">Mua ngay</button>
             </section>
         </div>
     </div>
@@ -193,7 +194,9 @@
           }
 
           $('.size .item').addClass('cross')
-          $(`.item[data-size='${$('.size-details').text()}']`).addClass('size-choose').removeClass('cross');
+          if (![[${notFoundSize}]]) {
+            $(`.item[data-size='${$('.size-details').text()}']`).addClass('size-choose').removeClass('cross');
+          }
 
           for (let i = 0; i < availableSizes.length; i++) {
             $(`.item[data-id='${availableSizes[i]}']`).removeClass('cross');
@@ -269,12 +272,13 @@
             if (isValid) {
                 req = {
                     product_id: [[${product.id}]],
+                    size: [[${size}]],
                     receiver_name: receiverName,
                     receiver_phone: receiverPhone,
                     receiver_address: receiverAddress,
                     coupon_code: couponCode,
                     total_price: totalPrice,
-                    price: price
+                    product_price: price
                 }
                 var myJSON = JSON.stringify(req);
                 $.ajax({
@@ -283,7 +287,10 @@
                     data: myJSON,
                     contentType: "application/json; charset=utf-8",
                     success: function(data) {
-
+                        toastr.success("Đặt hàng thành công");
+                        setTimeout(function() {
+                            location.href = "/tai-khoan/lich-su-giao-dich/"+data;
+                        }, 1000)
                     },
                     error: function(data) {
                         toastr.warning(data.responseJSON.message);

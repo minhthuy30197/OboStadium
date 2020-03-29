@@ -55,5 +55,6 @@ public class CreateOrderReq {
     @JsonProperty("total_price")
     private long totalPrice;
 
-    private long price;
+    @JsonProperty("product_price")
+    private long productPrice;
 }

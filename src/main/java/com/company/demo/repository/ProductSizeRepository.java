@@ -10,4 +10,7 @@ import java.util.List;
 public interface ProductSizeRepository extends JpaRepository<ProductSize, Long> {
     @Query(nativeQuery = true, value = "SELECT size FROM product_size WHERE product_id = ?1 AND quantity > 0")
     public List<Integer> findAllSizeOfProduct(String id);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM product_size WHERE product_id = ?1 AND size = ?2 AND quantity > 0")
+    public ProductSize checkProductSizeAvailable(String productId, int size);
 }

@@ -6,6 +6,8 @@ $(document).on('click', function (e) {
     $(target).addClass('size-choose');
     $('#sizeChooseModal').modal('hide');
     $('.size-details').text($(target).attr('data-size'));
+    $('.not-found-size').hide();
+    $('#btn-buy-now').show();
   }
 })
 

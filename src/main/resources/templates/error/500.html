@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(
+                                                ~{:: title},
+                                                'short-header',
+                                                ~{:: #css-resources},
+                                                ~{:: #js-resources},
+                                                ~{:: #main-content}
+                                               )}">
+
+<head>
+    <title>Lỗi hệ thống</title>
+
+    <th:block id="css-resources">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/header.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/except-home-page.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/error.css}"/>
+    </th:block>
+</head>
+<body>
+<main id="main-content" class="error-div">
+    <img th:src="@{/image/500.png}" alt="500" class="img-fluid">
+    <a href="/">
+        <button class="btn btn-secondary">Quay về trang chủ</button>
+    </a>
+</main>
+
+<th:block id="js-resources"></th:block>
+</body>
+</html>

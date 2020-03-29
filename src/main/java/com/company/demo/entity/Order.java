@@ -63,8 +63,8 @@ public class Order {
     private int status;
 
     @Type(type = "json")
-    @Column(name = "promotions", columnDefinition = "json")
-    private UsedPromotion promotions;
+    @Column(name = "promotion", columnDefinition = "json")
+    private UsedPromotion promotion;
 
     @Getter
     @Setter

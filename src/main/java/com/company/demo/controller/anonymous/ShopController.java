@@ -1,20 +1,18 @@
 package com.company.demo.controller.anonymous;
 
-import com.company.demo.entity.Brand;
-import com.company.demo.entity.Category;
-import com.company.demo.entity.Post;
+import com.company.demo.entity.*;
+import com.company.demo.exception.NotFoundException;
 import com.company.demo.model.dto.DetailProductInfoDto;
 import com.company.demo.model.dto.ListProductDto;
 import com.company.demo.model.dto.ProductInfoDto;
 import com.company.demo.model.request.CreateOrderReq;
 import com.company.demo.model.request.FilterProductReq;
-import com.company.demo.service.BlogService;
-import com.company.demo.service.BrandService;
-import com.company.demo.service.CategoryService;
-import com.company.demo.service.ProductService;
+import com.company.demo.security.CustomUserDetails;
+import com.company.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +34,9 @@ public class ShopController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private OrderService orderService;
 
     @GetMapping("/")
     public String getIndexPage(Model model) {
@@ -134,7 +135,14 @@ public class ShopController {
     @GetMapping("/san-pham/{slug}/{id}")
     public String getDetailProductPage(Model model, @PathVariable String id) {
         // Get detail info
-        DetailProductInfoDto product = productService.getDetailProductById(id);
+        DetailProductInfoDto product;
+        try {
+            product = productService.getDetailProductById(id);
+        } catch (NotFoundException ex) {
+            return "error/404";
+        } catch (Exception ex) {
+            return "error/500";
+        }
         model.addAttribute("product", product);
 
         // Get related products
@@ -161,17 +169,32 @@ public class ShopController {
     @GetMapping("/dat-hang")
     public String getCartPage(Model model, @RequestParam String id, @RequestParam int size) {
         // Get detail info
-        DetailProductInfoDto product = productService.getDetailProductById(id);
+        DetailProductInfoDto product;
+        try {
+            product = productService.getDetailProductById(id);
+        } catch (NotFoundException ex) {
+            return "error/404";
+        } catch (Exception ex) {
+            return "error/500";
+        }
         model.addAttribute("product", product);
+
+        // Validate size
+        if (size < 35 || size > 42) {
+            return "error/404";
+        }
 
         // Get list available size
         List<Integer> availableSizes = productService.getListAvailableSize(id);
         model.addAttribute("availableSizes", availableSizes);
-        if (availableSizes.size() > 0) {
-            model.addAttribute("canBuy", true);
-        } else {
-            model.addAttribute("canBuy", false);
+        boolean notFoundSize = true;
+        for (Integer availableSize : availableSizes) {
+            if (availableSize == size) {
+                notFoundSize = false;
+                break;
+            }
         }
+        model.addAttribute("notFoundSize", notFoundSize);
 
         // Render list size
         model.addAttribute("sizeVn", SIZE_VN);
@@ -185,6 +208,10 @@ public class ShopController {
 
     @PostMapping("/api/order")
     public ResponseEntity<?> createOrder(@Valid @RequestBody CreateOrderReq orderReq) {
-        return ResponseEntity.ok("");
+        User user = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
+
+        Order order = orderService.createOrder(orderReq, user.getId());
+
+        return ResponseEntity.ok(order.getId());
     }
 }
