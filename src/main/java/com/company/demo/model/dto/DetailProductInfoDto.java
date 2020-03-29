@@ -26,6 +26,8 @@ public class DetailProductInfoDto {
 
     private long promotionPrice;
 
+    private String couponCode;
+
     private String description;
 
     private Brand brand;

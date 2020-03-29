@@ -53,8 +53,9 @@
         <!-- Currency-->
         <script type="text/javascript" th:src="@{/vendor/currency/currency.min.js}"></script>
         <script th:inline="javascript">
+            let isLogined = [[${isLogined}]];
+
             $(function () {
-                let isLogined = [[${isLogined}]];
                 if (isLogined == true) {
                     signedValidate(true, [[${user_fullname}]]);
                 } else {

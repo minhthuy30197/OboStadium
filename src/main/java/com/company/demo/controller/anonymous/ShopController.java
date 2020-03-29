@@ -6,6 +6,7 @@ import com.company.demo.entity.Post;
 import com.company.demo.model.dto.DetailProductInfoDto;
 import com.company.demo.model.dto.ListProductDto;
 import com.company.demo.model.dto.ProductInfoDto;
+import com.company.demo.model.request.CreateOrderReq;
 import com.company.demo.model.request.FilterProductReq;
 import com.company.demo.service.BlogService;
 import com.company.demo.service.BrandService;
@@ -17,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
 import static com.company.demo.config.Constant.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -154,5 +156,35 @@ public class ShopController {
         model.addAttribute("sizeCm", SIZE_CM);
 
         return "shop/detail";
+    }
+
+    @GetMapping("/dat-hang")
+    public String getCartPage(Model model, @RequestParam String id, @RequestParam int size) {
+        // Get detail info
+        DetailProductInfoDto product = productService.getDetailProductById(id);
+        model.addAttribute("product", product);
+
+        // Get list available size
+        List<Integer> availableSizes = productService.getListAvailableSize(id);
+        model.addAttribute("availableSizes", availableSizes);
+        if (availableSizes.size() > 0) {
+            model.addAttribute("canBuy", true);
+        } else {
+            model.addAttribute("canBuy", false);
+        }
+
+        // Render list size
+        model.addAttribute("sizeVn", SIZE_VN);
+        model.addAttribute("sizeUs", SIZE_US);
+        model.addAttribute("sizeCm", SIZE_CM);
+
+        model.addAttribute("size", size);
+
+        return "shop/payment";
+    }
+
+    @PostMapping("/api/order")
+    public ResponseEntity<?> createOrder(@Valid @RequestBody CreateOrderReq orderReq) {
+        return ResponseEntity.ok("");
     }
 }

@@ -422,8 +422,7 @@
 			   	    $('#filterModal').modal('hide');
 			   	},
 			   	error: function(data) {
-			   	    console.log(data);
-			   		toastr.warning(data.responseJSON.message);
+			   	    toastr.warning(data.responseJSON.message);
 			   	},
 			});
         }

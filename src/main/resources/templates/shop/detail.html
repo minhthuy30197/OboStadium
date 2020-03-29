@@ -67,7 +67,7 @@
                     <span th:if="${canBuy}">Còn hàng</span>
                     <span th:unless="${canBuy}" style="color:#f04e40">Tạm hết hàng</span>
                 </div>
-                <div class="btns" th:if="${canBuy} == true">
+                <div class="btns">
                     <div class="size-btn" data-toggle="modal" data-target="#sizeChooseModal">
                         <button class="btn btn-primary size trans-btn">
                             <span class="size-text">Size</span>
@@ -75,8 +75,8 @@
                             <i class="fas fa-chevron-down dropdown-arrow"></i>
                         </button>
                     </div>
-                    <a class="buy-btn" href="./buy-page.html">
-                        <button class="btn btn-primary buy red-btn">
+                    <div class="buy-btn">
+                        <button class="btn btn-primary buy red-btn" th:classappend="${canBuy} == true ? '' : 'not-buy'">
                             <div class="ask-text left-content">
                                 <th:block th:if="${product.promotionPrice}">
                                     <div class="ask-desc sub-content old-price"><span class="text-price" th:text="${product.price}"></span> &#x20AB;</div>
@@ -91,7 +91,7 @@
                                 <div class="buy-now main-content">Mua ngay</div>
                             </div>
                         </button>
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -201,13 +201,29 @@
             }
           }
 
-          $('.item').addClass('cross')
+          $('.size .item').addClass('cross')
           $(`.item[data-size='${$('.size-details').text()}']`).addClass('size-choose').removeClass('cross');
 
           for (let i = 0; i < availableSizes.length; i++) {
             $(`.item[data-id='${availableSizes[i]}']`).removeClass('cross');
           }
         }
+
+        $('.buy-now').click(function() {
+            if (isLogined == true) {
+                let size = $('.size-choose').data("id");
+                if (size == null || size == "") {
+                    toastr.warning("Sản phẩm tạm hết hàng. Vui lòng đặt hàng sau.");
+                } else {
+                    location.href = "/dat-hang?id="+[[${product.id}]]+"&size="+size;
+                }
+            } else {
+                toastr.warning("Vui lòng đăng nhập để đặt hàng");
+                setTimeout(function() {
+                    $('#signInSignUp').modal('show');
+                }, 500);
+            }
+        })
     </script>
 </th:block>
 </body>

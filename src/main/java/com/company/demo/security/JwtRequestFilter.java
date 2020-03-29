@@ -49,13 +49,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             return;
         }
 
-        // Kiểm tra hạn token
-        Date expiration = claims.getExpiration();
-        if (expiration.before(new Date())) {
-            filterChain.doFilter(httpServletRequest, httpServletResponse);
-            return;
-        }
-
         // Tạo object Authentication
         UsernamePasswordAuthenticationToken authenticationObject = getAuthentication(claims);
         if (authenticationObject == null) {

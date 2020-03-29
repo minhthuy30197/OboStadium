@@ -88,7 +88,6 @@
   justify-content: space-between;
   line-height: 1.5rem;
   padding-bottom: 1.5625rem;
-  border-bottom: 1px solid #D5D6D6;
 }
 .price-include .sub-price-showing {
   font-weight: bold;
@@ -100,7 +99,7 @@
 }
 .coupon .form-control {
   border: none;
-  border-bottom: 1px solid transparent;
+  border-bottom: 1px solid #d5d6d6;
   text-align: right;
   padding-right: 0px;
   border-radius: 0px;

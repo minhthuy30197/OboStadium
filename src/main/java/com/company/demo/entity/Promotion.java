@@ -39,4 +39,7 @@ public class Promotion<Datetime> {
 
     @Column(name = "is_active", columnDefinition = "TINYINT(1)")
     private boolean isActive;
+
+    @Column(name = "is_public", columnDefinition = "TINYINT(1)")
+    private boolean isPublic;
 }

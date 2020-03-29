@@ -215,8 +215,13 @@ function formatDate() {
 
 function formatMoney() {
    $('.text-price').each(function (index, element) {
-        money = $(element).text()
-        $(element).text(money.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ","))
+        money = $(element).text();
+        $(element).text(convertPrice(money));
+   });
+
+   $('.text-price-input').each(function (index, element) {
+        money = $(element).val();
+        $(element).val(convertPrice(money));
    });
 }
 
@@ -231,11 +236,13 @@ function resetModal() {
 
 function signedValidate(status = false, fullname = '') {
   if (status == true) {
+    isLogined = true;
     let signedLink = `
   <a id="account-setting" class="nav-link account-setting" href="./account.html">Xin chào ${fullname}</a>`;
 
     $('.account-setting').replaceWith(signedLink);
   } else {
+    isLogined = false;
     let notSignedLink = `
   <a class="nav-link account-setting" href="" data-toggle="modal" data-target="#signInSignUp">Tài khoản</a>
   `;

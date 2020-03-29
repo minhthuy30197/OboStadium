@@ -1,6 +1,7 @@
 package com.company.demo.security;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,6 +47,10 @@ public class JwtTokenUtil {
         // Kiểm tra token có bắt đầu bằng tiền tố
         if (token == null) return null;
 
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+        try {
+            return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+        } catch (ExpiredJwtException e) {
+            return null;
+        }
     }
 }

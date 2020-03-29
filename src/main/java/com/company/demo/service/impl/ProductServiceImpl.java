@@ -17,10 +17,10 @@ import static com.company.demo.config.Constant.*;
 @Component
 public class ProductServiceImpl implements ProductService {
     @Autowired
-    private ProductRepository productRepository;
+    private PromotionService promotionService;
 
     @Autowired
-    private PromotionRepository promotionRepository;
+    private ProductRepository productRepository;
 
     @Autowired
     private ConfigurationRepository configurationRepository;
@@ -35,14 +35,14 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductInfoDto> getListBestSellerProduct() {
         List<ProductInfoDto> products = productRepository.getListBestSellerProduct(5);
 
-        return checkPromotion(products);
+        return promotionService.checkPublicPromotion(products);
     }
 
     @Override
     public List<ProductInfoDto> getListNewProduct() {
         List<ProductInfoDto> products = productRepository.getListNewProduct(  5);
 
-        return checkPromotion(products);
+        return promotionService.checkPublicPromotion(products);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
             Configuration config = configs.get(0);
             List<ProductInfoDto> products = productRepository.getListSuggestProduct(config.getOboChoices(), 5);
 
-            return checkPromotion(products);
+            return promotionService.checkPublicPromotion(products);
         }
 
         return null;
@@ -76,7 +76,13 @@ public class ProductServiceImpl implements ProductService {
         DetailProductInfoDto dto = ProductMapper.toDetailProductInfoDto(product);
 
         // Check promotion
-        dto.setPromotionPrice(calculatePromotionPrice(dto.getPrice()));
+        Promotion promotion = promotionService.checkPublicPromotion();
+        if (promotion != null) {
+            dto.setCouponCode(promotion.getCouponCode());
+            dto.setPromotionPrice(promotionService.calculatePromotionPrice(dto.getPrice(), promotion));
+        } else {
+            dto.setCouponCode("");
+        }
 
         return dto;
     }
@@ -90,7 +96,7 @@ public class ProductServiceImpl implements ProductService {
 
         List<ProductInfoDto> products = productRepository.getRelatedProducts(id, product.get().getBrand().getId(), 5);
 
-        return checkPromotion(products);
+        return promotionService.checkPublicPromotion(products);
     }
 
     @Override
@@ -120,7 +126,7 @@ public class ProductServiceImpl implements ProductService {
         // Calculate total pages
         int totalPages = page.calculateTotalPage(totalItems);
 
-        ListProductDto result = new ListProductDto(checkPromotion(products), totalPages, req.getPage());
+        ListProductDto result = new ListProductDto(promotionService.checkPublicPromotion(products), totalPages, req.getPage());
 
         return result;
     }
@@ -145,58 +151,8 @@ public class ProductServiceImpl implements ProductService {
 
         int totalPages = pageInfo.calculateTotalPage(totalItems);
 
-        ListProductDto result = new ListProductDto(checkPromotion(products), totalPages, page);
+        ListProductDto result = new ListProductDto(promotionService.checkPublicPromotion(products), totalPages, page);
 
         return result;
-    }
-
-    public List<ProductInfoDto> checkPromotion(List<ProductInfoDto> products) {
-        List<ProductInfoDto> rs = products;
-
-        // Check has promotion
-        Promotion promotion = promotionRepository.checkHasPromotion();
-        if (promotion != null) {
-            // Calculate promotion price
-            for (ProductInfoDto product : products) {
-                long discountValue = promotion.getMaximumDiscountValue();
-                if (promotion.getDiscountType() == DISCOUNT_PERCENT) {
-                    long tmp = product.getPrice() * promotion.getDiscountValue() / 100;
-                    if (tmp < discountValue) {
-                        discountValue = tmp;
-                    }
-                }
-
-                long promotionPrice = product.getPrice() - discountValue;
-                if (promotionPrice > 0) {
-                    product.setPromotionPrice(promotionPrice);
-                } else {
-                    product.setPromotionPrice(0);
-                }
-            }
-        }
-
-        return rs;
-    }
-
-    public Long calculatePromotionPrice(Long price) {
-        Promotion promotion = promotionRepository.checkHasPromotion();
-        if (promotion != null) {
-            long discountValue = promotion.getMaximumDiscountValue();
-            if (promotion.getDiscountType() == DISCOUNT_PERCENT) {
-                long tmp = price * promotion.getDiscountValue() / 100;
-                if (tmp < discountValue) {
-                    discountValue = tmp;
-                }
-            }
-
-            long promotionPrice = price - discountValue;
-            if (promotionPrice < 0) {
-                promotionPrice = 0;
-            }
-
-            return promotionPrice;
-        }
-
-        return null;
     }
 }

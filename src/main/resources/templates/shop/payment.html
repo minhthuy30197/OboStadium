@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(
+                                                ~{:: title},
+                                                'short-header',
+                                                ~{:: #css-resources},
+                                                ~{:: #js-resources},
+                                                ~{:: #main-content}
+                                               )}">
+
+<head>
+    <title>Đặt hàng</title>
+
+    <th:block id="css-resources">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/header.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/buying/product-info.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/buying/pricing.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/buying/shipping-info.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/product-details/size-choose.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/buying/buying-section.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/product-details/size-guide-table.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/input-radio.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/except-home-page.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/buying.css}"/>
+    </th:block>
+</head>
+<body>
+<main id="main-content">
+    <div class="main-wrapper container">
+        <div class="row">
+            <!-- Product Info Section-->
+            <section class="product-info-wrapper col-lg-7">
+                <div class="product-info">
+                    <div class="product-name" th:text="${product.name}"></div>
+                    <a class="product-image" th:href="@{/san-pham/{slug}/{id}(id=${product.id}, slug=${product.slug})}">
+                        <img class="img-fluid" th:src="@{/image/product-details-image/1.jpg}" alt="image-1"/>
+                    </a>
+                </div>
+            </section>
+            <!-- Buying Function Section-->
+            <section class="buying col-lg-5">
+                <!-- Adress Section-->
+                <div class="address-info-wrapper childs">
+                    <div class="coupon price-include">
+                        <div class="text">Người nhận hàng</div>
+                        <div>
+                            <input class="form-control" placeholder="Nhập tên người nhận" type="text" th:value="${user_fullname}" id="in-user-fullname"/>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="coupon price-include">
+                        <div class="text">Điện thoại</div>
+                        <div>
+                            <input class="form-control" placeholder="Nhập số điện thoại" type="text" th:value="${user_phone}" id="in-user-phone"/>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="coupon price-include">
+                        <div class="text">Địa chỉ</div>
+                        <div>
+                            <textarea class="form-control" placeholder="Nhập địa chỉ" rows="2" th:text="${user_address}" id="in-user-address"></textarea>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group" style="margin-top:30px">
+                    <input type="text" class="form-control" placeholder="Nhập mã khuyến mãi" id="in-coupon" th:value="${product.couponCode}">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="btn-apply-coupon">Áp dụng khuyến mãi</button>
+                    </div>
+                </div>
+                <!-- Pricing Section-->
+                <div class="pricing childs">
+                    <div class="size-btn" data-toggle="modal" data-target="#sizeChooseModal">
+                        <button class="btn btn-primary size trans-btn"><span class="size-text">Size</span><span class="size-details">9US | 42.5VN | 26.2CM</span><i class="fas fa-chevron-down dropdown-arrow"></i></button>
+                    </div>
+                    <div class="coupon price-include">
+                        <div class="text">Giá sản phẩm</div>
+                        <input class="form-control text-price-input" id="in-price" type="text" th:value="${product.price}" readonly/>
+                    </div>
+                    <div class="coupon price-include">
+                        <div class="text">Khuyến mãi</div>
+                        <input class="form-control text-price-input" id="in-promotion-value" type="text" readonly/>
+                    </div>
+                    <div class="coupon price-include">
+                        <div class="text">Tổng thanh toán</div>
+                        <input class="form-control text-price-input" id="in-total-price" type="text" readonly/>
+                    </div>
+                </div>
+                <a th:href="@{/san-pham/{slug}/{id}(id=${product.id}, slug=${product.slug})}">
+                    <button class="btn btn-secondary confirm-btn">Quay lại</button>
+                </a>
+                <button class="btn btn-primary confirm-btn red-btn" id="btn-buy-now">Mua ngay</button>
+            </section>
+        </div>
+    </div>
+
+    <!-- Modals-->
+    <th:block th:replace="~{fragment/size_choose_modal :: size-choose-modal}"></th:block>
+    <div class="modal fade" id="addNewShipping" tabindex="-1" role="dialog" aria-labelledby="addNewShippingLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addNewShippingLabel">Thêm địa chỉ mới</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <form class="modal-body">
+                    <input class="form-control full-name" placeholder="Họ và tên" data-name="Họ và tên"/>
+                    <div class="invalid-feedback"> </div>
+                    <input class="form-control phone" placeholder="Số điện thoại" data-name="Số điện thoại"/>
+                    <div class="invalid-feedback"> </div>
+                    <select class="custom-select city" data-name="Thành phố"></select>
+                    <div class="invalid-feedback"> </div>
+                    <select class="custom-select district" data-name="Quận/Huyện">
+                        <option>Quận/Huyện</option>
+                    </select>
+                    <div class="invalid-feedback"> </div>
+                    <select class="custom-select ward" data-name="Phường/Xã">
+                        <option>Phường/Xã</option>
+                    </select>
+                    <div class="invalid-feedback"> </div>
+                    <textarea class="form-control address" placeholder="Địa chỉ" data-name="Địa chỉ"></textarea>
+                    <div class="invalid-feedback"> </div>
+                </form>
+                <div class="modal-footer">
+                    <button class="btn" type="button" data-dismiss="modal">Huỷ bỏ</button>
+                    <button class="btn btn-primary red-btn save" type="button">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<th:block id="js-resources">
+    <script th:src="@{/script/except-home-page.js}"></script>
+    <script th:src="@{/script/size-choose.js}"></script>
+    <script th:src="@{/script/buy-page.js}"></script>
+    <script th:inline="javascript">
+        let price = [[${product.price}]];
+
+        let promotionValue = 0;
+        let totalPrice = price;
+
+        if ([[${product.promotionPrice}]] != null) {
+            totalPrice = [[${product.promotionPrice}]];
+            promotionValue = price - totalPrice;
+        }
+        $('#in-total-price').val(totalPrice);
+        $('#in-promotion-value').val(promotionValue);
+
+        let couponCode = [[${product.couponCode}]];
+
+        let sizeVn = [[${sizeVn}]];
+
+        let sizeUs = [[${sizeUs}]];
+
+        let sizeCm = [[${sizeCm}]];
+
+        function render() {
+          for (let i = 0; i < sizeVn.length; i++) {
+            let sizeChoose = `
+            <div class="item" data-size="${sizeUs[i]}US | ${sizeVn[i]}VN | ${sizeCm[i]}CM" data-id="${sizeVn[i]}">
+                ${sizeVn[i]}
+            </div>
+            `;
+
+            $('.size .select-filter').append(sizeChoose);
+          };
+        };
+
+        function sizeGuideRender() {
+          let tr = '';
+          for (let i = 0; i < sizeVn.length; i++) {
+            tr += `
+            <tr>
+              <td>${sizeVn[i]}</td>
+              <td>${sizeUs[i]}</td>
+              <td>${sizeCm[i]}</td>
+            </tr>
+            `;
+          }
+          $('.side-guide-table tbody').html(tr);
+        }
+
+        function activeSize() {
+          let availableSizes = [[${availableSizes}]]
+
+          for (let i = 0; i < sizeVn.length; i++) {
+            if (sizeVn[i] == [[${size}]]) {
+              $('.size-details').text(sizeUs[i] + "US | " + sizeVn[i] + "VN | " + sizeCm[i] + "CM")
+              break;
+            }
+          }
+
+          $('.size .item').addClass('cross')
+          $(`.item[data-size='${$('.size-details').text()}']`).addClass('size-choose').removeClass('cross');
+
+          for (let i = 0; i < availableSizes.length; i++) {
+            $(`.item[data-id='${availableSizes[i]}']`).removeClass('cross');
+          }
+        }
+
+        $('#btn-apply-coupon').click(function() {
+            let coupon = $('#in-coupon').val();
+            if (coupon == "") {
+                $('#in-coupon').val(couponCode);
+                toastr.warning("Bạn chưa nhập mã khuyến mãi");
+                return;
+            }
+            $.ajax({
+			   	url: '/api/check-hidden-promotion?code='+coupon,
+			   	type: 'GET',
+			   	contentType: "application/json; charset=utf-8",
+			   	success: function(data) {
+                    couponCode = coupon;
+                    let tmp = data.discountValue;
+                    if (data.discountType == 1) {
+                        tmp = price * data.discountValue / 100;
+                    }
+                    if (tmp < data.maximumDiscountValue) {
+                        promotionValue = tmp;
+                    } else {
+                        promotionValue = data.maximumDiscountValue;
+                    }
+                    totalPrice = price - promotionValue;
+                    $('#in-price').val(price);
+                    $('#in-promotion-value').val(promotionValue);
+                    $('#in-total-price').val(totalPrice);
+                    formatMoney();
+			   	},
+			   	error: function(data) {
+			   	    $('#in-coupon').val(couponCode);
+			   		toastr.warning(data.responseJSON.message);
+			   	},
+			});
+        })
+
+        $('#btn-buy-now').click(function() {
+            let receiverName = $('#in-user-fullname').val();
+            let receiverPhone = $('#in-user-phone').val();
+            let receiverAddress = $('#in-user-address').val();
+            let isValid = true;
+            if (receiverName.length == 0) {
+                fullNameInvalid = $('#in-user-fullname').next();
+                fullNameInvalid.css('display', 'block');
+                fullNameInvalid.html('Vui lòng nhập họ tên người nhận hàng');
+                isValid = false;
+            }
+            if (receiverPhone.length == 0) {
+                phoneInvalid = $('#in-user-phone').next();
+                phoneInvalid.css('display', 'block');
+                phoneInvalid.html('Vui lòng nhập số điện thoại người nhận hàng');
+                isValid = false;
+            }
+            let phoneFormat = new RegExp(/((09|03|07|08|05)+([0-9]{8})\b)/g);
+            if (!phoneFormat.test(receiverPhone)) {
+                phoneInvalid = $('#in-user-phone').next();
+                phoneInvalid.css('display', 'block');
+                phoneInvalid.html('Số điện thoại không hợp lệ');
+                isValid = false;
+            }
+            if (receiverAddress.length == 0) {
+                addressInvalid = $('#in-user-address').next();
+                addressInvalid.css('display', 'block');
+                addressInvalid.html('Vui lòng nhập địa chỉ nhận hàng');
+                isValid = false;
+            }
+
+            if (isValid) {
+                req = {
+                    product_id: [[${product.id}]],
+                    receiver_name: receiverName,
+                    receiver_phone: receiverPhone,
+                    receiver_address: receiverAddress,
+                    coupon_code: couponCode,
+                    total_price: totalPrice,
+                    price: price
+                }
+                var myJSON = JSON.stringify(req);
+                $.ajax({
+                    url: '/api/order',
+                    type: 'POST',
+                    data: myJSON,
+                    contentType: "application/json; charset=utf-8",
+                    success: function(data) {
+
+                    },
+                    error: function(data) {
+                        toastr.warning(data.responseJSON.message);
+                    },
+                });
+            }
+        })
+    </script>
+</th:block>
+</body>
+</html>
+
+
