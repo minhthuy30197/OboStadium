@@ -52,7 +52,7 @@ public class WebSecurityConfig<CustomUserDetailService> extends WebSecurityConfi
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/api/order").authenticated()
+                .antMatchers("/api/order", "/tai-khoan", "/tai-khoan/**", "/api/change-password", "/api/update-profile").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .exceptionHandling()

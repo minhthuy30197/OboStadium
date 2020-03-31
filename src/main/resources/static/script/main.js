@@ -43,9 +43,9 @@ $(document).on('click', function (e) {
       signInEmailInvalid.html('Email không hợp lệ');
       isValid = false;
     }
-    if (signInPasswordValue == "") {
+    if (signInPasswordValue.length < 4 || signInPasswordValue.length > 20) {
       signInPasswordInvalid.css('display', 'block');
-      signInPasswordInvalid.html('Vui lòng nhập password')
+      signInPasswordInvalid.html('Độ dài mật khẩu từ 4 - 20 ký tự')
       isValid = false;
     }
 
@@ -125,16 +125,16 @@ $(document).on('click', function (e) {
     }
 
     // Validate password
-    if (passwordValue == "") {
+    if (passwordValue.length < 4 || passwordValue.length > 20) {
       passwordInvalid.css('display', 'block');
-      passwordInvalid.html('Vui lòng nhập password');
+      passwordInvalid.html('Độ dài mật khẩu từ 4 - 20 ký tự');
       isValid = false;
     }
 
     // Validate confirm password
-    if (confirmPasswordValue == "") {
+    if (confirmPasswordValue < 4 || passwordValue.length > 20) {
       confirmPasswordInvalid.css('display', 'block');
-      confirmPasswordInvalid.html('Vui lòng xác nhận lại password');
+      confirmPasswordInvalid.html('Độ dài xác nhận mật khẩu từ 4 - 20 ký tự');
       isValid = false;
     } else if (confirmPasswordValue !== passwordValue) {
       confirmPasswordInvalid.css('display', 'block');
@@ -238,7 +238,7 @@ function signedValidate(status = false, fullname = '') {
   if (status == true) {
     isLogined = true;
     let signedLink = `
-  <a id="account-setting" class="nav-link account-setting" href="./account.html">Xin chào ${fullname}</a>`;
+  <a id="account-setting" class="nav-link account-setting" href="/tai-khoan">Xin chào ${fullname}</a>`;
 
     $('.account-setting').replaceWith(signedLink);
   } else {
@@ -274,3 +274,4 @@ function searchProductByKeyword() {
     }
     location.href="/api/tim-kiem?keyword="+keyword;
 }
+

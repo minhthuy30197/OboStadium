@@ -12,6 +12,13 @@ body {
   color: #333333;
 }
 
+.required-label::after {
+  content: "*";
+  color: red;
+  margin-left: 5px;
+}
+
+
 .navbar-expand-lg .navbar-nav .nav-link {
   padding: 0px 0.9375rem 0.9375rem 0.9375rem;
   transition: all 0.3s ease;

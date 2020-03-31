@@ -42,21 +42,21 @@
                 <!-- Adress Section-->
                 <div class="address-info-wrapper childs">
                     <div class="coupon price-include">
-                        <div class="text">Người nhận hàng</div>
+                        <div class="text required-label">Người nhận hàng</div>
                         <div>
                             <input class="form-control" placeholder="Nhập tên người nhận" type="text" th:value="${user_fullname}" id="in-user-fullname"/>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="coupon price-include">
-                        <div class="text">Điện thoại</div>
+                        <div class="text required-label">Điện thoại</div>
                         <div>
                             <input class="form-control" placeholder="Nhập số điện thoại" type="text" th:value="${user_phone}" id="in-user-phone"/>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="coupon price-include">
-                        <div class="text">Địa chỉ</div>
+                        <div class="text required-label">Địa chỉ</div>
                         <div>
                             <textarea class="form-control" placeholder="Nhập địa chỉ" rows="2" th:text="${user_address}" id="in-user-address"></textarea>
                             <div class="invalid-feedback"></div>

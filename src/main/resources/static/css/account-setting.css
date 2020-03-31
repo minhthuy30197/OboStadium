@@ -24,6 +24,16 @@
   margin-bottom: 1.25rem;
 }
 
+.password-wrapper-in {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.password-wrapper-in .text-btn {
+  margin-left: 1rem;
+}
+
 .password-wrapper {
   display: flex;
   align-items: center;
