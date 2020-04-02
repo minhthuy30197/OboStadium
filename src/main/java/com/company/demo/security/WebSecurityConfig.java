@@ -73,6 +73,6 @@ public class WebSecurityConfig<CustomUserDetailService> extends WebSecurityConfi
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
-                .antMatchers("/css/**", "/script/**", "/image/**", "/vendor/**", "/favicon.ico");
+                .antMatchers("/css/**", "/script/**", "/image/**", "/vendor/**", "/favicon.ico", "/adminlte/**");
     }
 }

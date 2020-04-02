@@ -1,0 +1,219 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="main-fragment(title, cssResources, jsResources, mainContent)">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <link rel="icon" th:href="@{/image/favicon.ico}" type="image/x-icon"/>
+        <link rel="shortcut icon" th:href="@{/image/favicon.ico}" type="image/x-icon"/>
+        <title th:replace="${title}">Page Title</title>
+        <!-- Font Awesome Icons -->
+        <link rel="stylesheet" th:href="@{/adminlte/plugins/fontawesome-free/css/all.min.css}">
+        <!-- overlayScrollbars -->
+        <link rel="stylesheet" th:href="@{/adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css}">
+        <!-- Theme style -->
+        <link rel="stylesheet" th:href="@{/adminlte/dist/css/adminlte.min.css}">
+        <!-- Google Font: Source Sans Pro -->
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+        <!-- Toastr JS-->
+        <script type="text/javascript" th:src="@{/vendor/toastr/toastr.min.js}"></script>
+        <!-- Components CSS -->
+        <th:block th:replace="${cssResources} ?: ~{}"></th:block>
+    </head>
+    <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+        <div class="wrapper">
+            <!-- Navbar -->
+            <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+                <!-- Left navbar links -->
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                    </li>
+                </ul>
+
+                <!-- Right navbar links -->
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" data-toggle="dropdown" href="#">
+                            <i class="fas fa-user"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+                            <a href="/tai-khoan" class="dropdown-item">
+                                <div class="media">
+                                    Trang chủ
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="/tai-khoan" class="dropdown-item">
+                                <div class="media">
+                                    Cập nhật profile
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="/api/logout" class="dropdown-item">
+                                <div class="media">
+                                    Đăng xuất
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Main Sidebar Container -->
+            <aside class="main-sidebar sidebar-dark-primary elevation-4">
+                <!-- Brand Logo -->
+                <a href="/" class="brand-link">
+                    <img th:src="@{/image/short-logo.png}" alt="Logo" class="brand-image">
+                    <span class="brand-text font-weight-light">Obo Stadium</span>
+                </a>
+
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <!-- Sidebar Menu -->
+                    <nav class="mt-2">
+                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                            <li class="nav-item has-treeview">
+                                <a href="/admin" class="nav-link">
+                                    <i class="nav-icon fas fa-chart-line"></i>
+                                    <p>
+                                        Dashboard
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="/admin/orders" class="nav-link">
+                                    <i class="nav-icon fas fa-shopping-cart"></i>
+                                    <p>
+                                        Quản lý đơn hàng
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="/admin/orders" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Danh sách đơn hàng</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/admin/orders/create" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Tạo đơn hàng</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="/admin/products" class="nav-link">
+                                    <i class="nav-icon fas fa-star"></i>
+                                    <p>
+                                        Quản lý sản phẩm
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+
+                                </ul>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="/admin/promotions" class="nav-link">
+                                    <i class="nav-icon fas fa-ad"></i>
+                                    <p>
+                                        Quản lý khuyến mãi
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+
+                                </ul>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="/admin/categories" class="nav-link">
+                                    <i class="nav-icon fas fa-layer-group"></i>
+                                    <p>
+                                        Quản lý category
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+
+                                </ul>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="/admin/posts" class="nav-link">
+                                    <i class="nav-icon fas fa-file"></i>
+                                    <p>
+                                        Quản lý blog
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="/admin/posts" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Danh sách bài viết</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/admin/posts/create" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Tạo bài viết mới</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="/admin/users" class="nav-link">
+                                    <i class="nav-icon fas fa-users"></i>
+                                    <p>
+                                        Quản lý user
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+
+                                </ul>
+                            </li>
+                            <li class="nav-item has-treeview">
+                                <a href="/admin/config" class="nav-link">
+                                    <i class="nav-icon fas fa-wrench"></i>
+                                    <p>
+                                        Cấu hình hệ thống
+                                        <i class="fas fa-angle-left right"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Main content -->
+                <section class="content" style="padding:1rem;">
+                    <div class="container-fluid">
+                        <th:block th:replace="${mainContent} ?: ~{}"></th:block>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- jQuery -->
+        <script type="text/javascript" th:src="@{/vendor/jquery/jquery-3.4.1.min.js}"></script>
+        <!-- Bootstrap -->
+        <script type="text/javascript" th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <!-- overlayScrollbars -->
+        <script th:src="@{/adminlte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"></script>
+        <!-- AdminLTE App -->
+        <script th:src="@{/adminlte/dist/js/adminlte.js}"></script>
+        <!-- Toastr JS-->
+        <script type="text/javascript" th:src="@{/vendor/toastr/toastr.min.js}"></script>
+        <!-- Common JS-->
+        <th:block th:replace="${jsResources} ?: ~{}"></th:block>
+    </body>
+</html>
