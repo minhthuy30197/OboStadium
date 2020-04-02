@@ -42,170 +42,52 @@
             <div class="main-content">
                 <div class="nav-tab">
                     <ul class="nav nav-pills" id="pills-tab" role="tablist">
-                        <li class="nav-item"><a class="nav-link active" id="pending-tab" data-toggle="pill" href="#pending" role="tab" aria-controls="pending" aria-selected="true">Ch&#x1EDD; l&#x1EA5;y h&agrave;ng</a></li>
-                        <li class="nav-item"><a class="nav-link" id="sell-tab" data-toggle="pill" href="#sell" role="tab" aria-controls="sell" aria-selected="false">&Dstrok;ang giao h&agrave;ng</a></li>
-                        <li class="nav-item"><a class="nav-link" id="sell-tab" data-toggle="pill" href="#sell" role="tab" aria-controls="sell" aria-selected="false">&Dstrok;&atilde; giao h&agrave;ng</a></li>
-                        <li class="nav-item"><a class="nav-link" id="canceled-tab" data-toggle="pill" href="#canceled" role="tab" aria-controls="canceled" aria-selected="false">&Dstrok;&atilde; hu&#x1EF7;</a></li>
+                        <li class="nav-item"><div class="nav-link active order-status" data-status="1">Chờ lấy hàng</div></li>
+                        <li class="nav-item"><div class="nav-link order-status" data-status="2">&Dstrok;ang giao h&agrave;ng</div></li>
+                        <li class="nav-item"><div class="nav-link order-status" data-status="3">&Dstrok;&atilde; giao h&agrave;ng</div></li>
+                        <li class="nav-item"><div class="nav-link order-status" data-status="4">Đã hủy</div></li>
+                        <li class="nav-item"><div class="nav-link order-status" data-status="5">&Dstrok;&atilde; trả h&agrave;ng</div></li>
                     </ul>
                 </div>
                 <div class="tab-content" id="pills-tabContent">
-                    <!-- pending Section-->
-                    <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">
-                        <!-- Item-->
-                        <div class="item">
-                            <div class="header-item">
-                                <div class="order-number-wrapper">M&atilde; &dstrok;&#x1A1;n <a class="order-number" href="./order-details.html">#123abc</a></div><a class="full-details" href="./order-details.html">Xem chi ti&#x1EBF;t</a>
-                            </div>
-                            <div class="item-info-wrapper">
-                                <div class="product-info-wrapper">
-                                    <div class="thumbnails"><img class="img-fluid" src="./image/product/yeezy-700-waverunner-solid-grey.jpg" alt=""/></div>
-                                    <div class="product-info"><a class="name" href="product-details.html">Adidas Yeezy Boost 700 Wave Runner Solid Grey</a>
-                                        <div class="size">8US | 41VN | 26CM</div>
+                    <div class="tab-pane fade show active" id="list-order" role="tabpanel" aria-labelledby="pending-tab">
+                        <th:block th:each="item : ${orders}">
+                            <!-- Item -->
+                            <div class="item">
+                                <div class="header-item">
+                                    <div class="order-number-wrapper">
+                                        Mã đơn <a class="order-number" th:href="@{/tai-khoan/lich-su-giao-dich/{id}(id=${item.id})}" th:text="'#'+${item.id}"></a>
                                     </div>
+                                    <a class="full-details" th:href="@{/tai-khoan/lich-su-giao-dich/{id}(id=${item.id})}">Xem chi tiết</a>
                                 </div>
-                                <div class="price bid-price">9.310.000 &#x20AB;</div>
-                            </div>
-                        </div>
-                        <!-- Item Small-->
-                        <div class="item-small">
-                            <div class="order-number-wrapper">M&atilde; &dstrok;&#x1A1;n <a class="order-number" href="./order-details.html">#123abc</a></div>
-                            <div class="item-info-wrapper">
-                                <div class="product-info-wrapper">
-                                    <div class="product-info"><a class="name" href="product-details.html">Adidas Yeezy Boost 700 Wave Runner Solid Grey</a>
-                                        <div class="size">8US | 41VN | 26CM</div>
+                                <div class="item-info-wrapper">
+                                    <div class="product-info-wrapper">
+                                        <div class="thumbnails"><img class="img-fluid" th:src="@{${item.productImg}}" th:alt="${item.productName}"/></div>
+                                        <div class="product-info"><span class="name" th:text="${item.productName}"></span>
+                                            <div class="size"><span th:text="${item.sizeUs}"></span>US | <span th:text="${item.sizeVn}"></span>VN | <span th:text="${item.sizeCm}"></span>CM</div>
+                                        </div>
                                     </div>
+                                    <div class="price bid-price"><span class="text-price" th:text="${item.totalPrice}"></span> &#x20AB;</div>
                                 </div>
-                                <div class="price bid-price">9.310.000 &#x20AB;</div>
                             </div>
-                        </div>
-                        <!-- Item-->
-                        <div class="item">
-                            <div class="header-item">
-                                <div class="order-number-wrapper">M&atilde; &dstrok;&#x1A1;n <a class="order-number" href="#">#123abc</a></div><a class="full-details" href="#">Xem chi ti&#x1EBF;t</a>
-                            </div>
-                            <div class="item-info-wrapper">
-                                <div class="product-info-wrapper">
-                                    <div class="thumbnails"><img class="img-fluid" src="./image/product/yeezy-700-waverunner-solid-grey.jpg" alt=""/></div>
-                                    <div class="product-info"><a class="name" href="product-details.html">Adidas Yeezy Boost 700 Wave Runner Solid Grey</a>
-                                        <div class="size">8US | 41VN | 26CM</div>
+                            <!-- Item Small-->
+                            <div class="item-small">
+                                <div class="order-number-wrapper">
+                                    Mã đơn <a class="order-number" th:href="@{/tai-khoan/lich-su-giao-dich/{id}(id=${item.id})}" th:text="'#'+${item.id}"></a>
+                                </div>
+                                <div class="item-info-wrapper">
+                                    <div class="product-info-wrapper">
+                                        <div class="product-info">
+                                            <a class="name" th:href="@{/tai-khoan/lich-su-giao-dich/{id}(id=${item.id})}" th:text="${item.productName}"></a>
+                                            <div class="size">
+                                                <span th:text="${item.sizeUs}"></span>US | <span th:text="${item.sizeVn}"></span>VN | <span th:text="${item.sizeCm}"></span>CM
+                                            </div>
+                                        </div>
                                     </div>
+                                    <div class="price bid-price"><span class="text-price" th:text="${item.totalPrice}"></span> &#x20AB;</div>
                                 </div>
-                                <div class="price bid-price">9.310.000 &#x20AB;</div>
                             </div>
-                        </div>
-                        <!-- Item Small-->
-                        <div class="item-small">
-                            <div class="order-number-wrapper">M&atilde; &dstrok;&#x1A1;n <a class="order-number" href="#">#123abc</a></div>
-                            <div class="item-info-wrapper">
-                                <div class="product-info-wrapper">
-                                    <div class="product-info"><a class="name" href="product-details.html">Adidas Yeezy Boost 700 Wave Runner Solid Grey</a>
-                                        <div class="size">8US | 41VN | 26CM</div>
-                                    </div>
-                                </div>
-                                <div class="price bid-price">9.310.000 &#x20AB;</div>
-                            </div>
-                        </div>
-                        <!-- Item-->
-                        <div class="item">
-                            <div class="header-item">
-                                <div class="order-number-wrapper">M&atilde; &dstrok;&#x1A1;n <a class="order-number" href="#">#123abc</a></div><a class="full-details" href="#">Xem chi ti&#x1EBF;t</a>
-                            </div>
-                            <div class="item-info-wrapper">
-                                <div class="product-info-wrapper">
-                                    <div class="thumbnails"><img class="img-fluid" src="./image/product/yeezy-700-waverunner-solid-grey.jpg" alt=""/></div>
-                                    <div class="product-info"><a class="name" href="product-details.html">Adidas Yeezy Boost 700 Wave Runner Solid Grey</a>
-                                        <div class="size">8US | 41VN | 26CM</div>
-                                    </div>
-                                </div>
-                                <div class="price bid-price">9.310.000 &#x20AB;</div>
-                            </div>
-                        </div>
-                        <!-- Item Small-->
-                        <div class="item-small">
-                            <div class="order-number-wrapper">M&atilde; &dstrok;&#x1A1;n <a class="order-number" href="#">#123abc</a></div>
-                            <div class="item-info-wrapper">
-                                <div class="product-info-wrapper">
-                                    <div class="product-info"><a class="name" href="product-details.html">Adidas Yeezy Boost 700 Wave Runner Solid Grey</a>
-                                        <div class="size">8US | 41VN | 26CM</div>
-                                    </div>
-                                </div>
-                                <div class="price bid-price">9.310.000 &#x20AB;</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Asks Section-->
-                    <div class="tab-pane fade" id="canceled" role="tabpanel" aria-labelledby="canceled-tab">
-                        <!-- Item-->
-                        <div class="item">
-                            <div class="header-item">
-                                <div class="order-number-wrapper">M&atilde; &dstrok;&#x1A1;n <a class="order-number" href="./order-details-canceled.html">#123abc</a></div><a class="full-details" href="./order-details-canceled.html">Xem chi ti&#x1EBF;t</a>
-                            </div>
-                            <div class="item-info-wrapper">
-                                <div class="product-info-wrapper">
-                                    <div class="thumbnails"><img class="img-fluid" src="./image/product/yeezy-700-waverunner-solid-grey.jpg" alt=""/></div>
-                                    <div class="product-info"><a class="name" href="product-details.html">Adidas Yeezy Boost 700 Wave Runner Solid Grey</a>
-                                        <div class="size">8US | 41VN | 26CM</div>
-                                    </div>
-                                </div>
-                                <div class="price bid-price">9.310.000 &#x20AB;</div>
-                            </div>
-                        </div>
-                        <!-- Item Small-->
-                        <div class="item-small">
-                            <div class="order-number-wrapper">M&atilde; &dstrok;&#x1A1;n <a class="order-number" href="./order-details-canceled.html">#123abc</a></div>
-                            <div class="item-info-wrapper">
-                                <div class="product-info-wrapper">
-                                    <div class="product-info"><a class="name" href="product-details.html">Adidas Yeezy Boost 700 Wave Runner Solid Grey</a>
-                                        <div class="size">8US | 41VN | 26CM</div>
-                                    </div>
-                                </div>
-                                <div class="price bid-price">9.310.000 &#x20AB;</div>
-                            </div>
-                        </div>
-                        <!-- Item-->
-                        <div class="item">
-                            <div class="header-item">
-                                <div class="order-number-wrapper">M&atilde; &dstrok;&#x1A1;n <a class="order-number" href="#">#123abc</a></div><a class="full-details" href="#">Xem chi ti&#x1EBF;t</a>
-                            </div>
-                            <div class="item-info-wrapper">
-                                <div class="product-info-wrapper">
-                                    <div class="thumbnails"><img class="img-fluid" src="./image/product/yeezy-700-waverunner-solid-grey.jpg" alt=""/></div>
-                                    <div class="product-info"><a class="name" href="product-details.html">Adidas Yeezy Boost 700 Wave Runner Solid Grey</a>
-                                        <div class="size">8US | 41VN | 26CM</div>
-                                    </div>
-                                </div>
-                                <div class="price bid-price">9.310.000 &#x20AB;</div>
-                            </div>
-                        </div>
-                        <!-- Item Small-->
-                        <div class="item-small">
-                            <div class="order-number-wrapper">M&atilde; &dstrok;&#x1A1;n <a class="order-number" href="#">#123abc</a></div>
-                            <div class="item-info-wrapper">
-                                <div class="product-info-wrapper">
-                                    <div class="product-info"><a class="name" href="product-details.html">Adidas Yeezy Boost 700 Wave Runner Solid Grey</a>
-                                        <div class="size">8US | 41VN | 26CM</div>
-                                    </div>
-                                </div>
-                                <div class="price bid-price">9.310.000 &#x20AB;</div>
-                            </div>
-                        </div>
-                        <!-- Item-->
-                        <div class="item">
-                            <div class="header-item">
-                                <div class="order-number-wrapper">M&atilde; &dstrok;&#x1A1;n <a class="order-number" href="#">#123abc</a></div><a class="full-details" href="#">Xem chi ti&#x1EBF;t</a>
-                            </div>
-                            <div class="item-info-wrapper">
-                                <div class="product-info-wrapper">
-                                    <div class="thumbnails"><img class="img-fluid" src="./image/product/yeezy-700-waverunner-solid-grey.jpg" alt=""/></div>
-                                    <div class="product-info"><a class="name" href="product-details.html">Adidas Yeezy Boost 700 Wave Runner Solid Grey</a>
-                                        <div class="size">8US | 41VN | 26CM</div>
-                                    </div>
-                                </div>
-                                <div class="price bid-price">9.310.000 &#x20AB;</div>
-                            </div>
-                        </div>
-                        <!-- Item Small-->
-                        <div class="item-small"></div>
+                        </th:block>
                     </div>
                 </div>
             </div>

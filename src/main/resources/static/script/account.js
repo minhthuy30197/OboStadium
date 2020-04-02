@@ -54,6 +54,7 @@ $('.btn-confirm-change-password').click(function() {
                 toastr.success("Đổi mật khẩu thành công");
                 clearInputChangePassword();
                 $('.modal').modal('hide');
+                formatMoney();
             },
             error: function(data) {
                 toastr.warning(data.responseJSON.message);

@@ -24,4 +24,5 @@ public class Constant {
     public static final int COMPLETE_STATUS = 3;
     public static final int RETURNED_STATUS = 4;
     public static final int CANCELED_STATUS = 5;
+    public static ArrayList<Integer> LIST_ORDER_STATUS = new ArrayList<>(Arrays.asList(ORDER_STATUS, DELIVERY_STATUS, COMPLETE_STATUS, RETURNED_STATUS, CANCELED_STATUS));
 }

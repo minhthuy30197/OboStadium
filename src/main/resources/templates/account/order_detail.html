@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout :: main-fragment(
+                                                ~{:: title},
+                                                'short-header',
+                                                ~{:: #css-resources},
+                                                ~{:: #js-resources},
+                                                ~{:: #main-content}
+                                               )}">
+
+<head>
+    <title>Thông tin đơn hàng</title>
+
+    <th:block id="css-resources">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/components/header.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/except-home-page.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/account.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/bid-details.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/order-details.css}"/>
+    </th:block>
+</head>
+<body>
+<main id="main-content" class="container">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="left-sidebar">
+                <div class="header">
+                    <div class="avatar"><img class="img-fluid" th:src="@{/image/post/avatar.png}" alt="avatar"/></div>
+                    <div class="user-info">
+                        <div class="user-name" th:text="${user_fullname}"></div>
+                        <div class="edit-profile">Chỉnh sửa tài khoản</div>
+                    </div>
+                </div>
+                <div class="break-line"></div>
+                <div class="nav-sidebar">
+                    <a class="account nav-item" href="/tai-khoan">Quản lý tài khoản</a>
+                    <a class="buying-order nav-item" href="/tai-khoan/lich-su-giao-dich">Quản lý đơn hàng</a>
+                    <a class="btn btn-primary red-btn sign-out-btn" href="/api/logout">Đăng xuất</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9 main-content-wrapper">
+            <div class="main-content">
+                <div class="header"><a class="go-back-previous-page" href="/tai-khoan/lich-su-giao-dich"><i class="fas fa-chevron-left"></i> Trở lại</a>
+                    <div class="order-status-wrapper">
+                        <div class="order-number-wrapper">Mã đơn <span class="order-number" th:text="'#'+${order.id}"></span></div>
+                        <div class="status" th:text="${order.statusText}"></div>
+                    </div>
+                </div>
+                <div class="break-line"></div>
+                <div class="item">
+                    <div class="product-info-wrapper">
+                        <div class="thumbnails"><img class="img-fluid" th:src="${order.productImg}" th:alt="${order.productName}"/></div>
+                        <div class="product-info"><span class="name" th:text="${order.productName}"></span>
+                            <div class="size"><span th:text="${order.sizeUs}"></span>US | <span th:text="${order.sizeVn}"></span>VN | <span th:text="${order.sizeCm}"></span>CM</div>
+                        </div>
+                    </div>
+                    <div class="price asks-price"><span class="text-price" th:text="${order.productPrice}"></span> &#x20AB;</div>
+                    <div class="shipping-and-price-wrapper">
+                        <div class="shipping-wrapper">
+                            <div class="title">Địa chỉ giao hàng</div>
+                            <div class="buyer-name" th:text="${order.receiverName}"></div>
+                            <div class="shipping-address" th:text="${order.receiverAddress}"></div>
+                            <div class="phone" th:text="${order.receiverPhone}"></div>
+                        </div>
+                        <div class="price-wrapper">
+                            <div class="sub-price-wrapper price">Tạm tính<span><span class="text-price" th:text="${order.productPrice}"></span> &#x20AB;</span></div>
+                            <div class="shipping-price-wrapper price">Khuyến mãi<span><span class="text-price" th:text="${order.productPrice} - ${order.totalPrice}"></span> &#x20AB;</span></div>
+                            <div class="total-price-wrapper price">Thành tiền<span class="total-price"><span class="text-price" th:text="${order.totalPrice}"></span> &#x20AB;</span></div>
+                        </div>
+                    </div>
+                    <button th:if="${canCancel} == true" class="btn btn-primary red-btn cancel-btn" th:data-order="${order.id}">Hủy đơn hàng</button>
+                </div>
+                <div class="item-small">
+                    <div class="order-number-wrapper">Mã đơn <span class="order-number" th:text="'#'+${order.id}"></span></div>
+                    <div class="item-info-wrapper">
+                        <div class="product-info-wrapper">
+                            <div class="product-info"><span class="name" th:text="${order.productName}"></span>
+                                <div class="size"><span th:text="${order.sizeUs}"></span>US | <span th:text="${order.sizeVn}"></span>VN | <span th:text="${order.sizeCm}"></span>CM</div>
+                            </div>
+                        </div>
+                        <div class="price asks-price"><span class="text-price" th:text="${order.productPrice}"></span> &#x20AB;</div>
+                        <div class="shipping-and-price-wrapper">
+                            <div class="shipping-wrapper">
+                                <div class="title status" th:text="${order.statusText}"></div>
+                                <div class="buyer-name" th:text="${order.receiverName}"></div>
+                                <div class="shipping-address" th:text="${order.receiverAddress}"></div>
+                                <div class="phone" th:text="${order.receiverPhone}"></div>
+                            </div>
+                            <div class="price-wrapper">
+                                <div class="sub-price-wrapper price">Tạm tính<span><span class="text-price" th:text="${order.productPrice}"></span> &#x20AB;</span></div>
+                                <div class="shipping-price-wrapper price">Khuyến mãi<span><span class="text-price" th:text="${order.productPrice} - ${order.totalPrice}"></span> &#x20AB;</span></div>
+                                <div class="total-price-wrapper price">Thành tiền<span class="total-price"><span class="text-price" th:text="${order.totalPrice}"></span> &#x20AB;</span></div>
+                            </div>
+                        </div>
+                        <button th:if="${canCancel} == true" class="btn btn-primary red-btn cancel-btn" th:data-order="${order.id}">Hủy đơn hàng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<th:block id="js-resources">
+    <script th:src="@{/script/except-home-page.js}"></script>
+    <script th:src="@{/script/buying-order.js}"></script>
+</th:block>
+</body>
+</html>
