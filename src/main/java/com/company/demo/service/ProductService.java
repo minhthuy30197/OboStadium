@@ -1,7 +1,7 @@
 package com.company.demo.service;
 
 import com.company.demo.model.dto.DetailProductInfoDto;
-import com.company.demo.model.dto.ListProductDto;
+import com.company.demo.model.dto.PageableDto;
 import com.company.demo.model.dto.ProductInfoDto;
 import com.company.demo.model.request.FilterProductReq;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public interface ProductService {
 
     public List<Integer> getListAvailableSize(String id);
 
-    public ListProductDto filterProduct(FilterProductReq req);
+    public PageableDto filterProduct(FilterProductReq req);
 
-    public ListProductDto searchProductByKeyword(String keyword, Integer page);
+    public PageableDto searchProductByKeyword(String keyword, Integer page);
 }

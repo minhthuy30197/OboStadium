@@ -2,8 +2,11 @@ package com.company.demo.service.impl;
 
 import com.company.demo.entity.Post;
 import com.company.demo.exception.NotFoundException;
+import com.company.demo.model.dto.PageableDto;
+import com.company.demo.model.dto.PostInfoDto;
 import com.company.demo.repository.PostRepository;
 import com.company.demo.service.BlogService;
+import com.company.demo.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -44,5 +47,19 @@ public class BlogServiceImpl implements BlogService {
     public List<Post> getLatestPost() {
         List<Post> posts = postRepository.getLatestPosts(PUBLIC_POST, 8);
         return posts;
+    }
+
+    @Override
+    public PageableDto adminGetListPost(String title, String status, int page, String order, String direction) {
+        int limit = 15;
+        PageUtil pageInfo  = new PageUtil(limit, page);
+
+        // Get list posts and totalItems
+        List<PostInfoDto> posts = postRepository.adminGetListPost(title, status, limit, pageInfo.calculateOffset(), order, direction);
+        int totalItems = postRepository.countPostFilter(title, status);
+
+        int totalPages = pageInfo.calculateTotalPage(totalItems);
+
+        return new PageableDto(posts, totalPages, pageInfo.getPage());
     }
 }

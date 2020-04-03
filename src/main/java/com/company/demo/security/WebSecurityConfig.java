@@ -53,6 +53,7 @@ public class WebSecurityConfig<CustomUserDetailService> extends WebSecurityConfi
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/api/order", "/tai-khoan", "/tai-khoan/**", "/api/change-password", "/api/update-profile").authenticated()
+                .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .logout()

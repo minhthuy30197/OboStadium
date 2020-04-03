@@ -1,9 +1,46 @@
 package com.company.demo.entity;
 
+import com.company.demo.model.dto.PostInfoDto;
 import lombok.*;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
+@SqlResultSetMappings(
+        value = {
+                @SqlResultSetMapping(
+                        name = "postInfoDto",
+                        classes = @ConstructorResult(
+                                targetClass = PostInfoDto.class,
+                                columns = {
+                                        @ColumnResult(name = "id", type = Long.class),
+                                        @ColumnResult(name = "slug", type = String.class),
+                                        @ColumnResult(name = "title", type = String.class),
+                                        @ColumnResult(name = "created_at", type = String.class),
+                                        @ColumnResult(name = "published_at", type = String.class),
+                                        @ColumnResult(name = "status", type = String.class)
+                                }
+                        )
+                )
+        }
+)
+@NamedNativeQuery(
+        name = "adminGetListPost",
+        resultSetMapping = "postInfoDto",
+        query = "SELECT id, slug, title, \n" +
+                "DATE_FORMAT(created_at,'%d/%m/%Y') as created_at,\n" +
+                "DATE_FORMAT(published_at,'%d/%m/%Y') as published_at,\n" +
+                "(\n" +
+                "\tCASE \n" +
+                "\t\tWHEN status = true THEN 'Công khai'\n" +
+                "    \tELSE 'Nháp'\n" +
+                "    END \n" +
+                ") as status\n" +
+                "FROM post\n" +
+                "WHERE title LIKE CONCAT('%',:title,'%') AND status LIKE CONCAT('%',:status,'%')\n" +
+                "ORDER BY :order :direction\n" +
+                "LIMIT :limit\n" +
+                "OFFSET :offset"
+)
 @Setter
 @Getter
 @NoArgsConstructor

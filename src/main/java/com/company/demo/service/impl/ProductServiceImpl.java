@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javax.persistence.EntityManager;
 import java.util.*;
-import static com.company.demo.config.Constant.*;
 
 @Component
 public class ProductServiceImpl implements ProductService {
@@ -107,7 +106,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ListProductDto filterProduct(FilterProductReq req) {
+    public PageableDto filterProduct(FilterProductReq req) {
         int limit = 16;
         PageUtil page  = new PageUtil(limit, req.getPage());
 
@@ -126,13 +125,13 @@ public class ProductServiceImpl implements ProductService {
         // Calculate total pages
         int totalPages = page.calculateTotalPage(totalItems);
 
-        ListProductDto result = new ListProductDto(promotionService.checkPublicPromotion(products), totalPages, req.getPage());
+        PageableDto result = new PageableDto(promotionService.checkPublicPromotion(products), totalPages, req.getPage());
 
         return result;
     }
 
     @Override
-    public ListProductDto searchProductByKeyword(String keyword, Integer page) {
+    public PageableDto searchProductByKeyword(String keyword, Integer page) {
         // Validate
         if (keyword == null) {
             keyword = "";
@@ -151,7 +150,7 @@ public class ProductServiceImpl implements ProductService {
 
         int totalPages = pageInfo.calculateTotalPage(totalItems);
 
-        ListProductDto result = new ListProductDto(promotionService.checkPublicPromotion(products), totalPages, page);
+        PageableDto result = new PageableDto(promotionService.checkPublicPromotion(products), totalPages, page);
 
         return result;
     }

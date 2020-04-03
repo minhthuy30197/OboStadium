@@ -15,9 +15,12 @@
         <link rel="stylesheet" th:href="@{/adminlte/dist/css/adminlte.min.css}">
         <!-- Google Font: Source Sans Pro -->
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-        <!-- Toastr JS-->
-        <script type="text/javascript" th:src="@{/vendor/toastr/toastr.min.js}"></script>
+        <!-- Toastr CSS -->
+        <link th:href="@{/vendor/toastr/toastr.min.css}" rel="stylesheet"/>
+        <!-- Admin CSS -->
+        <link th:href="@{/adminlte/dist/css/admin.css}" rel="stylesheet"/>
         <!-- Components CSS -->
+        <script type="text/javascript" th:src="@{/vendor/toastr/toastr.min.js}"></script>
         <th:block th:replace="${cssResources} ?: ~{}"></th:block>
     </head>
     <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">

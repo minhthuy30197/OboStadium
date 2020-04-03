@@ -415,7 +415,7 @@
 			   	data: myJSON,
 			   	contentType: "application/json; charset=utf-8",
 			   	success: function(data) {
-			   	    genProductList(data.products);
+			   	    genProductList(data.items);
 			   	    currentPage = data.currentPage;
 			   	    totalPages = data.totalPages;
 			   	    pagination();

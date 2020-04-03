@@ -3,7 +3,7 @@ package com.company.demo.controller.anonymous;
 import com.company.demo.entity.*;
 import com.company.demo.exception.NotFoundException;
 import com.company.demo.model.dto.DetailProductInfoDto;
-import com.company.demo.model.dto.ListProductDto;
+import com.company.demo.model.dto.PageableDto;
 import com.company.demo.model.dto.ProductInfoDto;
 import com.company.demo.model.request.CreateOrderReq;
 import com.company.demo.model.request.FilterProductReq;
@@ -84,10 +84,10 @@ public class ShopController {
 
         // Get list product
         FilterProductReq req = new FilterProductReq(brandIds, categoryIds, new ArrayList<>(), (long) 0, Long.MAX_VALUE, 1);
-        ListProductDto result = productService.filterProduct(req);
+        PageableDto result = productService.filterProduct(req);
         model.addAttribute("totalPages", result.getTotalPages());
         model.addAttribute("currentPage", result.getCurrentPage());
-        model.addAttribute("listProduct", result.getProducts());
+        model.addAttribute("listProduct", result.getItems());
 
         return "shop/product";
     }
@@ -110,20 +110,20 @@ public class ShopController {
             }
         }
 
-        ListProductDto result = productService.filterProduct(req);
+        PageableDto result = productService.filterProduct(req);
 
         return ResponseEntity.ok(result);
     }
 
     @GetMapping("/api/tim-kiem")
     public String searchProduct(Model model, @RequestParam(required = false) String keyword, @RequestParam(required = false) Integer page) {
-        ListProductDto result = productService.searchProductByKeyword(keyword, page);
+        PageableDto result = productService.searchProductByKeyword(keyword, page);
 
         model.addAttribute("totalPages", result.getTotalPages());
         model.addAttribute("currentPage", result.getCurrentPage());
-        model.addAttribute("listProduct", result.getProducts());
+        model.addAttribute("listProduct", result.getItems());
         model.addAttribute("keyword", keyword);
-        if (result.getProducts().size() > 0) {
+        if (((List<?>)result.getItems()).size() > 0) {
             model.addAttribute("hasResult", true);
         } else {
             model.addAttribute("hasResult", false);

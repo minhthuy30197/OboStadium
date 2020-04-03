@@ -1,6 +1,7 @@
 package com.company.demo.service;
 
 import com.company.demo.entity.Post;
+import com.company.demo.model.dto.PageableDto;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -14,4 +15,6 @@ public interface BlogService {
     public List<Post> getLatestPostsNotId(long id);
 
     public List<Post> getLatestPost();
+
+    public PageableDto adminGetListPost(String title, String status, int page, String order, String direction);
 }
