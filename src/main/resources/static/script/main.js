@@ -208,6 +208,7 @@ function configToastr() {
 function formatDate() {
    $( ".date" ).each(function() {
      let textDate = $(this).text();
+     console.log(textDate);
      let date = new Date(textDate);
      $(this).text(date.toLocaleDateString("en-US"))
    });

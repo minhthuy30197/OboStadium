@@ -1,0 +1,34 @@
+<th:block th:fragment="choose-img-modal">
+    <!-- Modal img list -->
+    <div class="modal fade" id="choose-img-modal">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Chọn ảnh</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="float-left">
+                            <input type="file" name="file" id="upload-thumbnail">
+                            <label for="upload-thumbnail">
+                                <span class="btn btn-warning btn-upload-img"><i class="fas fa-upload"></i> Tải ảnh lên</span>
+                            </label>
+                            <button class="btn btn-success btn-choose-img" disabled>Chọn ảnh</button>
+                        </div>
+                        <div class="float-right">
+                            <button class="btn btn-danger btn-delete-img" disabled><i class="fas fa-trash-alt"></i> Xóa ảnh</button>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div id="list-user-img">
+                        <ul class="list"></ul>
+                        <ul class="pagination"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>

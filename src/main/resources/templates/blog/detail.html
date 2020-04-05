@@ -34,7 +34,7 @@
     <div class="main-content-wrapper container">
         <h1 class="h1 title" th:text="${post.title}"></h1>
         <div class="author-and-date">By <span class="author" th:text="${post.createdBy.fullName}"></span> &middot; <span class="date" th:text="${post.publishedAt}"></span></div>
-        <div class="main-content" th:text="${post.content}"></div>
+        <div class="main-content" th:utext="${post.content}"></div>
     </div>
 
     <!-- Latest new -->

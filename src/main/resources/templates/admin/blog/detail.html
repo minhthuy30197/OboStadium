@@ -8,7 +8,7 @@
                                                )}">
 
 <head>
-    <title>Tạo bài viết mới</title>
+    <title th:text="${post.title}"></title>
 
     <th:block id="css-resources">
         <!-- summernote -->
@@ -24,7 +24,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="/admin/posts">Danh sách bài viết</a></li>
-                <li class="breadcrumb-item active">Tạo bài viết mới</li>
+                <li class="breadcrumb-item active" th:text="${post.title}"></li>
             </ol>
         </div>
     </div>
@@ -35,10 +35,11 @@
             <span class="fas fa-chevron-left" style="margin-right:0.5rem;"></span>
             <span>Trở về</span>
         </a>
-        <button class="btn btn-success btn-create-post">
+        <button class="btn btn-success btn-update-post">
             <span class="fa fa-plus" style="margin-right:0.5rem;"></span>
-            <span>Viết bài</span>
+            <span>Cập nhật</span>
         </button>
+        <button class="btn btn-danger float-right btn-delete-post"><i class="fas fa-trash-alt"></i> Xóa</button>
         <div class="clear"></div>
     </div>
 
@@ -54,34 +55,40 @@
                                     <label class="required-label" for="title">Tiêu đề</label>
                                     <span class="invalid-feedback" id="invalid-feedback-title">Độ dài tiêu đề từ 1 - 300 ký tự</span>
                                 </div>
-                                <input type="text" class="form-control" id="title">
+                                <input type="text" class="form-control" id="title" th:value="${post.title}">
                             </div>
                             <div class="form-group">
                                 <div>
                                     <label class="required-label" for="content">Nội dung</label>
                                     <span class="invalid-feedback" id="invalid-feedback-content">Nội dung bài viết trống</span>
                                 </div>
-                                <textarea class="textarea" id="content" name="content"  style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                <textarea th:text="${post.content}" class="textarea" id="content" name="content"  style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="description">Mô tả</label>
-                                <textarea class="form-control" rows="4" name="description" id="description"></textarea>
+                                <div>
+                                    <label for="description">Mô tả</label>
+                                    <span class="invalid-feedback" id="invalid-feedback-description">Thêm mô tả trước khi công khai</span>
+                                </div>
+                                <textarea class="form-control" rows="4" name="description" id="description" th:text="${post.description}"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-4">
                             <div class="form-group">
                                 <label for="status" class="required-label">Trạng thái</label>
                                 <select class="form-control" id="status">
-                                    <option value="0">Nháp</option>
-                                    <option value="1">Công khai</option>
+                                    <option value="0" th:selected="(${post.status} == 0)">Nháp</option>
+                                    <option value="1" th:selected="(${post.status} == 1)">Công khai</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label class="required-label">Ảnh thumbnail</label>
                                 <div class="post-thumbnail-container">
                                     <div class="img-div">
-                                        <img id="preview-img" th:src="@{/image/noimage.png}" alt="Thumbnail post">
+                                        <img id="preview-img" th:src="${(post.thumbnail != null && !#strings.isEmpty(post.thumbnail)) ? post.thumbnail : '/image/noimage.png'}" alt="Thumbnail post">
                                     </div>
+                                </div>
+                                <div>
+                                    <span class="invalid-feedback" id="invalid-feedback-image">Upload ảnh trước khi công khai</span>
                                 </div>
                                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#choose-img-modal">
                                     Chọn ảnh
@@ -131,7 +138,7 @@
             $('#preview-img').attr('src', url);
         })
 
-        $('.btn-create-post').click(function() {
+        $('.btn-update-post').click(function() {
             let title = $('#title').val();
             let description = $('#description').val();
             let content = $('#content').val();
@@ -141,9 +148,6 @@
                 return;
             }
             let image = $('#preview-img').attr('src');
-            if (image == "/image/noimage.png") {
-                image = "";
-            }
             isValid = true;
 
             if (title.length == 0 || title.length > 300) {
@@ -156,6 +160,18 @@
                 isValid = false;
             }
 
+            if (status == "1") {
+                if (description.length == 0) {
+                    $('#invalid-feedback-description').show();
+                    isValid = false;
+                }
+
+                if (image == "/image/noimage.png") {
+                    $('#invalid-feedback-image').show();
+                    isValid = false;
+                }
+            }
+
             if (isValid) {
                 req = {
                     title: title,
@@ -166,21 +182,35 @@
                 }
                 var myJSON = JSON.stringify(req);
                 $.ajax({
-                    url: '/api/admin/posts',
-                    type: 'POST',
+                    url: '/api/admin/posts/'+[[${post.id}]],
+                    type: 'PUT',
                     data: myJSON,
                     contentType: "application/json; charset=utf-8",
                     success: function(data) {
-                        toastr.success("Tạo bài viết thành công");
-                        setTimeout(function() {
-                            location.href = "/admin/posts/"+data;
-                        }, 1000);
+                        toastr.success("Cập nhật bài viết thành công");
                     },
                     error: function(data) {
                         toastr.warning(data.responseJSON.message);
-                    },
+                    }
                 });
             }
+        })
+
+        $('.btn-delete-post').click(function() {
+            $.ajax({
+                url: '/api/admin/posts/'+[[${post.id}]],
+                type: 'DELETE',
+                contentType: "application/json; charset=utf-8",
+                success: function(data) {
+                    toastr.success("Xóa bài viết thành công");
+                    setTimeout(function() {
+                        location.href = "/admin/posts/";
+                    }, 1000);
+                },
+                error: function(data) {
+                    toastr.warning(data.responseJSON.message);
+                },
+            });
         })
     </script>
 </th:block>

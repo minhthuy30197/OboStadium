@@ -36,10 +36,10 @@
             <span class="fas fa-redo-alt" style="margin-right:0.5rem;"></span>
             <span>Refresh</span>
         </a>
-        <a role="button" class="btn btn-secondary" id="btn-search">
+        <button class="btn btn-secondary" id="btn-search">
             <span class="fas fa-search" style="margin-right:0.5rem;"></span>
             <span>Tìm kiếm</span>
-        </a>
+        </button>
         <div class="clear"></div>
     </div>
 
@@ -59,11 +59,11 @@
                                 <th width="15%">
                                     Trạng thái
                                 </th>
-                                <th width="15" class="thuy-sort-area" data-order="created_at">
+                                <th width="15" class="thuy-sort-area" data-order="post.created_at">
                                     Ngày tạo
                                     <i class="fa fa-sort pull-right" style="margin-top: 3px;"></i>
                                 </th>
-                                <th width="15%" class="thuy-sort-area" data-order="published_at">
+                                <th width="15%" class="thuy-sort-area" data-order="post.published_at">
                                     Ngày xuất bản
                                     <i class="fa fa-sort pull-right" style="margin-top: 3px;"></i>
                                 </th>
@@ -123,7 +123,7 @@
              let vars = parseUrl();
              title = vars["title"] || ""
              status = vars["status"] || ""
-             order = vars["order"] || "created_at"
+             order = vars["order"] || "post.created_at"
              page = vars["page"] || "1"
              direction = vars["direction"] || "desc"
 
@@ -137,9 +137,9 @@
               var th = $('.heading').find(`[data-order='` + order + `']`)
               th.find('i').removeClass("fa-sort")
               if (direction == "asc") {
-                  th.find('i').addClass("fa-sort-desc")
+                  th.find('i').addClass("fas fa-sort-up")
               } else {
-                  th.find('i').addClass("fa-sort-asc")
+                  th.find('i').addClass("fas fa-sort-down")
               }
             }
 

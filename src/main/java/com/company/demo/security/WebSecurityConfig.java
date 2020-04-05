@@ -53,7 +53,7 @@ public class WebSecurityConfig<CustomUserDetailService> extends WebSecurityConfi
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/api/order", "/tai-khoan", "/tai-khoan/**", "/api/change-password", "/api/update-profile").authenticated()
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/admin/**", "/api/admin/**").hasRole("ADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .logout()
@@ -74,6 +74,6 @@ public class WebSecurityConfig<CustomUserDetailService> extends WebSecurityConfi
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
-                .antMatchers("/css/**", "/script/**", "/image/**", "/vendor/**", "/favicon.ico", "/adminlte/**");
+                .antMatchers("/css/**", "/script/**", "/image/**", "/vendor/**", "/favicon.ico", "/adminlte/**", "/media/static/**");
     }
 }

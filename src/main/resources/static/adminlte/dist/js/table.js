@@ -79,3 +79,21 @@ $('.thuy-search-select').on('change', function () {
 $('#btn-search').click(function() {
     $('#search-form').submit();
 })
+
+// Sắp xếp
+$('.thuy-sort-area').click(function () {
+  var newOrder = this.dataset.order
+  if (newOrder != order) {
+    $('#direction').val("asc")
+  } else {
+    if (direction == "asc") {
+       $('#direction').val("desc")
+    } else {
+       $('#direction').val("asc")
+    }
+  }
+  $('#order').val(newOrder)
+  $('#page').val("1")
+  $('#search-form').submit();
+});
+

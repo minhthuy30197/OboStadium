@@ -15,8 +15,8 @@ import java.sql.Timestamp;
                                         @ColumnResult(name = "id", type = Long.class),
                                         @ColumnResult(name = "slug", type = String.class),
                                         @ColumnResult(name = "title", type = String.class),
-                                        @ColumnResult(name = "created_at", type = String.class),
-                                        @ColumnResult(name = "published_at", type = String.class),
+                                        @ColumnResult(name = "created_time", type = String.class),
+                                        @ColumnResult(name = "published_time", type = String.class),
                                         @ColumnResult(name = "status", type = String.class)
                                 }
                         )
@@ -27,8 +27,8 @@ import java.sql.Timestamp;
         name = "adminGetListPost",
         resultSetMapping = "postInfoDto",
         query = "SELECT id, slug, title, \n" +
-                "DATE_FORMAT(created_at,'%d/%m/%Y') as created_at,\n" +
-                "DATE_FORMAT(published_at,'%d/%m/%Y') as published_at,\n" +
+                "DATE_FORMAT(created_at,'%d/%m/%Y %H:%i') as created_time,\n" +
+                "DATE_FORMAT(published_at,'%d/%m/%Y %H:%i') as published_time,\n" +
                 "(\n" +
                 "\tCASE \n" +
                 "\t\tWHEN status = true THEN 'Công khai'\n" +
