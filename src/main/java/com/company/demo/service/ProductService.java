@@ -1,5 +1,6 @@
 package com.company.demo.service;
 
+import com.company.demo.entity.Product;
 import com.company.demo.model.dto.DetailProductInfoDto;
 import com.company.demo.model.dto.PageableDto;
 import com.company.demo.model.dto.ProductInfoDto;
@@ -24,4 +25,6 @@ public interface ProductService {
     public PageableDto filterProduct(FilterProductReq req);
 
     public PageableDto searchProductByKeyword(String keyword, Integer page);
+
+    public PageableDto adminGetListProduct(String id, String name, String category, String brand, String order, String direction, int page);
 }

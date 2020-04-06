@@ -154,4 +154,17 @@ public class ProductServiceImpl implements ProductService {
 
         return result;
     }
+
+    @Override
+    public PageableDto adminGetListProduct(String id, String name, String category, String brand, String order, String direction, int page) {
+        int limit = 15;
+        PageUtil pageInfo  = new PageUtil(limit, page);
+
+        List<Product> products = productRepository.adminGetListProduct(id, name, category, brand, order, direction, limit , pageInfo.calculateOffset());
+        int totalItems = productRepository.countAdminGetListProduct(id, name, category, brand);
+
+        int totalPages = pageInfo.calculateTotalPage(totalItems);
+
+        return new PageableDto(products, totalPages, pageInfo.getPage());
+    }
 }

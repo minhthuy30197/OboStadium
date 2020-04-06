@@ -84,7 +84,7 @@ public class Post {
     @JoinColumn(name = "created_by")
     private User createdBy;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "modified_by")
     private User modifiedBy;
 }

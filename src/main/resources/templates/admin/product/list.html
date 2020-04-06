@@ -8,7 +8,7 @@
                                                )}">
 
 <head>
-    <title>Danh sách bài viết</title>
+    <title>Danh sách sản phẩm</title>
 
     <th:block id="css-resources">
         <link rel="stylesheet" type="text/css" th:href="@{/vendor/pagination/simplePagination.css}"/>
@@ -21,18 +21,18 @@
         <div class="col-12">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
-                <li class="breadcrumb-item active">Danh sách bài viết</li>
+                <li class="breadcrumb-item active">Danh sách sản phẩm</li>
             </ol>
         </div>
     </div>
 
     <!-- Toolbar -->
     <div class="toolbar">
-        <a role="button" class="btn btn-success" href="/admin/posts/create">
+        <a role="button" class="btn btn-success" href="/admin/products/create">
             <span class="fa fa-plus" style="margin-right:0.5rem;"></span>
-            <span>Viết bài</span>
+            <span>Thêm sản phẩm</span>
         </a>
-        <a role="button" class="btn btn-info" href="/admin/posts">
+        <a role="button" class="btn btn-info" href="/admin/products">
             <span class="fas fa-redo-alt" style="margin-right:0.5rem;"></span>
             <span>Refresh</span>
         </a>
@@ -53,31 +53,49 @@
                         <table class="table table-striped table-bordered table-hover">
                             <thead>
                             <tr class="heading">
-                                <th width="55%">
-                                    Tiêu đề
+                                <th width="10%">
+                                    Mã sản phẩm
+                                </th>
+                                <th width="50%">
+                                    Tên sản phẩm
                                 </th>
                                 <th width="15%">
-                                    Trạng thái
+                                    Thương hiệu
                                 </th>
-                                <th width="15" class="thuy-sort-area" data-order="post.created_at">
-                                    Ngày tạo
+                                <th width="10%">
+                                    Category
+                                </th>
+                                <th width="8%" class="thuy-sort-area" data-order="product.price">
+                                    Giá
                                     <i class="fa fa-sort float-right" style="margin-top: 3px;"></i>
                                 </th>
-                                <th width="15%" class="thuy-sort-area" data-order="post.published_at">
-                                    Ngày xuất bản
+                                <th width="7%" class="thuy-sort-area" data-order="product.total_sold">
+                                    Đã bán
                                     <i class="fa fa-sort float-right" style="margin-top: 3px;"></i>
                                 </th>
                             </tr>
                             <tr class="heading-search">
                                 <form method="GET" id="search-form">
                                     <th>
-                                        <input type="text" name="title" id="title" class="form-control thuy-search-input">
+                                        <input type="text" name="id" id="id" class="form-control thuy-search-input">
                                     </th>
                                     <th>
-                                        <select name="status" class="form-control thuy-search-select" id="status">
+                                        <input type="text" name="name" id="name" class="form-control thuy-search-input">
+                                    </th>
+                                    <th>
+                                        <select name="brand" class="form-control thuy-search-select" id="brand">
                                             <option value="">Tất cả</option>
-                                            <option value="0">Nháp</option>
-                                            <option value="1">Công khai</option>
+                                            <th:block th:each="brand : ${brands}">
+                                                <option th:value="${brand.id}" th:text="${brand.name}"></option>
+                                            </th:block>
+                                        </select>
+                                    </th>
+                                    <th>
+                                        <select name="category" class="form-control thuy-search-select" id="category">
+                                            <option value="">Tất cả</option>
+                                            <th:block th:each="category : ${categories}">
+                                                <option th:value="${category.id}" th:text="${category.name}"></option>
+                                            </th:block>
                                         </select>
                                     </th>
                                     <th></th>
@@ -89,16 +107,25 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <th:block th:each="post : ${posts}">
-                                    <tr>
-                                        <td>
-                                            <a th:href="@{/admin/posts/{id}(id=${post.id})}" th:text="${post.title}"></a>
-                                        </td>
-                                        <td th:text="${post.status}"></td>
-                                        <td th:text="${post.createdAt}"></td>
-                                        <td th:text="${post.publishedAt}"></td>
-                                    </tr>
-                                </th:block>
+                            <th:block th:each="product : ${products}">
+                                <tr>
+                                    <td>
+                                        <a th:href="@{/admin/products/{id}(id=${product.id})}" th:text="${product.id}"></a>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/admin/products/{id}(id=${product.id})}" th:text="${product.name}"></a>
+                                    </td>
+                                    <td th:text="${product.brand.name}"></td>
+                                    <td>
+                                        <th:block th:each="category, i : ${product.categories}">
+                                            <span th:if="${i.first} == true" th:text="${category.name}"></span>
+                                            <span th:if="${i.first} == false" th:text="', ' + ${category.name}"></span>
+                                        </th:block>
+                                    </td>
+                                    <td class="text-right text-price" th:text="${product.price}"></td>
+                                    <td th:text="${product.totalSold}" class="text-right"></td>
+                                </tr>
+                            </th:block>
                             </tbody>
                         </table>
                     </div>
@@ -117,21 +144,24 @@
     <script type="text/javascript" th:src="@{/vendor/pagination/jquery.simplePagination.js}"></script>
     <script type="text/javascript" th:src="@{/adminlte/dist/js/table.js}"></script>
     <script th:inline="javascript">
-        var title, status, order, page, direction;
+        var id, name, brand, category, order, page, direction;
 
         $(function () {
              let vars = parseUrl();
-             title = vars["title"] || ""
-             status = vars["status"] || ""
-             order = vars["order"] || "post.created_at"
+             id = vars["id"] || ""
+             name = vars["name"] || ""
+             brand = vars["brand"] || ""
+             category = vars["category"] || ""
+             order = vars["order"] || "product.created_at"
              page = vars["page"] || "1"
              direction = vars["direction"] || "desc"
-
              $('#order').val(order)
              $('#page').val(page)
              $('#direction').val(direction)
-             $('#title').val(title)
-             $('#status').val(status)
+             $('#id').val(id)
+             $('#name').val(name)
+             $('#brand').val(brand)
+             $('#category').val(category)
 
             if (order != "id") {
               var th = $('.heading').find(`[data-order='` + order + `']`)

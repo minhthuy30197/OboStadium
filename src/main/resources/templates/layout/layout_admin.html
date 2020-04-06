@@ -20,7 +20,6 @@
         <!-- Admin CSS -->
         <link th:href="@{/adminlte/dist/css/admin.css}" rel="stylesheet"/>
         <!-- Components CSS -->
-        <script type="text/javascript" th:src="@{/vendor/toastr/toastr.min.js}"></script>
         <th:block th:replace="${cssResources} ?: ~{}"></th:block>
     </head>
     <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -116,7 +115,18 @@
                                     </p>
                                 </a>
                                 <ul class="nav nav-treeview">
-
+                                    <li class="nav-item">
+                                        <a href="/admin/products" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Danh sách sản phẩm</p>
+                                        </a>
+                                        <li class="nav-item">
+                                            <a href="/admin/products/create" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Thêm mới sản phẩm</p>
+                                            </a>
+                                        </li>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="nav-item has-treeview">
@@ -217,6 +227,7 @@
         <!-- Toastr JS-->
         <script type="text/javascript" th:src="@{/vendor/toastr/toastr.min.js}"></script>
         <!-- Common JS-->
+        <script type="text/javascript" th:src="@{/adminlte/dist/js/custom.js}"></script>
         <th:block th:replace="${jsResources} ?: ~{}"></th:block>
     </body>
 </html>

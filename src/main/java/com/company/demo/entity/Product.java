@@ -107,7 +107,6 @@ import java.util.List;
                 "LIMIT :limit\n" +
                 "OFFSET :offset"
 )
-
 @Setter
 @Getter
 @NoArgsConstructor

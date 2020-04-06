@@ -60,4 +60,25 @@ public interface ProductRepository extends JpaRepository<Product, String> {
             "WHERE product.is_available = true AND product.brand_id IN (?1) AND product_category.category_id IN (?2)\n" +
             "AND product.price > ?3 AND product.price < ?4\n")
     public int countProductAllSize(List<Integer> brands, List<Integer> categories, long minPrice, long maxPrice);
+
+    @Query(nativeQuery = true, value = "SELECT product.*\n" +
+            "FROM product\n" +
+            "INNER JOIN product_category\n" +
+            "ON product.id = product_category.product_id\n" +
+            "INNER JOIN category\n" +
+            "ON category.id = product_category.category_id\n" +
+            "WHERE product.id LIKE CONCAT('%',?1,'%') AND product.name LIKE CONCAT('%',?2,'%') AND category.id LIKE ?3 AND product.brand_id LIKE ?4 \n" +
+            "ORDER BY ?5 ?6 \n" +
+            "LIMIT ?7\n" +
+            "OFFSET ?8")
+    public List<Product> adminGetListProduct(String id, String name, String category, String brand, String order, String direction, int limit, int offset);
+
+    @Query(nativeQuery = true, value = "SELECT count(product.id)\n" +
+            "FROM product\n" +
+            "INNER JOIN product_category\n" +
+            "ON product.id = product_category.product_id\n" +
+            "INNER JOIN category\n" +
+            "ON category.id = product_category.category_id\n" +
+            "WHERE product.id LIKE CONCAT('%',:id,'%') AND product.name LIKE CONCAT('%',:name,'%') AND category.id LIKE :category AND product.brand_id LIKE :brand \n")
+    public int countAdminGetListProduct(@Param("id") String id, @Param("name") String name, @Param("category") String category, @Param("brand") String brand);
 }
