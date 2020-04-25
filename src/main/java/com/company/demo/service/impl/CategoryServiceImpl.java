@@ -63,6 +63,12 @@ public class CategoryServiceImpl implements CategoryService {
             throw new BadRequestException("Category không tồn tại");
         }
 
+        // Check product in category
+        int count = categoryRepository.checkProductInCategory(id);
+        if (count == 1) {
+            throw new BadRequestException("Có sản phẩm thuộc category không thể xóa");
+        }
+
         Category category = rs.get();
 
         try {
