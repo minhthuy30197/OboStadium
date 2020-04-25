@@ -9,6 +9,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity(name = "category")
 @Table(name = "category")
+@ToString
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

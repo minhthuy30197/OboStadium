@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout_admin :: main-fragment(
+                                                ~{:: title},
+                                                ~{:: #css-resources},
+                                                ~{:: #js-resources},
+                                                ~{:: #main-content}
+                                               )}">
+
+<head>
+    <title>Thêm sản phẩm mới</title>
+
+    <th:block id="css-resources">
+        <!-- summernote -->
+        <link rel="stylesheet" th:href="@{/adminlte/plugins/summernote/summernote-bs4.css}">
+        <link rel="stylesheet" th:href="@{/adminlte/dist/css/modal_img.css}">
+        <link rel="stylesheet" th:href="@{/adminlte/dist/css/list_image_product.css}">
+    </th:block>
+</head>
+<body>
+<main id="main-content">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-12">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/admin/products">Danh sách sản phẩm</a></li>
+                <li class="breadcrumb-item active">Thêm sản phẩm mới</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <a role="button" class="btn btn-default" href="/admin/products">
+            <span class="fas fa-chevron-left" style="margin-right:0.5rem;"></span>
+            <span>Trở về</span>
+        </a>
+        <button class="btn btn-success btn-create-product">
+            <span class="fa fa-plus" style="margin-right:0.5rem;"></span>
+            <span>Thêm sản phẩm</span>
+        </button>
+        <div class="clear"></div>
+    </div>
+
+    <!-- Main content -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-outline">
+                <div class="card-body pad">
+                    <div class="row">
+                        <div class="col-lg-9 col-md-8">
+                            <div class="form-group">
+                                <div>
+                                    <label class="required-label" for="name">Tên sản phẩm</label>
+                                    <span class="invalid-feedback" id="invalid-feedback-name">Độ dài tên từ 1 - 300 ký tự</span>
+                                </div>
+                                <input type="text" class="form-control" id="name">
+                            </div>
+                            <div class="form-group">
+                                <div>
+                                    <label class="required-label" for="description">Mô tả</label>
+                                    <span class="invalid-feedback" id="invalid-feedback-description">Mô tả sản phẩm trống</span>
+                                </div>
+                                <textarea class="textarea" id="description" name="description"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4">
+                            <div class="form-group">
+                                <label for="is-available" class="required-label">Trạng thái</label>
+                                <select class="form-control" id="is-available">
+                                    <option value="true">Mở bán</option>
+                                    <option value="false">Không bán</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="brand" class="required-label">Nhãn hiệu</label>
+                                <select class="form-control" id="brand">
+                                    <th:block th:each="brand : ${brands}">
+                                        <option th:value="${brand.id}" th:text="${brand.name}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div>
+                                    <label for="category" class="required-label">Category</label>
+                                    <span class="invalid-feedback" id="invalid-feedback-category">Category trống</span>
+                                </div>
+                                <select class="select2bs4" style="width: 100%;" id="category" multiple="multiple">
+                                    <th:block th:each="category : ${categories}">
+                                        <option th:value="${category.id}" th:text="${category.name}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div>
+                                    <label class="required-label" for="price">Giá bán (VNĐ)</label>
+                                    <span class="invalid-feedback" id="invalid-feedback-price">Khoảng giá sản phẩm: 1.000 - 1.000.000.000</span>
+                                </div>
+                                <input type="text" class="form-control text-price-input" id="price">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div>
+                                <label class="required-label">Ảnh sản phẩm</label> <i>(Lưu ý: Nên để nền trắng)</i>
+                                <span class="invalid-feedback" id="invalid-feedback-product-img">Chưa chọn ảnh sản phẩm</span>
+                            </div>
+                            <div id="list-product-image" class="grid-list-img">
+
+                            </div>
+                            <button type="button" class="btn btn-info" id="btn-upload-product-img" data-toggle="modal" data-target="#choose-img-modal">
+                                Chọn ảnh
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <th:block th:replace="~{fragment/choose_img_modal :: choose-img-modal}"></th:block>
+</main>
+
+<th:block id="js-resources">
+    <!-- Summernote -->
+    <script th:src="@{/adminlte/plugins/summernote/summernote-bs4.min.js}"></script>
+    <!-- List js -->
+    <script th:src="@{/adminlte/plugins/list/list.min.js}"></script>
+    <!-- Modal img js -->
+    <script th:src="@{/adminlte/dist/js/modal_img.js}"></script>
+    <script th:inline="javascript">
+        $(function () {
+            $('#description').summernote(
+                {
+                    height: 450,
+                    focus: true
+                }
+            )
+
+            let imgs = [[${images}]];
+            let tmp = [];
+            for (img of imgs) {
+                tmp.push({"grid-item-img":img})
+            }
+            initListImg(tmp);
+        })
+
+        $('#btn-upload-product-img').click(function() {
+            $('#choose-img-modal').modal('show');
+            $('.btn-choose-img').on('click', function(event) {
+                let url = $('#list-user-img .grid-item.choosen .grid-item-img').attr('src');
+                if (url == "" || url == null) {
+                    toastr.warning("Bạn chưa chọn ảnh");
+                    return;
+                }
+                closeChooseImgModal();
+                $('.btn-choose-img').off('click');
+                $('#list-product-image').append(`
+                    <div class="grid-item">
+                        <div class="img-container">
+                            <div class="img-div">
+                                <img src="${url}" alt="product img">
+                            </div>
+                        </div>
+                        <div class="remove-img" onclick="removeProductImage(this)">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                    </div>`)
+            });
+        })
+
+        function removeProductImage(btn) {
+            $(btn).parent().remove();
+        }
+
+        $('.btn-create-product').click(function() {
+            $('.invalid-feedback').hide();
+            let name = $('#name').val();
+            let description = $('#description').val();
+            let brand = $('#brand').val();
+            let isAvailable = false;
+            if ($('#is-available').val() == "true") {
+                isAvailable = true;
+            }
+            let category = $('#category').val();
+            let price = parseInt($('#price').val());
+            let productImgs = [];
+            $('#list-product-image .grid-item .img-container .img-div img').each(function() {
+               productImgs.push($(this).attr('src'));
+            })
+            isValid = true;
+
+            if (name.length == 0 || name.length > 300) {
+                $('#invalid-feedback-name').show();
+                isValid = false;
+            }
+
+            if (description.length == 0) {
+                $('#invalid-feedback-description').show();
+                isValid = false;
+            }
+
+            if (category.length == 0) {
+                $('#invalid-feedback-category').show();
+                isValid = false;
+            }
+
+            if (isNaN(price) || (price < 1000 || price > 1000000000)) {
+                $('#invalid-feedback-price').show();
+                isValid = false;
+            }
+
+            if (productImgs.length == 0) {
+                $('#invalid-feedback-product-img').show();
+                isValid = false;
+            }
+
+            if (isValid) {
+                req = {
+                    name: name,
+                    description: description,
+                    brand_id: parseInt(brand),
+                    category_ids: category,
+                    is_available: isAvailable,
+                    price: price,
+                    product_images: productImgs
+                }
+                var myJSON = JSON.stringify(req);
+                $.ajax({
+                    url: '/api/admin/products',
+                    type: 'POST',
+                    data: myJSON,
+                    contentType: "application/json; charset=utf-8",
+                    success: function(data) {
+                        toastr.success("Tạo sản phẩm thành công");
+                        setTimeout(function() {
+                            location.href = "/admin/products/"+data;
+                        }, 1000);
+                    },
+                    error: function(data) {
+                        toastr.warning(data.responseJSON.message);
+                    }
+                });
+            }
+        })
+    </script>
+</th:block>
+</body>
+</html>

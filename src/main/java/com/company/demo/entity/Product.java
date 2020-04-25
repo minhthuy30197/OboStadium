@@ -131,7 +131,7 @@ public class Product {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
@@ -147,7 +147,7 @@ public class Product {
     @Column(name = "is_available", columnDefinition = "TINYINT(1)")
     private boolean isAvailable;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "product_category",
             joinColumns = @JoinColumn(name = "product_id"),
@@ -162,4 +162,9 @@ public class Product {
     @Type(type = "json")
     @Column(name = "onfeet_images", columnDefinition = "json")
     private ArrayList<String> onfeetImages;
+
+    @PreRemove
+    private void removeCategories() {
+        this.categories.clear();
+    }
 }

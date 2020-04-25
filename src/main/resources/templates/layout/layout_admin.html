@@ -19,6 +19,9 @@
         <link th:href="@{/vendor/toastr/toastr.min.css}" rel="stylesheet"/>
         <!-- Admin CSS -->
         <link th:href="@{/adminlte/dist/css/admin.css}" rel="stylesheet"/>
+        <!-- Select2 -->
+        <link rel="stylesheet" th:href="@{/adminlte/plugins/select2/css/select2.min.css}">
+        <link rel="stylesheet" th:href="@{/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css}">
         <!-- Components CSS -->
         <th:block th:replace="${cssResources} ?: ~{}"></th:block>
     </head>
@@ -226,6 +229,8 @@
         <script th:src="@{/adminlte/dist/js/adminlte.js}"></script>
         <!-- Toastr JS-->
         <script type="text/javascript" th:src="@{/vendor/toastr/toastr.min.js}"></script>
+        <!-- Select2 -->
+        <script th:src="@{/adminlte/plugins/select2/js/select2.full.min.js}"></script>
         <!-- Common JS-->
         <script type="text/javascript" th:src="@{/adminlte/dist/js/custom.js}"></script>
         <th:block th:replace="${jsResources} ?: ~{}"></th:block>

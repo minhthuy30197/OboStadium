@@ -15,4 +15,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Query(nativeQuery = true, name = "userGetDetailById")
     public OrderDetailDto userGetDetailById(long id, long userId);
+
+    public int countByProductId(String id);
 }

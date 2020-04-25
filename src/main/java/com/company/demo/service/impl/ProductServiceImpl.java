@@ -4,13 +4,19 @@ import com.company.demo.entity.*;
 import com.company.demo.exception.*;
 import com.company.demo.model.dto.*;
 import com.company.demo.model.mapper.*;
+import com.company.demo.model.request.CreateProductReq;
 import com.company.demo.model.request.FilterProductReq;
+import com.company.demo.model.request.UpdateOnfeetImagesReq;
+import com.company.demo.model.request.UpdateSizeCountReq;
 import com.company.demo.repository.*;
 import com.company.demo.service.*;
 import com.company.demo.util.PageUtil;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import javax.persistence.EntityManager;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
+import static com.company.demo.config.Constant.*;
+import java.sql.Timestamp;
 import java.util.*;
 
 @Component
@@ -22,13 +28,13 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Autowired
+    private OrderRepository orderRepository;
+
+    @Autowired
     private ConfigurationRepository configurationRepository;
 
     @Autowired
     private ProductSizeRepository productSizeRepository;
-
-    @Autowired
-    private EntityManager entityManager;
 
     @Override
     public List<ProductInfoDto> getListBestSellerProduct() {
@@ -166,5 +172,138 @@ public class ProductServiceImpl implements ProductService {
         int totalPages = pageInfo.calculateTotalPage(totalItems);
 
         return new PageableDto(products, totalPages, pageInfo.getPage());
+    }
+
+    @Override
+    public String createProduct(CreateProductReq req) {
+        // Validate info
+        if (req.getCategoryIds().size() == 0) {
+            throw new BadRequestException("Danh mục trỗng");
+        }
+        if (req.getProductImages().size() == 0) {
+            throw new BadRequestException("Danh sách ảnh trống");
+        }
+
+        Product product = ProductMapper.toProduct(req);
+        product.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+        product.setTotalSold(0);
+        // Gen id
+        String productId = RandomStringUtils.randomAlphanumeric(6);
+        product.setId(productId);
+
+        try {
+            productRepository.save(product);
+        } catch (Exception ex) {
+            throw new InternalServerException("Lỗi khi thêm sản phẩm");
+        }
+
+        return productId;
+    }
+
+    @Override
+    public Product getProductById(String id) {
+        Optional<Product> product = productRepository.findById(id);
+        if (product.isEmpty()) {
+            throw new NotFoundException("Sản phẩm không tồn tại");
+        }
+
+        return product.get();
+    }
+
+    @Override
+    public void updateProduct(String id, CreateProductReq req) {
+        // Check product exist
+        Optional<Product> rs = productRepository.findById(id);
+        if (rs.isEmpty()) {
+            throw new NotFoundException("Sản phẩm không tồn tại");
+        }
+
+        // Validate info
+        if (req.getCategoryIds().size() == 0) {
+            throw new BadRequestException("Danh mục trỗng");
+        }
+        if (req.getProductImages().size() == 0) {
+            throw new BadRequestException("Danh sách ảnh trống");
+        }
+
+        Product product = ProductMapper.toProduct(req);
+        product.setId(id);
+
+        try {
+            productRepository.save(product);
+        } catch (Exception ex) {
+            throw new InternalServerException("Lỗi khi cập nhật thông tin sản phẩm");
+        }
+    }
+
+    @Override
+    public void updateOnfeetImages(String id, UpdateOnfeetImagesReq req) {
+        // Check product exist
+        Optional<Product> rs = productRepository.findById(id);
+        if (rs.isEmpty()) {
+            throw new NotFoundException("Sản phẩm không tồn tại");
+        }
+
+        Product product = rs.get();
+        product.setOnfeetImages(req.getOnfeetImages());
+        try {
+            productRepository.save(product);
+        } catch (Exception ex) {
+            throw new InternalServerException("Lỗi khi cập nhật hình ảnh on feet");
+        }
+    }
+
+    @Override
+    public void updateSizeCount(UpdateSizeCountReq req) {
+        // Check size is validate
+        boolean isValid = false;
+        for (int size : SIZE_VN) {
+            if (size == req.getSize()) {
+                isValid = true;
+                break;
+            }
+        }
+        if (!isValid) {
+            throw new BadRequestException("Size không hợp lệ");
+        }
+
+        // Check product exist
+        Optional<Product> rs = productRepository.findById(req.getProductId());
+        if (rs.isEmpty()) {
+            throw new NotFoundException("Sản phẩm không tồn tại");
+        }
+
+        ProductSize ps = new ProductSize(req.getProductId(), req.getSize(), req.getCount());
+        productSizeRepository.save(ps);
+    }
+
+    @Override
+    public void deleteProduct(String id) {
+        // Check product exist
+        Optional<Product> rs = productRepository.findById(id);
+        if (rs.isEmpty()) {
+            throw new NotFoundException("Sản phẩm không tồn tại");
+        }
+
+        // If have order, can't delete
+        int countOrder = orderRepository.countByProductId(id);
+        if (countOrder > 0) {
+            throw new BadRequestException("Sản phẩm đã được đặt hàng không thể xóa");
+        }
+
+        try {
+            // Delete product size
+            productSizeRepository.deleteByProductId(id);
+
+            productRepository.deleteById(id);
+        } catch (Exception ex) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            throw new InternalServerException("Lỗi khi xóa sản phẩm");
+        }
+    }
+
+    @Override
+    public List<ProductSize> getListSizeOfProduct(String id) {
+        return productSizeRepository.findByProductId(id);
     }
 }

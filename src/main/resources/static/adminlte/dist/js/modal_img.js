@@ -2,7 +2,7 @@ var options = {
 	valueNames: [
 		{name: 'grid-item-img', attr: 'src'}
 	],
-    item: '<div class="grid-item" onclick="chooseImg(this)"><img class="grid-item-img" src=""></div>',
+    item: '<div class="grid-item" onclick="chooseImg(this)"><div class="img-container"><div class="img-div"><img class="grid-item-img" src=""></div></div></div>',
 	pagination: true,
 	page: 10
 };
@@ -13,6 +13,13 @@ var imgList = new List('list-user-img', options);
 function initListImg(arr) {
     values = arr;
     imgList.add(values);
+}
+
+function closeChooseImgModal() {
+    $('.modal').modal('hide');
+    $('#list-user-img .grid-item.choosen').removeClass('choosen');
+    $('.btn-delete-img').prop('disabled', true);
+    $('.btn-choose-img').prop('disabled', true);
 }
 
 function chooseImg(img) {

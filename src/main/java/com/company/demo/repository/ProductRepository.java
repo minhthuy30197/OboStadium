@@ -61,7 +61,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
             "AND product.price > ?3 AND product.price < ?4\n")
     public int countProductAllSize(List<Integer> brands, List<Integer> categories, long minPrice, long maxPrice);
 
-    @Query(nativeQuery = true, value = "SELECT product.*\n" +
+    @Query(nativeQuery = true, value = "SELECT DISTINCT product.*\n" +
             "FROM product\n" +
             "INNER JOIN product_category\n" +
             "ON product.id = product_category.product_id\n" +
@@ -73,7 +73,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
             "OFFSET ?8")
     public List<Product> adminGetListProduct(String id, String name, String category, String brand, String order, String direction, int limit, int offset);
 
-    @Query(nativeQuery = true, value = "SELECT count(product.id)\n" +
+    @Query(nativeQuery = true, value = "SELECT count(distinct product.id)\n" +
             "FROM product\n" +
             "INNER JOIN product_category\n" +
             "ON product.id = product_category.product_id\n" +

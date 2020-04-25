@@ -62,7 +62,7 @@
                                     <label class="required-label" for="content">Nội dung</label>
                                     <span class="invalid-feedback" id="invalid-feedback-content">Nội dung bài viết trống</span>
                                 </div>
-                                <textarea th:text="${post.content}" class="textarea" id="content" name="content"  style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                <textarea th:text="${post.content}" class="textarea" id="content" name="content"></textarea>
                             </div>
                             <div class="form-group">
                                 <div>
@@ -129,16 +129,17 @@
         })
 
         $('.btn-choose-img').click(function() {
-            let url = $('.grid-item.choosen .grid-item-img').attr('src');
+            let url = $('#list-user-img .grid-item.choosen .grid-item-img').attr('src');
             if (url == "" || url == null) {
                 toastr.warning("Bạn chưa chọn ảnh");
                 return;
             }
-            $('.modal').modal('hide');
+            closeChooseImgModal();
             $('#preview-img').attr('src', url);
         })
 
         $('.btn-update-post').click(function() {
+            $('.invalid-feedback').hide();
             let title = $('#title').val();
             let description = $('#description').val();
             let content = $('#content').val();

@@ -17,8 +17,7 @@ textarea {
     resize: none;
 }
 
-.post-thumbnail-container {
-    background-color: red;
+.thumbnail-container {
     position: relative;
     width: 100%;
     padding-top: 68.88%;

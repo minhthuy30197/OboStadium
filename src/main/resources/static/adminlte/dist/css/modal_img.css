@@ -16,14 +16,27 @@
 	padding: 5px;
 	border-radius: 3px;
 	border: 1px solid #d2d6de;
-	height: 200px;
+}
+
+#list-user-img .list .grid-item .img-container {
+	position: relative;
+    width: 100%;
+    padding-top: 100%;
+}
+
+#list-user-img .list .grid-item .img-container .img-div {
+    position:  absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
 
 #list-user-img .list .grid-item.choosen {
 	border: 2px solid #3fb159;
 }
 
-#list-user-img .list .grid-item img {
+#list-user-img .list .grid-item .img-container .img-div img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
