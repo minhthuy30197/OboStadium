@@ -211,11 +211,11 @@
                                             <th>Số lượng có sẵn</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="list-product-size">
                                     <th:block th:each="ps : ${productSizes}">
                                         <tr>
-                                            <td th:text="${ps.size}"></td>
-                                            <td th:text="${ps.quantity}"></td>
+                                            <td th:text="${ps.size}" class="product-size" th:data-size="${ps.size}"></td>
+                                            <td th:text="${ps.quantity}" class="product-count"></td>
                                         </tr>
                                     </th:block>
                                     </tbody>
@@ -425,6 +425,12 @@
                 data: myJSON,
                 contentType: "application/json; charset=utf-8",
                 success: function(data) {
+                    let productSize = $('.product-size[data-size='+size+']')
+                    if (productSize.length == 0) {
+                        $('.list-product-size').append(`<tr><td>${size}</td><td>${count}</td></tr>`);
+                    } else {
+                        $(productSize).parent().find('.product-count').text(count);
+                    }
                     toastr.success("Cập nhật thành công");
                 },
                 error: function(data) {
