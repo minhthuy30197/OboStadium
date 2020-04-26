@@ -48,6 +48,7 @@ public class ManagePostController {
 
     @GetMapping("/admin/posts/create")
     public String getPostCreatePage(Model model) {
+        // Get list image of user
         User user = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
         List<String> images = imageService.getListImageOfUser(user.getId());
         model.addAttribute("images", images);
@@ -65,6 +66,7 @@ public class ManagePostController {
 
     @GetMapping("/admin/posts/{id}")
     public String getPostDetailPage(Model model, @PathVariable long id) {
+        // Get list image of user
         User user = ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUser();
         List<String> images = imageService.getListImageOfUser(user.getId());
         model.addAttribute("images", images);

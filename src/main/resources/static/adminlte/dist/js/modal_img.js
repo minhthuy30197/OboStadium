@@ -16,7 +16,7 @@ function initListImg(arr) {
 }
 
 function closeChooseImgModal() {
-    $('.modal').modal('hide');
+    $('#choose-img-modal').modal('hide');
     $('#list-user-img .grid-item.choosen').removeClass('choosen');
     $('.btn-delete-img').prop('disabled', true);
     $('.btn-choose-img').prop('disabled', true);

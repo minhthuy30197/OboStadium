@@ -81,4 +81,6 @@ public interface ProductRepository extends JpaRepository<Product, String> {
             "ON category.id = product_category.category_id\n" +
             "WHERE product.id LIKE CONCAT('%',:id,'%') AND product.name LIKE CONCAT('%',:name,'%') AND category.id LIKE :category AND product.brand_id LIKE :brand \n")
     public int countAdminGetListProduct(@Param("id") String id, @Param("name") String name, @Param("category") String category, @Param("brand") String brand);
+
+    public int countByBrandId(int id);
 }
