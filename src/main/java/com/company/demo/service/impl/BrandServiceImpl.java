@@ -3,6 +3,7 @@ package com.company.demo.service.impl;
 import com.company.demo.entity.Brand;
 import com.company.demo.exception.BadRequestException;
 import com.company.demo.exception.InternalServerException;
+import com.company.demo.exception.NotFoundException;
 import com.company.demo.model.dto.BrandInfo;
 import com.company.demo.model.request.CreateBrandReq;
 import com.company.demo.repository.BrandRepository;
@@ -47,7 +48,7 @@ public class BrandServiceImpl implements BrandService {
         // Check brand exist
         Optional<Brand> rs = brandRepository.findById(id);
         if (rs.isEmpty()) {
-            throw new BadRequestException("Nhãn hiệu không tồn tại");
+            throw new NotFoundException("Nhãn hiệu không tồn tại");
         }
 
         Brand brand = rs.get();
@@ -66,7 +67,7 @@ public class BrandServiceImpl implements BrandService {
         // Check category exist
         Optional<Brand> rs = brandRepository.findById(id);
         if (rs.isEmpty()) {
-            throw new BadRequestException("Nhãn hiệu không tồn tại");
+            throw new NotFoundException("Nhãn hiệu không tồn tại");
         }
 
         // Check product in brand

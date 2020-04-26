@@ -1,5 +1,4 @@
 $(function () {
-  formatDate();
   formatMoney();
   resetModal();
   configToastr();
@@ -203,15 +202,6 @@ function configToastr() {
           "showMethod": "fadeIn",
           "hideMethod": "fadeOut"
     }
-}
-
-function formatDate() {
-   $( ".date" ).each(function() {
-     let textDate = $(this).text();
-     console.log(textDate);
-     let date = new Date(textDate);
-     $(this).text(date.toLocaleDateString("en-US"))
-   });
 }
 
 function formatMoney() {

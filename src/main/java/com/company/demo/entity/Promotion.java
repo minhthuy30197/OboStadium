@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Entity(name = "promotion")
 @Table(name = "promotion")
-public class Promotion<Datetime> {
+public class Promotion {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")

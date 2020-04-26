@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout_admin :: main-fragment(
+                                                ~{:: title},
+                                                ~{:: #css-resources},
+                                                ~{:: #js-resources},
+                                                ~{:: #main-content}
+                                               )}">
+
+<head>
+    <title>Danh sách khuyến mãi</title>
+
+    <th:block id="css-resources">
+        <link rel="stylesheet" type="text/css" th:href="@{/vendor/pagination/simplePagination.css}"/>
+    </th:block>
+</head>
+<body>
+<main id="main-content">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-12">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                <li class="breadcrumb-item active">Danh sách khuyến mãi</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <a role="button" class="btn btn-success" href="/admin/promotions/create">
+            <span class="fa fa-plus" style="margin-right:0.5rem;"></span>
+            <span>Tạo khuyến mãi</span>
+        </a>
+        <a role="button" class="btn btn-info" href="/admin/promotions">
+            <span class="fas fa-redo-alt" style="margin-right:0.5rem;"></span>
+            <span>Refresh</span>
+        </a>
+        <button class="btn btn-secondary" id="btn-search">
+            <span class="fas fa-search" style="margin-right:0.5rem;"></span>
+            <span>Tìm kiếm</span>
+        </button>
+        <div class="clear"></div>
+    </div>
+
+    <!-- Main content -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-outline">
+                <div class="card-body pad">
+                    <div class="table-responsive">
+                        <!-- Table data -->
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr class="heading">
+                                <th width="15%">
+                                    Mã coupon
+                                </th>
+                                <th width="25%">
+                                    Tên khuyến mãi
+                                </th>
+                                <th width="10%">
+                                    Loại
+                                </th>
+                                <th width="10%">
+                                    Trạng thái
+                                </th>
+                                <th width="20%">
+                                    Giá trị
+                                </th>
+                                <th width="20%">
+                                    Ngày hết hạn
+                                </th>
+                            </tr>
+                            <tr class="heading-search">
+                                <form method="GET" id="search-form">
+                                    <th>
+                                        <input type="text" name="code" id="code" class="form-control thuy-search-input">
+                                    </th>
+                                    <th>
+                                        <input type="text" name="name" id="name" class="form-control thuy-search-input">
+                                    </th>
+                                    <th>
+                                        <select name="ispublic" class="form-control thuy-search-select" id="ispublic">
+                                            <option value="">Tất cả</option>
+                                            <option value="false">Ẩn</option>
+                                            <option value="true">Công khai</option>
+                                        </select>
+                                    </th>
+                                    <th>
+                                        <select name="active" class="form-control thuy-search-select" id="active">
+                                            <option value="">Tất cả</option>
+                                            <option value="false">Vô hiệu hóa</option>
+                                            <option value="true">Kích hoạt</option>
+                                        </select>
+                                    </th>
+                                    <th></th>
+                                    <th></th>
+                                    <input type="hidden" name="page" id="page">
+                                </form>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <th:block th:each="promotion : ${promotions}">
+                                    <tr>
+                                        <td>
+                                            <a th:href="@{/admin/promotions/{id}(id=${promotion.id})}" th:text="${promotion.couponCode}"></a>
+                                        </td>
+                                        <td>
+                                            <a th:href="@{/admin/promotions/{id}(id=${promotion.id})}" th:text="${promotion.name}"></a>
+                                        </td>
+                                        <td>
+                                            <th:block th:if="${promotion.isPublic()} == true">
+                                                Công khai
+                                            </th:block>
+                                            <th:block th:if="${promotion.isPublic()} == false">
+                                                Ẩn
+                                            </th:block>
+                                        </td>
+                                        <td>
+                                            <th:block th:if="${promotion.isActive()} == true">
+                                                Kích hoạt
+                                            </th:block>
+                                            <th:block th:if="${promotion.isActive()} == false">
+                                                Vô hiệu hóa
+                                            </th:block>
+                                        </td>
+                                        <td class="text-right">
+                                            <th:block th:if="${promotion.discountType} == 1">
+                                                <span th:text="${promotion.discountValue}"></span> %
+                                            </th:block>
+                                            <th:block th:if="${promotion.discountType} == 2">
+                                                <span class="text-price" th:text="${promotion.discountValue}"></span> đ
+                                            </th:block>
+                                        </td>
+                                        <td>
+                                            <span th:text="${#dates.format(promotion.expiredAt, 'dd-MM-yyyy')}"></span>
+                                        </td>
+                                    </tr>
+                                </th:block>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination" id="pagination"></ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<th:block id="js-resources">
+    <script type="text/javascript" th:src="@{/vendor/pagination/jquery.simplePagination.js}"></script>
+    <script type="text/javascript" th:src="@{/adminlte/dist/js/table.js}"></script>
+    <script th:inline="javascript">
+        var name, code, ispublic, active, page;
+
+        $(function () {
+             let vars = parseUrl();
+             name = vars["name"] || ""
+             code = vars["code"] || ""
+             ispublic = vars["ispublic"] || ""
+             active = vars["active"] || ""
+             page = vars["page"] || "1"
+
+             $('#name').val(name)
+             $('#code').val(code)
+             $('#ispublic').val(ispublic)
+             $('#active').val(active)
+             $('#page').val(page)
+
+             pagination([[${totalPages}]], [[${currentPage}]]);
+        });
+    </script>
+</th:block>
+</body>
+</html>
+
+

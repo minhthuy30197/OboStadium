@@ -3,6 +3,7 @@ package com.company.demo.service.impl;
 import com.company.demo.entity.Category;
 import com.company.demo.exception.BadRequestException;
 import com.company.demo.exception.InternalServerException;
+import com.company.demo.exception.NotFoundException;
 import com.company.demo.model.dto.CategoryInfo;
 import com.company.demo.model.request.CreateCategoryReq;
 import com.company.demo.repository.CategoryRepository;
@@ -42,7 +43,7 @@ public class CategoryServiceImpl implements CategoryService {
         // Check category exist
         Optional<Category> rs = categoryRepository.findById(id);
         if (rs.isEmpty()) {
-            throw new BadRequestException("Category không tồn tại");
+            throw new NotFoundException("Category không tồn tại");
         }
 
         Category category = rs.get();
@@ -60,7 +61,7 @@ public class CategoryServiceImpl implements CategoryService {
         // Check category exist
         Optional<Category> rs = categoryRepository.findById(id);
         if (rs.isEmpty()) {
-            throw new BadRequestException("Category không tồn tại");
+            throw new NotFoundException("Category không tồn tại");
         }
 
         // Check product in category

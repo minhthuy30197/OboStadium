@@ -30,12 +30,12 @@
                             <img class="img-fluid" th:src="${post.thumbnail}" th:alt="${post.title}"/>
                         </div>
                         <div class="details col-5 mx-1">
-                            <div class="date" th:text="${post.publishedAt}"></div>
+                            <div th:text="${#dates.format(post.publishedAt, 'dd/MM/yyyy')}"></div>
                             <div class="title" th:text="${post.title}"></div>
                             <div class="short-desc" th:text="${post.description}"></div>
                         </div>
                         <div class="details-small col-12">
-                            <div class="date" th:text="${post.publishedAt}"></div>
+                            <div th:text="${#dates.format(post.publishedAt, 'dd/MM/yyyy')}"></div>
                             <div class="title" th:text="${post.title}"></div>
                             <div class="short-desc" th:text="${post.description}"></div>
                         </div>
@@ -44,7 +44,7 @@
                 <th:block th:if="${index.odd}">
                     <div class="row">
                         <div class="details col-5 offset-1">
-                            <div class="date" th:text="${post.publishedAt}"></div>
+                            <div th:text="${#dates.format(post.publishedAt, 'dd/MM/yyyy')}"></div>
                             <div class="title" th:text="${post.title}"></div>
                             <div class="short-desc" th:text="${post.description}"></div>
                         </div>
@@ -52,7 +52,7 @@
                             <img class="img-fluid" th:src="${post.thumbnail}" th:alt="${post.title}"/>
                         </div>
                         <div class="details-small col-12">
-                            <div class="date" th:text="${post.publishedAt}"></div>
+                            <div th:text="${#dates.format(post.publishedAt, 'dd/MM/yyyy')}"></div>
                             <div class="title" th:text="${post.title}"></div>
                             <div class="short-desc" th:text="${post.description}"></div>
                         </div>
