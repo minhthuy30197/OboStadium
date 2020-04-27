@@ -306,4 +306,24 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductSize> getListSizeOfProduct(String id) {
         return productSizeRepository.findByProductId(id);
     }
+
+    @Override
+    public List<ShortProductInfoDto> getAllProduct() {
+        return productRepository.getAllProduct();
+    }
+
+    @Override
+    public List<ShortProductInfoDto> getAvailableProducts() {
+        return productRepository.getAvailableProducts();
+    }
+
+    @Override
+    public boolean checkProductSizeAvailable(String productId, int size) {
+        ProductSize ps = productSizeRepository.checkProductSizeAvailable(productId, size);
+        if (ps != null) {
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout_admin :: main-fragment(
+                                                ~{:: title},
+                                                ~{:: #css-resources},
+                                                ~{:: #js-resources},
+                                                ~{:: #main-content}
+                                               )}">
+
+<head>
+    <title>Danh sách đơn hàng</title>
+
+    <th:block id="css-resources">
+        <link rel="stylesheet" type="text/css" th:href="@{/vendor/pagination/simplePagination.css}"/>
+    </th:block>
+</head>
+<body>
+<main id="main-content">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-12">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                <li class="breadcrumb-item active">Danh sách đơn hàng</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <a role="button" class="btn btn-success" href="/admin/orders/create">
+            <span class="fa fa-plus" style="margin-right:0.5rem;"></span>
+            <span>Tạo đơn hàng</span>
+        </a>
+        <a role="button" class="btn btn-info" href="/admin/orders">
+            <span class="fas fa-redo-alt" style="margin-right:0.5rem;"></span>
+            <span>Refresh</span>
+        </a>
+        <button class="btn btn-secondary" id="btn-search">
+            <span class="fas fa-search" style="margin-right:0.5rem;"></span>
+            <span>Tìm kiếm</span>
+        </button>
+        <div class="clear"></div>
+    </div>
+
+    <!-- Main content -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-outline">
+                <div class="card-body pad">
+                    <div class="table-responsive">
+                        <!-- Table data -->
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr class="heading">
+                                <th width="8%">
+                                    Mã đơn
+                                </th>
+                                <th width="22%">
+                                    Người nhận
+                                </th>
+                                <th width="15%">
+                                    Điện thoại
+                                </th>
+                                <th width="10%">
+                                    Trạng thái
+                                </th>
+                                <th width="30%">
+                                    Sản phẩm
+                                </th>
+                                <th width="15%">
+                                    Ngày tạo đơn
+                                </th>
+                            </tr>
+                            <tr class="heading-search">
+                                <form method="GET" id="search-form">
+                                    <th>
+                                        <input type="text" name="id" id="id" class="form-control thuy-search-input">
+                                    </th>
+                                    <th>
+                                        <input type="text" name="name" id="name" class="form-control thuy-search-input">
+                                    </th>
+                                    <th>
+                                        <input type="text" name="phone" id="phone" class="form-control thuy-search-input">
+                                    </th>
+                                    <th>
+                                        <select name="status" class="form-control thuy-search-select" id="status">
+                                            <option value="">Tất cả</option>
+                                            <option value="1">Chờ lấy hàng</option>
+                                            <option value="2">Đang giao hàng</option>
+                                            <option value="3">Đã giao hàng</option>
+                                            <option value="4">Đã hủy</option>
+                                            <option value="5">Đã trả hàng</option>
+                                        </select>
+                                    </th>
+                                    <th>
+                                        <select name="product" class="form-control thuy-search-select" id="product">
+                                            <option value="">Tất cả</option>
+                                            <th:block th:each="product : ${products}">
+                                                <option th:value="${product.id}" th:text="${product.name}"></option>
+                                            </th:block>
+                                        </select>
+                                    </th>
+                                    <th></th>
+                                    <input type="hidden" name="page" id="page">
+                                </form>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <th:block th:each="order : ${orders}">
+                                    <tr>
+                                        <td>
+                                            <a th:href="@{/admin/orders/{id}(id=${order.id})}" th:text="${order.id}"></a>
+                                        </td>
+                                        <td th:text="${order.receiverName}"></td>
+                                        <td th:text="${order.receiverPhone}"></td>
+                                        <td>
+                                            <span th:if="${order.status} == 1" class="badge badge-warning">Chờ lấy hàng</span>
+                                            <span th:if="${order.status} == 2" class="badge badge-primary">Đang giao hàng</span>
+                                            <span th:if="${order.status} == 3" class="badge badge-success">Đã giao hàng</span>
+                                            <span th:if="${order.status} == 4" class="badge badge-light">Đã hủy</span>
+                                            <span th:if="${order.status} == 5" class="badge badge-danger">Đã trả hàng</span>
+                                        </td>
+                                        <td th:text="${order.product.name}"></td>
+                                        <td>
+                                            <span th:text="${#dates.format(order.createdAt, 'dd-MM-yyyy HH:mm')}"></span>
+                                        </td>
+                                    </tr>
+                                </th:block>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination" id="pagination"></ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<th:block id="js-resources">
+    <script type="text/javascript" th:src="@{/vendor/pagination/jquery.simplePagination.js}"></script>
+    <script type="text/javascript" th:src="@{/adminlte/dist/js/table.js}"></script>
+    <script th:inline="javascript">
+        var id, name, phone, status, product, page;
+
+        $(function () {
+            let vars = parseUrl();
+            id = vars["id"] || ""
+            name = vars["name"] || ""
+            phone = vars["phone"] || ""
+            status = vars["status"] || ""
+            product = vars["product"] || ""
+            page = vars["page"] || "1"
+
+            $('#id').val(id)
+            $('#name').val(name)
+            $('#phone').val(phone)
+            $('#status').val(status)
+            $('#product').val(product)
+            $('#page').val(page)
+
+            pagination([[${totalPages}]], [[${currentPage}]]);
+        });
+    </script>
+</th:block>
+</body>
+</html>
+
+

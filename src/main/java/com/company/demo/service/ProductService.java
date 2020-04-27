@@ -5,6 +5,7 @@ import com.company.demo.entity.ProductSize;
 import com.company.demo.model.dto.DetailProductInfoDto;
 import com.company.demo.model.dto.PageableDto;
 import com.company.demo.model.dto.ProductInfoDto;
+import com.company.demo.model.dto.ShortProductInfoDto;
 import com.company.demo.model.request.CreateProductReq;
 import com.company.demo.model.request.FilterProductReq;
 import com.company.demo.model.request.UpdateOnfeetImagesReq;
@@ -45,4 +46,10 @@ public interface ProductService {
     public void deleteProduct(String id);
 
     public List<ProductSize> getListSizeOfProduct(String id);
+
+    public List<ShortProductInfoDto> getAllProduct();
+
+    public List<ShortProductInfoDto> getAvailableProducts();
+
+    public boolean checkProductSizeAvailable(String productId, int size);
 }

@@ -212,4 +212,9 @@ public class PromotionServiceImpl implements PromotionService {
 
         return rs.get();
     }
+
+    @Override
+    public List<Promotion> getAllValidPromotion() {
+        return promotionRepository.getAllValidPromotion();
+    }
 }

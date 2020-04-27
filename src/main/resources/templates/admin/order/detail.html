@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout_admin :: main-fragment(
+                                                ~{:: title},
+                                                ~{:: #css-resources},
+                                                ~{:: #js-resources},
+                                                ~{:: #main-content}
+                                               )}">
+
+<head>
+    <title th:text="'Đơn hàng ' + ${order.id}"></title>
+
+    <th:block id="css-resources">
+        <link rel="stylesheet" th:href="@{/adminlte/dist/css/order.css}">
+    </th:block>
+</head>
+<body>
+<main id="main-content">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-12">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/admin/orders">Danh sách đơn hàng</a></li>
+                <li class="breadcrumb-item active" th:text="'Đơn hàng ' + ${order.id}"></li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <a role="button" class="btn btn-default" href="/admin/orders">
+            <span class="fas fa-chevron-left" style="margin-right:0.5rem;"></span>
+            <span>Trở về</span>
+        </a>
+        <button class="btn btn-success btn-update-order">
+            <span>Cập nhật</span>
+        </button>
+        <div class="clear"></div>
+    </div>
+
+    <!-- Main content -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-outline">
+                <div class="card-body pad">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="info-div">
+                                <label>Thông tin người đặt</label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control" readonly th:value="${order.createdBy.fullName}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-phone-alt"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control" readonly th:value="${order.createdBy.phone}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control" readonly th:value="${order.createdBy.email}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control" readonly th:value="${#dates.format(order.createdAt, 'dd-MM-yyyy HH:mm')}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info-div">
+                                <label>Thông tin người nhận</label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                            </div>
+                                            <input id="receiver-name" type="text" class="form-control" th:value="${order.receiverName}" th:readonly="${order.status} != 1">
+                                            <span class="invalid-feedback" id="invalid-feedback-name">Họ tên trống</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-phone-alt"></i></span>
+                                            </div>
+                                            <input id="receiver-phone" type="text" class="form-control" th:value="${order.receiverPhone}" th:readonly="${order.status} != 1">
+                                            <span class="invalid-feedback" id="invalid-feedback-phone">Điện thoại trống</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px;">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <textarea name="receiver-address" id="receiver-address" rows="5" th:text="${order.receiverAddress}" th:readonly="${order.status} != 1"></textarea>
+                                            <span class="invalid-feedback" id="invalid-feedback-address">Địa chỉ trống</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info-div">
+                                <label>Chi tiết đơn hàng</label>
+                                <th:block th:if="${order.status} == 1">
+                                    <button class="btn" onclick="openModalChangeDetailOrder()"><i class="fas fa-edit"></i></button>
+                                </th:block>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Sản phẩm</th>
+                                                <th>Kích cỡ</th>
+                                                <th>Giá tiền</th>
+                                                <th>Khuyến mãi</th>
+                                                <th>Mức giảm</th>
+                                                <th>Thành tiền</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <a target="_blank" th:href="@{/admin/products/{id}(id=${order.product.id})}" th:text="${order.product.name}"></a>
+                                                </td>
+                                                <td>
+                                                    <span th:text="${order.size}"></span>
+                                                    <th:block th:if="${order.status} == 1">
+                                                        <span th:if="${sizeIsAvailable} == false" class="badge badge-danger">Hết hàng</span>
+                                                    </th:block>
+                                                </td>
+                                                <td>
+                                                    <span class="text-price" th:text="${order.productPrice}"></span> đ
+                                                </td>
+                                                <td>
+                                                    <span th:if="${order.promotion} != null" th:text="${order.promotion.couponCode}"></span>
+                                                </td>
+                                                <td>
+                                                    <div th:if="${order.promotion} != null">
+                                                        <th:block th:if="${order.promotion.discountType} == 1">
+                                                            <span th:text="${order.promotion.discountValue}"></span> %
+                                                        </th:block>
+                                                        <th:block th:if="${order.promotion.discountType} == 2">
+                                                            <span class="text-price" th:text="${order.promotion.discountValue}"></span> đ
+                                                        </th:block>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span class="text-price" th:text="${order.totalPrice}"></span> đ
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="edit-order-div">
+                                <label>Trạng thái đơn hàng</label>
+                                <select name="status" class="form-control thuy-search-select" id="status">
+                                    <option value="1" th:selected="${order.status} == 1">Chờ lấy hàng</option>
+                                    <option value="2" th:selected="${order.status} == 2">Đang giao hàng</option>
+                                    <option value="3" th:selected="${order.status} == 3">Đã giao hàng</option>
+                                    <option value="4" th:selected="${order.status} == 4">Đã hủy</option>
+                                    <option value="5" th:selected="${order.status} == 5">Đã trả hàng</option>
+                                </select>
+                                <textarea name="note" id="note" rows="5" placeholder="Ghi chú" th:text="${order.note}"></textarea>
+                                <i th:if="${order.modifiedAt}">Chỉnh sửa lần cuối lúc <span th:text="${#dates.format(order.modifiedAt, 'dd-MM-yyyy HH:mm')}"></span> bởi <span th:text="${order.modifiedBy.fullName}"></span></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal change detail order -->
+    <th:block th:if="${order.status} == 1">
+        <div class="modal fade" id="modal-change-detail-order" tabindex="-1" role="dialog" aria-labelledby="modalChangeDetailOrder" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Chi tiết đơn hàng</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="product">Sản phẩm</label>
+                            <select name="product" class="form-control thuy-search-select" id="product">
+                                <th:block th:each="product : ${products}">
+                                    <option th:value="${product.id}" th:text="${product.name}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="size">Kích cỡ</label>
+                            <select class="form-control" id="size">
+
+                            </select>
+                            <span class="invalid-feedback" id="invalid-feedback-product">Sản phẩm đã hết size</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="size">Khuyến mãi</label>
+                            <select class="form-control" id="promotion">
+                                <option value="">Chọn khuyến mãi</option>
+                                <th:block th:each="promotion : ${promotions}">
+                                    <option th:value="${promotion.couponCode}">
+                                        <span th:text="${promotion.couponCode}"></span> -
+                                        <th:block th:if="${promotion.discountType} == 1">
+                                            <span th:text="${promotion.discountValue}"></span> %
+                                        </th:block>
+                                        <th:block th:if="${promotion.discountType} == 2">
+                                            <span class="text-price" th:text="${promotion.discountValue}"></span> đ
+                                        </th:block>
+                                    </option>
+                                </th:block>
+                            </select>
+                        </div>
+                        <div>
+                            <div class="display-info-price">
+                                <span>Giá tiền</span>
+                                <span class="text-price badge badge-primary" id="product-price">0</span>
+                            </div>
+                            <div class="display-info-price">
+                                <span>Khuyến mãi</span>
+                                <span class="text-price badge badge-warning" id="promotion-price">0</span>
+                            </div>
+                            <div class="display-info-price">
+                                <span>Thành tiền</span>
+                                <span class="text-price badge badge-success" id="total-price">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        <button type="button" class="btn btn-success" onclick="changeDetailOrder()">Chọn</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</main>
+
+<th:block id="js-resources">
+    <script th:inline="javascript">
+        var status = [[${order.status}]]
+        if (status == 1) {
+            var products = [[${products}]]
+            var promotions = [[${promotions}]]
+            let productPrice = 0;
+            let promotionPrice = 0;
+            let totalPrice = 0;
+
+            function eventChangeProduct() {
+               let idProduct = $('#product').val();
+               let sizes = [];
+               for (product of products) {
+                    if (product.id == idProduct) {
+                        if (product.availableSizes != null) {
+                            sizes = product.availableSizes;
+                        }
+                        productPrice = product.price;
+                        totalPrice = product.price;
+                        break;
+                    }
+               }
+
+               $('#size').empty();
+               for (size of sizes) {
+                    $("#size").append(new Option(size, size));
+               }
+
+               calculatePrice();
+            }
+
+            $('#product').change( function() {
+               eventChangeProduct();
+            });
+
+            $('#promotion').change( function() {
+               calculatePrice();
+            });
+
+            function calculatePrice() {
+               let codePromotion = $('#promotion').val();
+               if (codePromotion.length > 0) {
+                   for (promotion of promotions) {
+                       if (promotion.couponCode == codePromotion) {
+                            if (promotion.discountType == 1) {
+                                promotionPrice = productPrice * promotion.discountValue / 100;
+                                if (promotionPrice > promotion.maximumDiscountValue) {
+                                    promotionPrice = promotion.maximumDiscountValue;
+                                }
+                            } else {
+                                promotionPrice = promotion.discountValue;
+                            }
+                            totalPrice = productPrice - promotionPrice;
+                            if (totalPrice < 0) {
+                                totalPrice = 0;
+                            }
+                            break;
+                       }
+                   }
+               } else {
+                    totalPrice = productPrice;
+               }
+
+               $('#product-price').text(productPrice);
+               $('#promotion-price').text(promotionPrice);
+               $('#total-price').text(totalPrice);
+            }
+
+            function openModalChangeDetailOrder() {
+                $('.invalid-feedback').hide();
+                $('#product').val([[${order.product.id}]]);
+                let promotion = [[${order.promotion}]]
+                if (promotion != null) {
+                    $('#promotion').val(promotion.couponCode);
+                }
+                eventChangeProduct();
+                $('#size').val([[${order.size}]]);
+                $('#modal-change-detail-order').modal('show');
+            }
+
+            function changeDetailOrder() {
+                let product = $('#product').val();
+                let size = $('#size').val();
+                let promotion = $('#promotion').val();
+
+                if (size == null || size == "") {
+                    $('#invalid-feedback-product').show();
+                    return;
+                }
+
+                req = {
+                    product_id: product,
+                    size: parseInt(size),
+                    coupon_code: promotion,
+                    total_price: totalPrice,
+                    product_price: productPrice
+                }
+
+                var myJSON = JSON.stringify(req);
+                $.ajax({
+                    url: '/api/admin/orders/'+[[${order.id}]]+'/update-detail',
+                    type: 'PUT',
+                    data: myJSON,
+                    contentType: "application/json; charset=utf-8",
+                    success: function(data) {
+                        toastr.success("Cập nhật thành công");
+                        setTimeout(function() {
+                            location.href = "/admin/orders/"+[[${order.id}]];
+                        }, 1000)
+                    },
+                    error: function(data) {
+                        toastr.warning(data.responseJSON.message);
+                    },
+                });
+            }
+        }
+
+        $('.btn-update-order').click(function() {
+            $('.invalid-feedback').hide();
+            let receiverName = $('#receiver-name').val();
+            let receiverPhone = $('#receiver-phone').val();
+            let receiverAddress = $('#receiver-address').val();
+            let status = $('#status').val();
+            let note = $('#note').val();
+            let isValid = true;
+
+            if (receiverName.length == 0) {
+                $('#invalid-feedback-name').show();
+                isValid = false;
+            }
+            if (receiverPhone.length == 0) {
+                $('#invalid-feedback-phone').show();
+                isValid = false;
+            }
+            if (receiverAddress.length == 0) {
+                $('#invalid-feedback-address').show();
+                isValid = false;
+            }
+
+            if (isValid) {
+                req = {
+                    receiver_name: receiverName,
+                    receiver_phone: receiverPhone,
+                    receiver_address: receiverAddress,
+                    status: parseInt(status),
+                    note: note
+                }
+                var myJSON = JSON.stringify(req);
+                $.ajax({
+                    url: '/api/admin/orders/'+[[${order.id}]]+'/update-status',
+                    type: 'PUT',
+                    data: myJSON,
+                    contentType: "application/json; charset=utf-8",
+                    success: function(data) {
+                        toastr.success("Cập nhật thành công");
+                        setTimeout(function() {
+                            location.href = "/admin/orders/"+[[${order.id}]];
+                        }, 1000)
+                    },
+                    error: function(data) {
+                        toastr.warning(data.responseJSON.message);
+                    },
+                });
+            }
+        })
+    </script>
+</th:block>
+</body>
+</html>

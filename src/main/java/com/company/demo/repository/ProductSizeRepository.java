@@ -23,4 +23,14 @@ public interface ProductSizeRepository extends JpaRepository<ProductSize, Long> 
     public void deleteByProductId(String id);
 
     public List<ProductSize> findByProductId(String id);
+
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true, value = "Update product_size set quantity = quantity - 1 where product_id = ?1 and size = ?2")
+    public void minusOneProductBySize(String id, int size);
+
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true, value = "Update product_size set quantity = quantity + 1 where product_id = ?1 and size = ?2")
+    public void plusOneProductBySize(String id, int size);
 }

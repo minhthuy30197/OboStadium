@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/layout_admin :: main-fragment(
+                                                ~{:: title},
+                                                ~{:: #css-resources},
+                                                ~{:: #js-resources},
+                                                ~{:: #main-content}
+                                               )}">
+
+<head>
+    <title>Tạo đơn hàng mới</title>
+
+    <th:block id="css-resources">
+        <link rel="stylesheet" th:href="@{/adminlte/dist/css/order.css}">
+    </th:block>
+</head>
+<body>
+<main id="main-content">
+    <!-- Breadcrumb -->
+    <div class="row">
+        <div class="col-12">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/admin/orders">Danh sách đơn hàng</a></li>
+                <li class="breadcrumb-item active">Tạo đơn hàng mới</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <a role="button" class="btn btn-default" href="/admin/orders">
+            <span class="fas fa-chevron-left" style="margin-right:0.5rem;"></span>
+            <span>Trở về</span>
+        </a>
+        <button class="btn btn-success btn-create-order">
+            <span class="fa fa-plus" style="margin-right:0.5rem;"></span>
+            <span>Tạo mới</span>
+        </button>
+        <div class="clear"></div>
+    </div>
+
+    <!-- Main content -->
+    <div class="row">
+        <div class="col-lg-6 col-md-8">
+            <div class="card card-outline">
+                <div class="card-body pad">
+                    <label>Thông tin người nhận</label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Họ tên *" id="receiver-name">
+                                    <span class="invalid-feedback" id="invalid-feedback-name">Họ tên trống</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-phone-alt"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Số điện thoại *" id="receiver-phone">
+                                    <span class="invalid-feedback" id="invalid-feedback-phone">Số điện thoại trống</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <textarea id="receiver-address" rows="5" placeholder="Địa chỉ *"></textarea>
+                                <span class="invalid-feedback" id="invalid-feedback-address">Địa chỉ trống</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <textarea rows="5" placeholder="Ghi chú" id="receiver-note"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-8">
+            <div class="card card-outline">
+                <div class="card-body pad">
+                    <label>Chi tiết đơn hàng</label>
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <label for="product">Sản phẩm</label>
+                                <select name="product" class="form-control thuy-search-select" id="product">
+                                    <th:block th:each="product : ${products}">
+                                        <option th:value="${product.id}" th:text="${product.name}"></option>
+                                    </th:block>
+                                </select>
+                                <span class="invalid-feedback" id="invalid-feedback-product">Sản phẩm đã hết size</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="size">Kích cỡ</label>
+                                <select class="form-control" id="size">
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="size">Khuyến mãi</label>
+                                <select class="form-control" id="promotion">
+                                    <option value="">Chọn khuyến mãi</option>
+                                    <th:block th:each="promotion : ${promotions}">
+                                        <option th:value="${promotion.couponCode}">
+                                            <span th:text="${promotion.couponCode}"></span> -
+                                            <th:block th:if="${promotion.discountType} == 1">
+                                                <span th:text="${promotion.discountValue}"></span> %
+                                            </th:block>
+                                            <th:block th:if="${promotion.discountType} == 2">
+                                                <span class="text-price" th:text="${promotion.discountValue}"></span> đ
+                                            </th:block>
+                                        </option>
+                                    </th:block>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="info-price-div">
+                                <div class="display-info-price">
+                                    <span>Giá tiền</span>
+                                    <span class="text-price badge badge-primary" id="product-price">0</span>
+                                </div>
+                                <div class="display-info-price">
+                                    <span>Khuyến mãi</span>
+                                    <span class="text-price badge badge-warning" id="promotion-price">0</span>
+                                </div>
+                                <div class="display-info-price">
+                                    <span>Thành tiền</span>
+                                    <span class="text-price badge badge-success" id="total-price">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<th:block id="js-resources">
+    <script th:inline="javascript">
+        var products = [[${products}]]
+        var promotions = [[${promotions}]]
+        let productPrice = 0;
+        let promotionPrice = 0;
+        let totalPrice = 0;
+
+        $(function() {
+            $('#product').val(products[0].id);
+            eventChangeProduct();
+        })
+
+        $('#product').change( function() {
+           eventChangeProduct();
+        });
+
+        function eventChangeProduct() {
+           let idProduct = $('#product').val();
+           let sizes = [];
+           for (product of products) {
+                if (product.id == idProduct) {
+                    if (product.availableSizes != null) {
+                        sizes = product.availableSizes;
+                    }
+                    productPrice = product.price;
+                    totalPrice = product.price;
+                    break;
+                }
+           }
+
+           $('#size').empty();
+           for (size of sizes) {
+                $("#size").append(new Option(size, size));
+           }
+
+           calculatePrice();
+        }
+
+        $('#promotion').change( function() {
+           calculatePrice();
+        });
+
+        function calculatePrice() {
+           let codePromotion = $('#promotion').val();
+           if (codePromotion.length > 0) {
+               for (promotion of promotions) {
+                   if (promotion.couponCode == codePromotion) {
+                        if (promotion.discountType == 1) {
+                            promotionPrice = productPrice * promotion.discountValue / 100;
+                            if (promotionPrice > promotion.maximumDiscountValue) {
+                                promotionPrice = promotion.maximumDiscountValue;
+                            }
+                        } else {
+                            promotionPrice = promotion.discountValue;
+                        }
+                        totalPrice = productPrice - promotionPrice;
+                        if (totalPrice < 0) {
+                            totalPrice = 0;
+                        }
+                        break;
+                   }
+               }
+           } else {
+                totalPrice = productPrice;
+           }
+
+           $('#product-price').text(productPrice);
+           $('#promotion-price').text(promotionPrice);
+           $('#total-price').text(totalPrice);
+
+           formatMoney();
+        }
+
+        $('.btn-create-order').click(function() {
+            $('.invalid-feedback').hide();
+            let receiverName = $('#receiver-name').val();
+            let receiverPhone = $('#receiver-phone').val();
+            let receiverAddress = $('#receiver-address').val();
+            let note = $('#receiver-note').val();
+            let product = $('#product').val();
+            let size = $('#size').val();
+            let promotion = $('#promotion').val();
+            let isValid = true;
+
+            if (receiverName.length == 0) {
+                $('#invalid-feedback-name').show();
+                isValid = false;
+            }
+            if (receiverPhone.length == 0) {
+                $('#invalid-feedback-phone').show();
+                isValid = false;
+            }
+            if (receiverAddress.length == 0) {
+                $('#invalid-feedback-address').show();
+                isValid = false;
+            }
+            if (size == null) {
+                $('#invalid-feedback-product').show();
+                isValid = false;
+            }
+
+            if (isValid) {
+                req = {
+                    product_id: product,
+                    size: parseInt(size),
+                    receiver_name: receiverName,
+                    receiver_phone: receiverPhone,
+                    receiver_address: receiverAddress,
+                    coupon_code: promotion,
+                    total_price: totalPrice,
+                    product_price: productPrice,
+                    note: note,
+                }
+                var myJSON = JSON.stringify(req);
+                $.ajax({
+                    url: '/api/order',
+                    type: 'POST',
+                    data: myJSON,
+                    contentType: "application/json; charset=utf-8",
+                    success: function(data) {
+                        toastr.success("Tạo đơn hàng thành công");
+                        setTimeout(function() {
+                            location.href = "/admin/orders/"+data;
+                        }, 1000)
+                    },
+                    error: function(data) {
+                        toastr.warning(data.responseJSON.message);
+                    },
+                });
+            }
+        })
+    </script>
+</th:block>
+</body>
+</html>

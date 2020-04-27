@@ -1,6 +1,7 @@
 package com.company.demo.entity;
 
 import com.company.demo.model.dto.ProductInfoDto;
+import com.company.demo.model.dto.ShortProductInfoDto;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.*;
 import org.hibernate.annotations.Type;
@@ -25,8 +26,43 @@ import java.util.List;
                                         @ColumnResult(name = "image", type = String.class)
                                 }
                         )
+                ),
+                @SqlResultSetMapping(
+                        name = "shortProductInfoDto",
+                        classes = @ConstructorResult(
+                                targetClass = ShortProductInfoDto.class,
+                                columns = {
+                                        @ColumnResult(name = "id", type = String.class),
+                                        @ColumnResult(name = "name", type = String.class)
+                                }
+                        )
+                ),
+                @SqlResultSetMapping(
+                        name = "productInfoAndAvailableSize",
+                        classes = @ConstructorResult(
+                                targetClass = ShortProductInfoDto.class,
+                                columns = {
+                                        @ColumnResult(name = "id", type = String.class),
+                                        @ColumnResult(name = "name", type = String.class),
+                                        @ColumnResult(name = "price", type = Long.class),
+                                        @ColumnResult(name = "sizes", type = String.class)
+                                }
+                        )
                 )
         }
+)
+@NamedNativeQuery(
+        name = "getAllProduct",
+        resultSetMapping = "shortProductInfoDto",
+        query = "SELECT pro.id, pro.name \n" +
+                "FROM product pro"
+)
+@NamedNativeQuery(
+        name = "getAvailableProducts",
+        resultSetMapping = "productInfoAndAvailableSize",
+        query = "SELECT pro.id, pro.name, pro.price,\n" +
+                "(SELECT JSON_ARRAYAGG(ps.size) FROM product_size ps WHERE ps.product_id = pro.id AND ps.quantity > 0) as sizes \n" +
+                "FROM product pro\n"
 )
 @NamedNativeQuery(
         name = "getListNewProduct",

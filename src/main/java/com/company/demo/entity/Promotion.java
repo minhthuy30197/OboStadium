@@ -42,4 +42,11 @@ public class Promotion {
 
     @Column(name = "is_public", columnDefinition = "TINYINT(1)")
     private boolean isPublic;
+
+    public Promotion(Order.UsedPromotion promotion) {
+        this.discountValue = promotion.getDiscountValue();
+        this.maximumDiscountValue = promotion.getMaximumDiscountValue();
+        this.discountType = promotion.getDiscountType();
+        this.couponCode = promotion.getCouponCode();
+    }
 }

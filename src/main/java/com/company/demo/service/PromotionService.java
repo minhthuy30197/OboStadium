@@ -26,4 +26,6 @@ public interface PromotionService {
     public void deletePromotion(long id);
 
     public Promotion getPromotionById(long id);
+
+    public List<Promotion> getAllValidPromotion();
 }

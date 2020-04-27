@@ -137,6 +137,8 @@ public class Order {
         private int discountType;
 
         private long discountValue;
+
+        private long maximumDiscountValue;
     }
 
     @Column(name = "note")

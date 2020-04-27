@@ -2,6 +2,7 @@ package com.company.demo.repository;
 
 import com.company.demo.entity.Product;
 import com.company.demo.model.dto.ProductInfoDto;
+import com.company.demo.model.dto.ShortProductInfoDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -83,4 +84,10 @@ public interface ProductRepository extends JpaRepository<Product, String> {
     public int countAdminGetListProduct(@Param("id") String id, @Param("name") String name, @Param("category") String category, @Param("brand") String brand);
 
     public int countByBrandId(int id);
+
+    @Query(nativeQuery = true, name = "getAllProduct")
+    public List<ShortProductInfoDto> getAllProduct();
+
+    @Query(nativeQuery = true, name = "getAvailableProducts")
+    public List<ShortProductInfoDto> getAvailableProducts();
 }
