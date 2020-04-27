@@ -71,9 +71,9 @@
                 </div>
                 <!-- Pricing Section-->
                 <div class="pricing childs">
-                    <h6 class="not-found-size" style="margin-top: 5px; color: #dc3545;"  th:styleappend="notFoundSize ? '' : 'display:none'">Size giày này đã hết. Vui lòng chọn size khác.</h6>
+                    <h6 class="not-found-size" style="margin-top: 5px; color: #dc3545;"  th:styleappend="${notFoundSize} == true ? '' : 'display:none'">Size giày này đã hết. Vui lòng chọn size khác.</h6>
                     <div class="size-btn" data-toggle="modal" data-target="#sizeChooseModal">
-                        <button class="btn btn-primary size trans-btn"><span class="size-text">Size</span><span class="size-details">9US | 42.5VN | 26.2CM</span><i class="fas fa-chevron-down dropdown-arrow"></i></button>
+                        <button class="btn btn-primary size trans-btn"><span class="size-text">Size</span><span th:data-size="${size}" class="size-details">9US | 42.5VN | 26.2CM</span><i class="fas fa-chevron-down dropdown-arrow"></i></button>
                     </div>
                     <div class="coupon price-include">
                         <div class="text">Giá sản phẩm</div>
@@ -98,38 +98,6 @@
 
     <!-- Modals-->
     <th:block th:replace="~{fragment/size_choose_modal :: size-choose-modal}"></th:block>
-    <div class="modal fade" id="addNewShipping" tabindex="-1" role="dialog" aria-labelledby="addNewShippingLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addNewShippingLabel">Thêm địa chỉ mới</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <form class="modal-body">
-                    <input class="form-control full-name" placeholder="Họ và tên" data-name="Họ và tên"/>
-                    <div class="invalid-feedback"> </div>
-                    <input class="form-control phone" placeholder="Số điện thoại" data-name="Số điện thoại"/>
-                    <div class="invalid-feedback"> </div>
-                    <select class="custom-select city" data-name="Thành phố"></select>
-                    <div class="invalid-feedback"> </div>
-                    <select class="custom-select district" data-name="Quận/Huyện">
-                        <option>Quận/Huyện</option>
-                    </select>
-                    <div class="invalid-feedback"> </div>
-                    <select class="custom-select ward" data-name="Phường/Xã">
-                        <option>Phường/Xã</option>
-                    </select>
-                    <div class="invalid-feedback"> </div>
-                    <textarea class="form-control address" placeholder="Địa chỉ" data-name="Địa chỉ"></textarea>
-                    <div class="invalid-feedback"> </div>
-                </form>
-                <div class="modal-footer">
-                    <button class="btn" type="button" data-dismiss="modal">Huỷ bỏ</button>
-                    <button class="btn btn-primary red-btn save" type="button">Lưu</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </main>
 
 <th:block id="js-resources">
@@ -268,11 +236,16 @@
                 addressInvalid.html('Vui lòng nhập địa chỉ nhận hàng');
                 isValid = false;
             }
+            let size = $('.size-choose').data("id");
+            if (size == null || size == "") {
+                $('.not-found-size').show();
+                isValid = false;
+            }
 
             if (isValid) {
                 req = {
                     product_id: [[${product.id}]],
-                    size: [[${size}]],
+                    size: size,
                     receiver_name: receiverName,
                     receiver_phone: receiverPhone,
                     receiver_address: receiverAddress,
