@@ -53,7 +53,7 @@
                             <div class="card-body">
                                 <h5 class="card-title" th:text="${post.title}"></h5>
                                 <p class="card-text news-short-desc" th:text="${post.description}"></p>
-                                <p class="card-text author">By <span class="name" th:text="${post.createdBy.fullName}">Cody</span> &middot; <span class="date" th:text="${post.publishedAt}"></span></p>
+                                <p class="card-text author">By <span class="name" th:text="${post.createdBy.fullName}">Cody</span> &middot; <span class="date" th:text="${#dates.format(post.publishedAt, 'dd/MM/yyyy')}"></span></p>
                             </div>
                         </div>
                         <div class="shadow mx-auto position-absolute"></div>

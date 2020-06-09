@@ -437,7 +437,7 @@
                                                    alt="${product.name}"/>
                                 <div class="card-body">
                                     <h5 class="card-title">${product.name}</h5>`
-                    if (product.promotionPrice != null) {
+                    if (product.promotionPrice > 0) {
                         html += `<p class="price"><span class="text-price">${product.promotionPrice}</span> &#x20AB;</p>
                                  <p class="old-price"><span class="text-price">${product.price}</span> &#x20AB;</p>`
                     } else {

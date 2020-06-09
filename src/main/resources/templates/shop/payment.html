@@ -33,7 +33,7 @@
                 <div class="product-info">
                     <div class="product-name" th:text="${product.name}"></div>
                     <a class="product-image" th:href="@{/san-pham/{slug}/{id}(id=${product.id}, slug=${product.slug})}">
-                        <img class="img-fluid" th:src="@{/image/product-details-image/1.jpg}" alt="image-1"/>
+                        <img class="img-fluid" th:src="${product.productImages[0]}" alt="image-1"/>
                     </a>
                 </div>
             </section>

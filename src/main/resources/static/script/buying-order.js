@@ -63,8 +63,8 @@ function showListOrder(orders) {
                                 </div>
                             </div>
         `
-        $('#list-order').html(html);
     }
+    $('#list-order').html(html);
 }
 
 $('.cancel-btn').click(function() {

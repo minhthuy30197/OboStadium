@@ -448,7 +448,7 @@
                 success: function(data) {
                     let productSize = $('.product-size[data-size='+size+']')
                     if (productSize.length == 0) {
-                        $('.list-product-size').append(`<tr><td>${size}</td><td>${count}</td></tr>`);
+                        $('.list-product-size').append(`<tr><td class="product-size" data-size="${size}">${size}</td><td class="product-count">${count}</td></tr>`);
                     } else {
                         $(productSize).parent().find('.product-count').text(count);
                     }

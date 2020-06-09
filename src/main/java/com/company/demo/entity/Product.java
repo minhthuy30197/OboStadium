@@ -96,10 +96,9 @@ import java.util.List;
         query = "SELECT pro.id, pro.name, pro.slug, pro.price, pro.total_sold, pro.product_images ->> \"$[0]\" as image \n" +
                 "FROM product pro\n" +
                 "WHERE pro.is_available = true AND\n" +
-                "pro.id != ?1 AND\n" +
-                "pro.brand_id = ?2\n" +
-                "ORDER BY pro.created_at, pro.total_sold desc\n" +
-                "LIMIT ?3\n"
+                "pro.id != ?1\n" +
+                "ORDER BY RAND()\n" +
+                "LIMIT ?2\n"
 )
 @NamedNativeQuery(
         name = "searchProductBySize",

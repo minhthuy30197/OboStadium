@@ -82,15 +82,14 @@ public class OrderServiceImpl implements OrderService {
         // Create order
         order.setCreatedAt(new Timestamp(System.currentTimeMillis()));
 
-        User createdBy = new User();
-        createdBy.setId(userId);
+        User createdBy = new User(userId);
         order.setCreatedBy(createdBy);
 
         order.setReceiverAddress(req.getReceiverAddress());
         order.setReceiverName(req.getReceiverName());
         order.setReceiverPhone(req.getReceiverPhone());
         order.setNote(req.getNote());
-
+        order.setBuyer(createdBy);
         order.setProduct(product.get());
         order.setSize(req.getSize());
         order.setProductPrice(req.getProductPrice());

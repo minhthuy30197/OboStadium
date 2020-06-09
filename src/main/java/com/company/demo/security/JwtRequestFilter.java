@@ -28,6 +28,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+        System.out.println(httpServletRequest.getRequestURI());
         // Lấy token từ cookie
         String token;
         Cookie cookie = WebUtils.getCookie(httpServletRequest, "JWT_TOKEN");

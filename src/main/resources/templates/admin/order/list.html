@@ -89,8 +89,8 @@
                                             <option value="1">Chờ lấy hàng</option>
                                             <option value="2">Đang giao hàng</option>
                                             <option value="3">Đã giao hàng</option>
-                                            <option value="4">Đã hủy</option>
-                                            <option value="5">Đã trả hàng</option>
+                                            <option value="5">Đã hủy</option>
+                                            <option value="4">Đã trả hàng</option>
                                         </select>
                                     </th>
                                     <th>
@@ -118,8 +118,8 @@
                                             <span th:if="${order.status} == 1" class="badge badge-warning">Chờ lấy hàng</span>
                                             <span th:if="${order.status} == 2" class="badge badge-primary">Đang giao hàng</span>
                                             <span th:if="${order.status} == 3" class="badge badge-success">Đã giao hàng</span>
-                                            <span th:if="${order.status} == 4" class="badge badge-light">Đã hủy</span>
-                                            <span th:if="${order.status} == 5" class="badge badge-danger">Đã trả hàng</span>
+                                            <span th:if="${order.status} == 5" class="badge badge-light">Đã hủy</span>
+                                            <span th:if="${order.status} == 4" class="badge badge-danger">Đã trả hàng</span>
                                         </td>
                                         <td th:text="${order.product.name}"></td>
                                         <td>

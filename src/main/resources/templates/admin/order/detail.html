@@ -320,6 +320,7 @@
                    }
                } else {
                     totalPrice = productPrice;
+                    promotionPrice = 0;
                }
 
                $('#product-price').text(productPrice);
@@ -343,7 +344,6 @@
                 let product = $('#product').val();
                 let size = $('#size').val();
                 let promotion = $('#promotion').val();
-
                 if (size == null || size == "") {
                     $('#invalid-feedback-product').show();
                     return;

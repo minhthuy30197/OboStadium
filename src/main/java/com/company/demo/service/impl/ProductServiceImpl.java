@@ -99,7 +99,7 @@ public class ProductServiceImpl implements ProductService {
             throw new NotFoundException("Sản phẩm không tồn tại");
         }
 
-        List<ProductInfoDto> products = productRepository.getRelatedProducts(id, product.get().getBrand().getId(), 5);
+        List<ProductInfoDto> products = productRepository.getRelatedProducts(id, 5);
 
         return promotionService.checkPublicPromotion(products);
     }
