@@ -22,6 +22,20 @@ Alternatively you can use the [Spring Boot Maven plugin](https://docs.spring.io/
 mvn spring-boot:run
 ```
 
+Import database from ```obo.sql```. Using two default account:
+
+- Admin account:
+    - Username: admin@obostadium.com
+    - Password: 123456
+- Member account:
+    - Username: monguyen@gmail.com
+    - Password: 123456
+    
+
+To access url ```/admin``` to get admin pages.  
+   
+
+
 ## Built with
 - [Java Spring](https://spring.io/) - The web framework used
 - [Maven](https://mvnrepository.com/) - Dependency Management
