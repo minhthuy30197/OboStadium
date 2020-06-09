@@ -53,7 +53,7 @@
             </div>
             <div class="product-info col-lg-6">
                 <div class="title h3">Mô tả sản phẩm</div>
-                <div class="desc" th:text="${product.description}"></div>
+                <div class="desc" th:utext="${product.description}"></div>
                 <div class="desc-sub">
                     <span class="desc-sub-title">Hãng: </span>
                     <span th:text="${product.brand.name}"></span>

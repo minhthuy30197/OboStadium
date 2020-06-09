@@ -312,7 +312,7 @@ public class OrderServiceImpl implements OrderService {
                 // TODO: Plus 1 product
                 productSizeRepository.plusOneProductBySize(order.getProduct().getId(), order.getSize());
             } else if (req.getStatus() == CANCELED_STATUS) {
-                
+
             } else if (req.getStatus() != DELIVERY_STATUS) {
                 throw new BadRequestException("Không thể chuyển đơn hàng sang trạng thái này");
             }

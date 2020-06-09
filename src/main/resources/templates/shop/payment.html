@@ -91,7 +91,7 @@
                 <a th:href="@{/san-pham/{slug}/{id}(id=${product.id}, slug=${product.slug})}">
                     <button class="btn btn-secondary confirm-btn">Quay lại</button>
                 </a>
-                <button class="btn btn-primary confirm-btn red-btn" id="btn-buy-now" th:style="notFoundSize ? 'display:none': ''">Mua ngay</button>
+                <button class="btn btn-primary confirm-btn red-btn" id="btn-buy-now" th:style="${notFoundSize} ? 'display:none': ''">Mua ngay</button>
             </section>
         </div>
     </div>
@@ -110,7 +110,7 @@
         let promotionValue = 0;
         let totalPrice = price;
 
-        if ([[${product.promotionPrice}]] != null) {
+        if ([[${product.couponCode}]] != null && [[${product.couponCode}]] != "") {
             totalPrice = [[${product.promotionPrice}]];
             promotionValue = price - totalPrice;
         }
