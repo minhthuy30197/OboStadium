@@ -42,3 +42,10 @@ To access url ```/admin``` to get admin pages.
 
 ## Author
 [Trinh Minh Thuy](https://github.com/minhthuy30197)
+
+
+------------
+
+### Hướng dẫn chạy bằng Docker Compose
+Cần cài đặt Docker và Docker Compose. Tự google search cách cài nhé
+Sau đó chạy file **build.sh**
